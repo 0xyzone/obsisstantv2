@@ -30,7 +30,8 @@ class AppPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
-            ->id('app')
+            ->id('studio')
+            ->default()
             ->login()
             ->registration()
             ->tenant(Tournament::class, ownershipRelationship: 'tournament')
@@ -39,6 +40,9 @@ class AppPanelProvider extends PanelProvider
             ->tenantProfile(EditTournament::class)
             ->path('studio')
             ->brandName('Obsisstant v2')
+            ->brandLogo(asset('mainLogo.png'))
+            ->brandLogoHeight('6rem')
+            ->favicon(asset('ObsistanT.png'))
             ->colors([
                 'primary' => Color::Emerald,
             ])

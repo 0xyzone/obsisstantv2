@@ -5,6 +5,7 @@ namespace App\Filament\App\Widgets;
 use App\Models\User;
 use Filament\Tables;
 use App\Models\Tournament;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 use Filament\Tables\Columns\TextColumn;
@@ -26,11 +27,18 @@ class TournamentWidget extends BaseWidget
             )
             ->heading('Tournaments')
             ->columns([
+                TextColumn::make('#')
+                ->url(fn($record) => route('filament.studio.tenant.profile', $record))
+                ->rowIndex(),
+                ImageColumn::make('logo')
+                ->url(fn($record) => route('filament.studio.tenant.profile', $record)),
                 TextColumn::make('name')
+                ->url(fn($record) => route('filament.studio.tenant.profile', $record))
             ])
             ->actions([
                 Tables\Actions\Action::make('Edit')
-                ->url(fn($record) => route('filament.app.tenant.profile', $record)),
+                ->url(fn($record) => route('filament.studio.tenant.profile', $record))
+                ->icon('heroicon-o-pencil'),
             ]);
     }
 }

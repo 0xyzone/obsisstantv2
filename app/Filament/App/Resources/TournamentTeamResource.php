@@ -7,6 +7,8 @@ use Filament\Forms\Components\Section;
 use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Columns\Layout\Split;
+use Filament\Tables\Columns\Layout\Stack;
+use Filament\Tables\Columns\TextColumn\TextColumnSize;
 use Filament\Tables\Table;
 use App\Models\TournamentTeam;
 use Filament\Facades\Filament;
@@ -30,7 +32,7 @@ class TournamentTeamResource extends Resource
     protected static ?string $activeNavigationIcon = 'heroicon-m-users';
     protected static ?string $tenantOwnershipRelationshipName = null;
     protected static ?string $tenantRelationshipName = 'teams';
-
+    
 
     public static function form(Form $form): Form
     {
@@ -51,9 +53,11 @@ class TournamentTeamResource extends Resource
                         ->maxLength(255),
                     Forms\Components\Split::make([
                         Forms\Components\TextInput::make('contact_number')
-                            ->numeric(),
+                            ->tel()
+                            ->unique(ignoreRecord: true),
                         Forms\Components\TextInput::make('alternative_contact_number')
-                            ->numeric(),
+                            ->tel()
+                            ->unique(ignoreRecord: true),
                     ]),
                 ])
                     ->columnSpan(2)
@@ -118,7 +122,8 @@ class TournamentTeamResource extends Resource
                         $data['tournament_id'] = Filament::getTenant()->id;
                         return $data;
                     })
-                    ->defaultItems(1)
+                    ->defaultItems(fn () => Filament::getTenant()->min_players ? Filament::getTenant()->min_players : 1)
+                    ->maxItems(fn () => Filament::getTenant()->max_players ? Filament::getTenant()->max_players : null)
                     ->itemLabel(fn(array $state): ?string => $state['name'] ?? null)
             ])
             ->columns(6);
@@ -128,29 +133,54 @@ class TournamentTeamResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make('logo'),
-                TextColumn::make('name')
-                    ->weight(FontWeight::Bold)
-                    ->searchable(isIndividual: true),
-                TextColumn::make('short_name')
-                    ->searchable(),
-                TextColumn::make('email')
-                    ->searchable(isIndividual: true),
-                TextColumn::make('contact_number')
-                    ->numeric()
-                    ->searchable(isIndividual: true),
-                TextColumn::make('alternative_contact_number')
-                    ->numeric()
-                    ->searchable(isIndividual: true),
-                Split::make([
-                    TextColumn::make('created_at')
-                        ->dateTime()
-                        ->toggleable(isToggledHiddenByDefault: true),
-                ]),
-                Panel::make([
-                    TextColumn::make('players.name')
-                        ->badge()
+                Stack::make([
+                    Split::make([
+                        ImageColumn::make('logo')
+                            ->grow(false)
+                            ->size(150),
+                        Stack::make([
+                            Stack::make([
+                                TextColumn::make('name')
+                                    ->size(TextColumnSize::Large)
+                                    ->weight(FontWeight::Bold)
+                                    ->icon('heroicon-o-users')
+                                    ->iconColor('primary')
+                                    ->searchable(isIndividual: true)
+                                    ->suffix(fn($record) => " (" . $record->short_name . ")"),
+                                TextColumn::make('created_at')
+                                    ->since()
+                                    ->size(TextColumnSize::ExtraSmall)
+                                    ->color('gray')
+                                    ->prefix('Created ')
+                                    ->toggleable(isToggledHiddenByDefault: true),
+                            ]),
+                            Panel::make([
+                                Stack::make([
+                                    TextColumn::make('email')
+                                        ->searchable(isIndividual: true)
+                                        ->iconColor('primary')
+                                        ->icon('heroicon-o-envelope'),
+                                    Split::make([
+                                        TextColumn::make('contact_number')
+                                            ->searchable(isIndividual: true)
+                                            ->iconColor('primary')
+                                            ->icon('heroicon-m-device-phone-mobile'),
+                                        TextColumn::make('alternative_contact_number')
+                                            ->searchable(isIndividual: true)
+                                            ->iconColor('primary')
+                                            ->icon('heroicon-s-device-phone-mobile'),
+                                    ])
+                                ])->space(2)
+                            ])
+                        ])
+                            ->space(3),
+                    ]),
+                    Panel::make([
+                        TextColumn::make('players.name')
+                            ->badge()
+                    ]),
                 ])
+                    ->space(3),
             ])
             ->contentGrid([
                 'md' => 2,

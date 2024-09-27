@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Filament\Pages\Tenancy;
+use Filament\Forms\Get;
 use Filament\Forms\Form;
 use App\Enums\TournamentType;
+use Filament\Actions\DeleteAction;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
@@ -28,13 +30,52 @@ class EditTournament extends EditTenantProfile
                             ->required()
                             ->columnSpanFull(),
                         Select::make('game_id')
-                            ->relationship('game', 'name'),
+                            ->relationship('game', 'name')
+                            ->disabledOn('edit'),
                         Select::make("type")
-                            ->options(TournamentType::class),
+                            ->options(TournamentType::class)
+                            ->disabledOn('edit'),
                         DatePicker::make("start_date")
-                            ->label("Starts From"),
+                            ->label("")
+                            ->timezone('America/Kathmandu')
+                            ->native(false)
+                            ->minDate(today())
+                            ->displayFormat('jS M, Y')
+                            ->firstDayOfWeek(7)
+                            ->closeOnDateSelection()
+                            ->prefix('Starts')
+                            ->live(),
                         DatePicker::make("end_date")
-                            ->label("Ends On"),
+                            ->label("")
+                            ->timezone('America/Kathmandu')
+                            ->native(false)
+                            ->minDate(fn (Get $get) => $get('start_date') ? $get('start_date') : now())
+                            ->displayFormat('jS M, Y')
+                            ->firstDayOfWeek(7)
+                            ->closeOnDateSelection()
+                            ->prefix('Ends'),
+                        TextInput::make('min_players')
+                            ->numeric()
+                            ->required()
+                            ->live()
+                            ->hidden(function (Get $get): bool {
+                                if ($get('type') == null || $get('type') != 'team' && $get('type') != 'ffa') {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            }),
+                        TextInput::make('max_players')
+                            ->numeric()
+                            ->required()
+                            ->gt('min_players')
+                            ->hidden(function (Get $get): bool {
+                                if ($get('min_players') == null || $get('type') != 'team' && $get('type') != 'ffa') {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            }),
                     ])
                     ->columns(2)
                     ->columnSpan(2),
@@ -52,17 +93,17 @@ class EditTournament extends EditTenantProfile
                     ->columnSpan(1),
                 Section::make([
                     FileUpload::make("logo")
-                    ->image()
-                    ->imageEditor()
-                    ->imageEditorAspectRatios([
-                        '1:1',
-                    ])
-                    ->panelAspectRatio("1:1")
-                    ->panelLayout('integrated')
-                    ->openable()
-                    ->downloadable()
-                    ->moveFiles()
-                    ->directory('images/tournaments/logo'),
+                        ->image()
+                        ->imageEditor()
+                        ->imageEditorAspectRatios([
+                            '1:1',
+                        ])
+                        ->panelAspectRatio("1:1")
+                        ->panelLayout('integrated')
+                        ->openable()
+                        ->downloadable()
+                        ->moveFiles()
+                        ->directory('images/tournaments/logo'),
                 ])
                     ->columnSpan(1)
             ])
