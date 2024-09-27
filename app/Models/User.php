@@ -72,6 +72,10 @@ class User extends Authenticatable implements HasTenants, FilamentUser
             return $this->name === "Super Admin";
         }
 
+        if ($panel->getId() === 'studio') {
+            return $this->name !== 'Super Admin';
+        }
+
         return true;
     }
 }
