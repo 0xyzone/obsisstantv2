@@ -21,11 +21,6 @@ class Tournament extends Model
         return $this->belongsToMany(User::class, 'tournament_users');
     }
 
-    // public function users(): BelongsTo
-    // {
-    //     return $this->belongsTo(User::class);
-    // }
-
     /**
      * Get the game that owns the Tournament
      *
@@ -44,6 +39,21 @@ class Tournament extends Model
     public function teams(): HasMany
     {
         return $this->hasMany(TournamentTeam::class);
+    }
+
+    /**
+     * Get all of the matches for the Tournament
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function matches(): HasMany
+    {
+        return $this->hasMany(TournamentMatch::class);
+    }
+
+    public function players(): HasMany
+    {
+        return $this->hasMany(TeamPlayer::class);
     }
 
     protected $casts = [

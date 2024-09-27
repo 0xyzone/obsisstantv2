@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Pages\Tenancy\EditTournament;
+use App\Http\Middleware\ApplyTenantScopes;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\Widgets;
@@ -32,7 +33,8 @@ class AppPanelProvider extends PanelProvider
             ->id('app')
             ->login()
             ->registration()
-            ->tenant(Tournament::class)
+            ->tenant(Tournament::class, ownershipRelationship: 'tournament')
+            ->tenantRoutePrefix('tournament')
             ->tenantRegistration(RegisterTournament::class)
             ->tenantProfile(EditTournament::class)
             ->path('studio')
@@ -62,6 +64,7 @@ class AppPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+                ApplyTenantScopes::class,
             ])
             ->authMiddleware([
                 Authenticate::class,

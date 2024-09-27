@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages\Tenancy;
 
+use App\Enums\TournamentType;
 use Filament\Forms\Form;
 use App\Models\Tournament;
 use Filament\Forms\Components\Select;
@@ -22,6 +23,10 @@ class RegisterTournament extends RegisterTenant
                 TextInput::make('name'),
                 Select::make('game_id')
                 ->relationship('game', 'name')
+                ->default('1'),
+                Select::make('type')
+                ->options(TournamentType::class)
+                ->default('team')
             ]);
     }
 
