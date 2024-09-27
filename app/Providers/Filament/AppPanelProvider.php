@@ -2,18 +2,21 @@
 
 namespace App\Providers\Filament;
 
-use App\Filament\Pages\Tenancy\EditTournament;
-use App\Http\Middleware\ApplyTenantScopes;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\Widgets;
 use App\Models\Tournament;
 use Filament\PanelProvider;
+use Filament\Facades\Filament;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\MaxWidth;
 use Illuminate\Support\Facades\Blade;
+use Filament\Navigation\NavigationItem;
+use App\Http\Middleware\CheckUserTenant;
+use App\Http\Middleware\ApplyTenantScopes;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Support\Facades\FilamentView;
+use App\Filament\Pages\Tenancy\EditTournament;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use App\Filament\Pages\Tenancy\RegisterTournament;
@@ -52,11 +55,17 @@ class AppPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/App/Resources'), for: 'App\\Filament\\App\\Resources')
             ->discoverPages(in: app_path('Filament/App/Pages'), for: 'App\\Filament\\App\\Pages')
             ->pages([
-                Pages\Dashboard::class,
+                // Pages\Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/App/Widgets'), for: 'App\\Filament\\App\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
+            ])
+            ->navigationItems([
+                NavigationItem::make('Edit Tournament')
+                ->url(fn(): string => EditTournament::getUrl())
+                ->icon('heroicon-o-trophy')
+                ->sort(-2),
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -69,6 +78,7 @@ class AppPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
                 ApplyTenantScopes::class,
+                CheckUserTenant::class
             ])
             ->authMiddleware([
                 Authenticate::class,

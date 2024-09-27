@@ -32,7 +32,7 @@ class TournamentTeamResource extends Resource
     protected static ?string $activeNavigationIcon = 'heroicon-m-users';
     protected static ?string $tenantOwnershipRelationshipName = null;
     protected static ?string $tenantRelationshipName = 'teams';
-    
+
 
     public static function form(Form $form): Form
     {
@@ -81,49 +81,53 @@ class TournamentTeamResource extends Resource
                 Repeater::make('players')
                     ->relationship()
                     ->columnSpanFull()
-                    ->grid(5)
+                    ->columns(16)
                     ->schema([
                         Forms\Components\Hidden::make('tournament_id')
                             ->default(Filament::getTenant()->id),
+                        Forms\Components\Toggle::make('is_playing')
+                            ->label('Playing')
+                            ->inline(false)
+                            ->grow(false)
+                            ->default(true)
+                            ->columnSpan(1),
                         Forms\Components\TextInput::make('name')
                             ->required()
-                            ->maxLength(255),
+                            ->maxLength(255)
+                            ->columnSpan(3),
                         Forms\Components\TextInput::make('nickname')
                             ->required()
-                            ->maxLength(255),
+                            ->maxLength(255)
+                            ->columnSpan(3),
                         Forms\Components\TextInput::make('ingame_id')
-                            ->maxLength(255),
+                            ->maxLength(255)
+                            ->columnSpan(3),
                         Forms\Components\Select::make('gender')
                             ->options([
                                 'male' => 'Male',
                                 'female' => 'Female',
                                 'other' => 'Other',
                             ])
-                            ->default('male'),
+                            ->default('male')
+                            ->columnSpan(3),
                         Forms\Components\FileUpload::make('photo')
                             ->image()
                             ->imageEditor()
                             ->imageEditorAspectRatios([
                                 '1:1',
                             ])
+                            ->columnSpan(3)
                             ->panelLayout('integrated')
                             ->openable()
                             ->downloadable()
                             ->moveFiles()
                             ->directory('images/teams/players'),
-                        Forms\Components\Split::make([
-                            Forms\Components\Toggle::make('is_playing')
-                                ->label('Playing')
-                                ->default(true),
-                            Forms\Components\Toggle::make('is_mvp'),
-                        ])
                     ])
                     ->mutateRelationshipDataBeforeFillUsing(function (array $data): array {
                         $data['tournament_id'] = Filament::getTenant()->id;
                         return $data;
                     })
-                    ->defaultItems(fn () => Filament::getTenant()->min_players ? Filament::getTenant()->min_players : 1)
-                    ->maxItems(fn () => Filament::getTenant()->max_players ? Filament::getTenant()->max_players : null)
+                    ->maxItems(fn() => Filament::getTenant()->max_players ? Filament::getTenant()->max_players : null)
                     ->itemLabel(fn(array $state): ?string => $state['name'] ?? null)
             ])
             ->columns(6);

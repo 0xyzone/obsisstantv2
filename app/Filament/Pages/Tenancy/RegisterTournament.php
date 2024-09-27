@@ -22,20 +22,35 @@ class RegisterTournament extends RegisterTenant
         return $form
             ->schema([
                 TextInput::make('name')
-                ->columnSpanFull()
-                ->required(),
+                    ->columnSpanFull()
+                    ->required()
+                    ->autofocus(),
                 Select::make('game_id')
-                ->relationship('game', 'name')
-                ->default('1')
-                ->columnSpanFull()
-                ->required(),
+                    ->relationship('game', 'name')
+                    ->default('1')
+                    ->columnSpanFull()
+                    ->required(),
                 Select::make('type')
-                ->options(TournamentType::class)
-                ->live()
-                ->default('team')
-                ->columnSpanFull()
-                ->required(),
+                    ->options(TournamentType::class)
+                    ->live()
+                    ->default('team')
+                    ->columnSpanFull()
+                    ->required(),
+                TextInput::make('max_teams')
+                    ->numeric()
+                    ->required()
+                    ->default(1)
+                    ->hidden(function (Get $get): bool {
+                        if ($get('type') == null || $get('type') != 'team' && $get('type') != 'ffa') {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    })
+                    ->columnSpanFull(),
                 TextInput::make('min_players')
+                    ->label('Min. Player(s) Per Team')
+                    ->default(1)
                     ->numeric()
                     ->required()
                     ->hidden(function (Get $get): bool {
@@ -46,6 +61,8 @@ class RegisterTournament extends RegisterTenant
                         }
                     }),
                 TextInput::make('max_players')
+                    ->label('Max. Player(s) Per Team')
+                    ->default(1)
                     ->numeric()
                     ->required()
                     ->hidden(function (Get $get): bool {

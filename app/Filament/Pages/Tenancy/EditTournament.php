@@ -49,11 +49,23 @@ class EditTournament extends EditTenantProfile
                             ->label("")
                             ->timezone('America/Kathmandu')
                             ->native(false)
-                            ->minDate(fn (Get $get) => $get('start_date') ? $get('start_date') : now())
+                            ->minDate(fn(Get $get) => $get('start_date') ? $get('start_date') : now())
                             ->displayFormat('jS M, Y')
                             ->firstDayOfWeek(7)
                             ->closeOnDateSelection()
                             ->prefix('Ends'),
+                        TextInput::make('max_teams')
+                            ->numeric()
+                            ->required()
+                            ->live()
+                            ->columnSpanFull()
+                            ->hidden(function (Get $get): bool {
+                                if ($get('type') == null || $get('type') != 'team' && $get('type') != 'ffa') {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            }),
                         TextInput::make('min_players')
                             ->numeric()
                             ->required()
