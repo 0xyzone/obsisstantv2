@@ -16,5 +16,5 @@ Route::get('demo', function() {
     $userId = auth()->user()->id;
     $setting = ObsSetting::where('user_id', $userId)->first();
     $password = Crypt::decryptString($setting->password);
-    return view('demo', compact('setting'));
+    return view('demo', compact('setting', 'password'));
 })->name('demo');

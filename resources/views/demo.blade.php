@@ -28,7 +28,7 @@
                         const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
                         const host = '192.168.1.104'; // Ensure this is populated correctly
                         const port = '{{ $setting->port }}'; // Ensure this is populated correctly
-                        const password = '{{ $setting->password }}'; // Ensure this is populated correctly
+                        const password = '{{ $password }}'; // Ensure this is populated correctly
                         const webSocketUrl = `${protocol}${host}:${port}`;
                         
                         // Create an instance of the OBS WebSocket client
