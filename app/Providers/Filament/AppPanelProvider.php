@@ -11,11 +11,15 @@ use Filament\Facades\Filament;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\MaxWidth;
 use Illuminate\Support\Facades\Blade;
+use App\Http\Middleware\AuthMiddleware;
 use Filament\Navigation\NavigationItem;
 use App\Http\Middleware\CheckUserTenant;
+use Filament\Forms\Components\FileUpload;
+use Illuminate\Validation\Rules\Password;
 use App\Http\Middleware\ApplyTenantScopes;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Support\Facades\FilamentView;
+use Jeffgreco13\FilamentBreezy\BreezyCore;
 use App\Filament\Pages\Tenancy\EditTournament;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -37,6 +41,7 @@ class AppPanelProvider extends PanelProvider
             ->default()
             ->login()
             ->registration()
+            ->sidebarFullyCollapsibleOnDesktop()
             ->tenant(Tournament::class, ownershipRelationship: 'tournament')
             ->tenantRoutePrefix('tournament')
             ->tenantRegistration(RegisterTournament::class)
@@ -44,8 +49,8 @@ class AppPanelProvider extends PanelProvider
             ->path('studio')
             ->brandName('Obsisstant v2')
             ->brandLogo(asset('mainLogo.png'))
-            ->brandLogoHeight('6rem')
             ->favicon(asset('ObsistanT.png'))
+            ->brandLogoHeight('6rem')
             ->colors([
                 'primary' => Color::Emerald,
             ])
@@ -63,9 +68,9 @@ class AppPanelProvider extends PanelProvider
             ])
             ->navigationItems([
                 NavigationItem::make('Edit Tournament')
-                ->url(fn(): string => EditTournament::getUrl())
-                ->icon('heroicon-o-trophy')
-                ->sort(-2),
+                    ->url(fn(): string => EditTournament::getUrl())
+                    ->icon('heroicon-o-trophy')
+                    ->sort(-2),
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -82,6 +87,21 @@ class AppPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+            ])
+            ->plugins([
+                BreezyCore::make()
+                    ->myProfile(
+                        shouldRegisterUserMenu: true, // Sets the 'account' link in the panel User Menu (default = true)
+                        shouldRegisterNavigation: true, // Adds a main navigation item for the My Profile page (default = false)
+                        navigationGroup: 'Settings', // Sets the navigation group for the My Profile page (default = null)
+                        hasAvatars: true, // Enables the avatar upload form component (default = false)
+                        slug: 'my-profile' // Sets the slug for the profile page (default = 'my-profile')
+                    )
+                    ->passwordUpdateRules(
+                        rules: [Password::default()->mixedCase()->uncompromised(3)], // you may pass an array of validation rules as well. (default = ['min:8'])
+                        requiresCurrentPassword: true, // when false, the user can update their password without entering their current password. (default = true)
+                    )
+                    ->avatarUploadComponent(fn() => FileUpload::make('avatar_url')->directory('images/profile-photos'))
             ]);
     }
 }
