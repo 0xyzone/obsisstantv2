@@ -26,7 +26,7 @@
                         console.log(response.status);
                         // Determine the correct WebSocket protocol (ws or wss)
                         const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
-                        const host = '{{ $setting->host }}'; // Ensure this is populated correctly
+                        const host = '192.168.1.104'; // Ensure this is populated correctly
                         const port = '{{ $setting->port }}'; // Ensure this is populated correctly
                         const password = '{{ $setting->password }}'; // Ensure this is populated correctly
                         const webSocketUrl = `${protocol}${host}:${port}`;
