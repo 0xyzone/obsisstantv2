@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Filament\Panel;
+use App\Models\ObsSetting;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -11,6 +12,7 @@ use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Notifications\Notifiable;
 use Filament\Models\Contracts\HasTenants;
 use Filament\Models\Contracts\FilamentUser;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -85,5 +87,15 @@ class User extends Authenticatable implements HasTenants, FilamentUser, HasAvata
     public function getFilamentAvatarUrl(): ?string
     {
         return $this->avatar_url ? Storage::url($this->avatar_url) : null ;
+    }
+
+    /**
+     * Get the obsSetting associated with the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function obsSetting(): HasOne
+    {
+        return $this->hasOne(ObsSetting::class);
     }
 }
