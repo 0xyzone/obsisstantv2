@@ -15,7 +15,7 @@
     </form> --}}
     <a href="#" id="connect-link">Connect</a>
     <script src="https://cdn.jsdelivr.net/npm/obs-websocket-js"></script>
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             $('#connect-link').on('click', function(event) {
                 event.preventDefault(); // Prevent default link behavior
@@ -45,6 +45,52 @@
                         socket.onclose = function() {
                             console.log('WebSocket connection closed.');
                         };
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error connecting to OBS:', error);
+                    }
+                });
+            });
+        });
+    </script> --}}
+    <script>
+        $(document).ready(function() {
+            $('#connect-link').on('click', function(event) {
+                event.preventDefault(); // Prevent default link behavior
+                $.ajax({
+                    url: '{{ route('connectOBS') }}', // Adjust this URL as necessary
+                    method: 'GET',
+                    success: function(response) {
+                        console.log(response.status);
+                        // Determine the correct WebSocket protocol (ws or wss)
+                        const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+                        const host = '{{ $setting->host }}'; // Ensure this is populated correctly
+                        const port = '{{ $setting->port }}'; // Ensure this is populated correctly
+                        const webSocketUrl = `${protocol}${host}:${port}`;
+                        
+                        // Create an instance of the OBS WebSocket client
+                        const obs = new OBSWebSocket();
+
+                        // Connect to OBS
+                        obs.connect({ address: webSocketUrl, password: '{{ $setting->password }}' }) // Replace with actual password if needed
+                            .then(() => {
+                                console.log('Connected to OBS WebSocket.');
+                                // Redirect to demo route after connection is established
+                                window.location.href = "{{ route('demo') }}"; // Redirect to demo
+                            })
+                            .catch(err => {
+                                console.error('Failed to connect to OBS:', err);
+                            });
+
+                        // Event listener for messages
+                        obs.on('message', (msg) => {
+                            console.log('Message from OBS:', msg);
+                        });
+
+                        // Handle disconnect
+                        obs.on('Disconnect', () => {
+                            console.log('Disconnected from OBS WebSocket.');
+                        });
                     },
                     error: function(xhr, status, error) {
                         console.error('Error connecting to OBS:', error);
