@@ -26,7 +26,7 @@
                         console.log(response.status);
                         // Determine the correct WebSocket protocol (ws or wss)
                         const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
-                        const host = 'localhost'; // Assuming $setting->host is passed to the view
+                        const host = '{{ $setting->host }}'; // Assuming $setting->host is passed to the view
                         const port = '{{ $setting->port }}';
                         const webSocketUrl = `${protocol}${host}:${port}`;
                         // Start the WebSocket connection
