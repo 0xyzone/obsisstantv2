@@ -35,7 +35,10 @@
                         const obs = new OBSWebSocket();
 
                         // Connect to OBS
-                        obs.connect({ address: webSocketUrl, password: password }) // Replace with actual password if needed
+                        obs.connect({ 
+                            address: webSocketUrl, 
+                            password: password
+                        }) // Replace with actual password if needed
                             .then(() => {
                                 console.log('Connected to OBS WebSocket.');
                                 // Redirect to demo route after connection is established
