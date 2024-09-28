@@ -23,8 +23,13 @@
                     method: 'GET',
                     success: function(response) {
                         console.log(response.status);
+                        // Determine the correct WebSocket protocol (ws or wss)
+                        const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+                        const host = '{{ $setting->host }}'; // Assuming $setting->host is passed to the view
+                        const port = '{{ $setting->port }}';
+                        const webSocketUrl = `${protocol}${host}:${port}`;
                         // Start the WebSocket connection
-                        const socket = new WebSocket('ws://192.168.1.104:4455');
+                        const socket = new WebSocket(webSocketUrl);
 
                         socket.onopen = function() {
                             console.log('WebSocket connection opened.');
