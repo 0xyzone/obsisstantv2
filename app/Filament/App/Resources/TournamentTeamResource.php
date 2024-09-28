@@ -56,11 +56,15 @@ class TournamentTeamResource extends Resource
                             ->tel()
                             ->unique(ignoreRecord: true),
                         Forms\Components\TextInput::make('alternative_contact_number')
+                        ->label('Alt. Number')
                             ->tel()
                             ->unique(ignoreRecord: true),
                     ]),
                 ])
-                    ->columnSpan(2)
+                    ->columnSpan([
+                        'default' => '3',
+                        'md' => '2'
+                    ])
                     ->heading('Contact Details'),
                 Section::make([
                     Forms\Components\FileUpload::make('logo')
@@ -72,15 +76,24 @@ class TournamentTeamResource extends Resource
                         ->imageEditorAspectRatios([
                             '1:1',
                         ])
+                        ->columnSpan([
+                            'default' => '3'
+                        ])
                         ->openable()
                         ->downloadable()
                         ->moveFiles()
                         ->directory('images/teams/logo'),
                 ])
-                    ->columnSpan(1),
+                    ->columnSpan([
+                        'default' => '3',
+                        'md' => '1'
+                    ]),
                 Repeater::make('players')
                     ->relationship()
-                    ->columnSpanFull()
+                    ->columnSpan([
+                        'default'=> '3',
+                        'md' => 'full'
+                    ])
                     ->columns(16)
                     ->schema([
                         Forms\Components\Hidden::make('tournament_id')

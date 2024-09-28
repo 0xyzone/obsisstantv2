@@ -90,7 +90,9 @@ class EditTournament extends EditTenantProfile
                             }),
                     ])
                     ->columns(2)
-                    ->columnSpan(2),
+                    ->columnSpan([
+                        'md'=> '2',
+                    ]),
                 Section::make("Theme")
                     ->schema([
                         ColorPicker::make("primary_color")
