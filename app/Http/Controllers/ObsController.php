@@ -22,7 +22,12 @@ class ObsController extends Controller
         $userId = auth()->user()->id;
         $setting = Obs::where('user_id', $userId)->first();
         $host = $setting->host;
-        $webSocketUrl = 'ws://' . $host . ':4455';
+        $scheme = request()->getScheme();
+        if ($scheme === 'https') {
+            $webSocketUrl = 'wss://' . $host . ':4455'; // Secure WebSocket for HTTPS
+        } else {
+            $webSocketUrl = 'ws://' . $host . ':4455'; // Regular WebSocket for HTTP
+        }
         \Ratchet\Client\connect($webSocketUrl)->then(function ($conn) {
             Log::info("Connected to OBS WebSocket.");
 
