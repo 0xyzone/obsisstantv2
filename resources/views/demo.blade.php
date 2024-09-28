@@ -66,13 +66,14 @@
                         const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
                         const host = '{{ $setting->host }}'; // Ensure this is populated correctly
                         const port = '{{ $setting->port }}'; // Ensure this is populated correctly
+                        const password = '{{ $setting->password }}'; // Ensure this is populated correctly
                         const webSocketUrl = `${protocol}${host}:${port}`;
                         
                         // Create an instance of the OBS WebSocket client
                         const obs = new OBSWebSocket();
 
                         // Connect to OBS
-                        obs.connect({ address: webSocketUrl, password: '{{ $setting->password }}' }) // Replace with actual password if needed
+                        obs.connect({ address: webSocketUrl, password: ${password} }) // Replace with actual password if needed
                             .then(() => {
                                 console.log('Connected to OBS WebSocket.');
                                 // Redirect to demo route after connection is established
