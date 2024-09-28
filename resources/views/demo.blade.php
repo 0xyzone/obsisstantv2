@@ -14,6 +14,7 @@
         <button type="submit">Run Command</button>
     </form> --}}
     <a href="#" id="connect-link">Connect</a>
+    <script src="https://cdn.jsdelivr.net/npm/obs-websocket-js"></script>
     <script>
         $(document).ready(function() {
             $('#connect-link').on('click', function(event) {
