@@ -30,8 +30,8 @@ class ObsController extends Controller
 
         $host = $setting->host;
         $password = Crypt::decryptString($setting->password);
-        $scheme = request()->getScheme();
-        if ($scheme === 'https') {
+        $scheme = Request::instance();
+        if ($scheme->isSecure()) {
             $webSocketUrl = 'wss://' . $host . ':4455'; // Secure WebSocket for HTTPS
         } else {
             $webSocketUrl = 'ws://' . $host . ':4455'; // Regular WebSocket for HTTP
