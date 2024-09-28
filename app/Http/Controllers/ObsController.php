@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ObsSetting as Obs;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Crypt;
 use Ratchet\Client\connect as connect;
 use Illuminate\Support\Facades\Session;
 use App\Filament\Dashboard\Pages\ObsSetting;
@@ -15,29 +16,36 @@ class ObsController extends Controller
     // protected $setting = Obs::where("user_id", $userId)->first();
     // protected $host = $setting->host;
     // protected $webSocketUrl = 'ws://' . $this->host . ':4455'; // WebSocket URL for OBS
-    protected $password = 'VLXfvGG8Nls1QPlX'; // OBS WebSocket password
+    // protected $password = 'VLXfvGG8Nls1QPlX'; // OBS WebSocket password
 
     public function connectToObs()
     {
         $userId = auth()->user()->id;
         $setting = Obs::where('user_id', $userId)->first();
+        // Check if the setting exists
+        if (!$setting) {
+            Log::error("OBS setting not found for user: {$userId}");
+            return response()->json(['error' => 'OBS settings not found'], 404);
+        }
+
         $host = $setting->host;
+        $password = Crypt::decryptString($setting->password);
         $scheme = request()->getScheme();
         if ($scheme === 'https') {
             $webSocketUrl = 'wss://' . $host . ':4455'; // Secure WebSocket for HTTPS
         } else {
             $webSocketUrl = 'ws://' . $host . ':4455'; // Regular WebSocket for HTTP
         }
-        \Ratchet\Client\connect($webSocketUrl)->then(function ($conn) {
+        \Ratchet\Client\connect($webSocketUrl)->then(function ($conn) use ($password) {
             Log::info("Connected to OBS WebSocket.");
 
-            $conn->on('message', function ($msg) use ($conn) {
+            $conn->on('message', function ($msg) use ($conn, $password) {
                 Log::info("Received: {$msg}");
                 $response = json_decode($msg, true);
 
                 // Check if the identification was successful
                 if (isset($response['op']) && $response['op'] === 0) { // Authentication challenge
-                    $this->handleAuthChallenge($response, $conn);
+                    $this->handleAuthChallenge($response, $conn, $password);
                 } elseif (isset($response['op']) && $response['op'] === 2) { // 3 indicates the identified state
                     Log::info("Successfully identified with OBS WebSocket.");
                     Session::put('obs_connected', true);
@@ -69,12 +77,12 @@ class ObsController extends Controller
         return response()->json(['status' => 'Still connecting to OBS...']);
     }
 
-    private function handleAuthChallenge($response, $conn)
+    private function handleAuthChallenge($response, $conn, $password)
     {
         $challenge = $response['d']['authentication']['challenge'];
         $salt = $response['d']['authentication']['salt'];
 
-        $authResponse = $this->generateAuthResponse($challenge, $salt);
+        $authResponse = $this->generateAuthResponse($challenge, $salt, $password);
         $identifyMessage = [
             'op' => 1, // Identify operation code
             'd' => [
@@ -89,14 +97,14 @@ class ObsController extends Controller
     }
 
     // Function to generate the authentication response
-    private function generateAuthResponse($challenge, $salt)
+    private function generateAuthResponse($challenge, $salt, $password)
     {
         // Decode the challenge
         $decodedChallenge = base64_decode($challenge);
         Log::info("Decoded Challenge: " . base64_encode($decodedChallenge));
 
         // Create a salted hash of the password
-        $passwordSaltedHash = hash('sha256', $this->password . $salt, true);
+        $passwordSaltedHash = hash('sha256', $password . $salt, true);
         Log::info("Password Salted Hash: " . base64_encode($passwordSaltedHash));
 
         // Create the final hash by combining the salted hash with the decoded challenge
