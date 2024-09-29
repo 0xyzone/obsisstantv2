@@ -1,12 +1,20 @@
 // obsWorker.js
+importScripts('https://cdn.jsdelivr.net/npm/obs-websocket-js');
+
 let obs = null;
 let isConnected = false;
-console.log('Worker Loaded');
-self.onmessage = function(e) {
-    const { command, host, port, password } = e.data;
+
+self.onmessage = function(event) {
+    const { command, host, port, password } = event.data;
     console.log('self on message executed');
+    
 
     if (command === 'connect') {
+        if (isConnected) {
+            postMessage({ status: 'already_connected' });
+            return;
+        }
+
         const protocol = self.location.protocol === 'https:' ? 'wss://' : 'ws://';
         const webSocketUrl = `${protocol}${host}:${port}`;
 
@@ -35,5 +43,11 @@ self.onmessage = function(e) {
             isConnected = false;
             postMessage({ status: 'disconnected' });
         });
+    }
+    if (command === 'disconnect') {
+        if (isConnected && obs) {
+            obs.disconnect();
+            postMessage({ status: 'disconnected' });
+        }
     }
 };

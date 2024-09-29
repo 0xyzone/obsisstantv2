@@ -1,8 +1,8 @@
+{{-- demo.blade.php --}}
 @php
-$userId = auth()->user()->id;
+$userId = auth()->user()->id ?? "";
 $setting = App\Models\ObsSetting::where('user_id', $userId)->first();
-// dd($setting);
-$password = Illuminate\Support\Facades\Crypt::decryptString($setting->password);
+$password = $setting ? Illuminate\Support\Facades\Crypt::decryptString($setting->password) : "";
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -20,18 +20,35 @@ $password = Illuminate\Support\Facades\Crypt::decryptString($setting->password);
         @csrf
         <button type="submit">Run Command</button>
     </form> --}}
+    @if ($setting)
     <a href="#" id="connect-link">Connect</a>
     <a href="#" id="disconnect-link">Disconnect</a>
     <script src="{{ asset('js/obsWorker.js') }}"></script>
     <script>
-        const worker = new Worker('obsWorker.js');
+        const worker = new Worker("{{ asset('js/obsWorker.js') }}");
         console.log('Worker initialized');
         // This is how you listen for messages from the worker
         worker.onmessage = function(event) {
-            const { status, msg} = event.data; // Get the data from the event
+            const {
+                status
+                , msg
+            } = event.data; // Get the data from the event
             if (status) {
                 console.log('WebSocket Status:', status);
-                alert(`WebSocket Status: ${status}`);
+                if (status === 'connected') {
+                    // Save connection details to sessionStorage
+                    sessionStorage.setItem('obsConnected', 'true');
+                    sessionStorage.setItem('host', '{{ $setting->host }}');
+                    sessionStorage.setItem('port', '{{ $setting->port }}');
+                    sessionStorage.setItem('password', '{{ $password }}');
+                }
+                if (status === 'disconnected') {
+                    // Remove connection details when disconnected
+                    sessionStorage.removeItem('obsConnected');
+                    sessionStorage.removeItem('host');
+                    sessionStorage.removeItem('port');
+                    sessionStorage.removeItem('password');
+                }
             }
             if (msg) {
                 console.log('Message from OBS:', msg);
@@ -39,6 +56,16 @@ $password = Illuminate\Support\Facades\Crypt::decryptString($setting->password);
         };
 
         $(document).ready(function() {
+            const obsConnected = sessionStorage.getItem('obsConnected');
+            if (obsConnected) {
+                console.log('Reconnecting to OBS WebSocket...');
+                worker.postMessage({
+                    command: 'connect'
+                    , host: sessionStorage.getItem('host')
+                    , port: sessionStorage.getItem('port')
+                    , password: sessionStorage.getItem('password')
+                });
+            }
             $('#connect-link').on('click', function(event) {
                 event.preventDefault();
                 console.log('Connect button clicked');
@@ -49,8 +76,23 @@ $password = Illuminate\Support\Facades\Crypt::decryptString($setting->password);
                     password: '{{ $password }}' // Pass the password
                 });
             });
+            $('#disconnect-link').on('click', function(event) {
+                event.preventDefault();
+                console.log('Disconnect button clicked');
+                worker.postMessage({
+                    command: 'disconnect'
+                });
+                // Clear the session storage
+                sessionStorage.removeItem('obsConnected');
+                sessionStorage.removeItem('host');
+                sessionStorage.removeItem('port');
+                sessionStorage.removeItem('password');
+            });
         });
 
     </script>
+    @else
+    Obs setting not set!
+    @endif
 </body>
 </html>

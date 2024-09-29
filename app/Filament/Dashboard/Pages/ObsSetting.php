@@ -38,9 +38,13 @@ class ObsSetting extends Page implements HasForms
         return $form
             ->schema([
                 TextInput::make('host')
+                    ->default('localhost')
+                    ->placeholder('localhost')
                     ->required(),
                 TextInput::make('port')
+                    ->placeholder('4455')
                     ->numeric()
+                    ->default(4455)
                     ->autocomplete(false)
                     ->required(),
                 TextInput::make('password')
