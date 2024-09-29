@@ -10,11 +10,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/connectOBS', [ObsController::class, 'connectToObs'])->name('connectOBS');
+// Route::get('/connectOBS', [ObsController::class, 'connectToObs'])->name('connectOBS');
+Route::get('/connectOBS', function () {
+    // Here you might validate user permissions or check settings
+    return response()->json(['status' => 'success']);
+})->name('connectOBS');
 
 Route::get('demo', function() {
-    $userId = auth()->user()->id;
-    $setting = ObsSetting::where('user_id', $userId)->first();
-    $password = Crypt::decryptString($setting->password);
-    return view('demo', compact('setting', 'password'));
+    return view('demo');
 })->name('demo');

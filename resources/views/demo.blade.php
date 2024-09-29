@@ -1,3 +1,9 @@
+@php
+$userId = auth()->user()->id;
+$setting = App\Models\ObsSetting::where('user_id', $userId)->first();
+// dd($setting);
+$password = Illuminate\Support\Facades\Crypt::decryptString($setting->password);
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/obs-websocket-js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
@@ -14,58 +21,32 @@
         <button type="submit">Run Command</button>
     </form> --}}
     <a href="#" id="connect-link">Connect</a>
-    <script src="https://cdn.jsdelivr.net/npm/obs-websocket-js"></script>
+    <a href="#" id="disconnect-link">Disconnect</a>
+    <script src="{{ asset('js/obsWorker.js') }}"></script>
     <script>
+        const worker = new Worker('obsWorker.js');
+        console.log('Worker initialized');
+        // This is how you listen for messages from the worker
+        worker.onmessage = function(event) {
+            const { status, msg} = event.data; // Get the data from the event
+            if (status) {
+                console.log('WebSocket Status:', status);
+                alert(`WebSocket Status: ${status}`);
+            }
+            if (msg) {
+                console.log('Message from OBS:', msg);
+            }
+        };
+
         $(document).ready(function() {
             $('#connect-link').on('click', function(event) {
-                event.preventDefault(); // Prevent default link behavior
-                $.ajax({
-                    url: '{{ route('connectOBS') }}', // Adjust this URL as necessary
-                    method: 'GET'
-                    , success: function(response) {
-                        console.log(response.status);
-                        // Determine the correct WebSocket protocol (ws or wss)
-                        const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
-                        const host = '192.168.1.104'; // Ensure this is populated correctly
-                        const port = '{{ $setting->port }}'; // Ensure this is populated correctly
-                        const password = '{{ $password }}'; // Ensure this is populated correctly
-                        const webSocketUrl = `${protocol}${host}:${port}`;
-                        console.log('WebSocket URL:', webSocketUrl);
-                        console.log('Protocol:', protocol);
-                        console.log('Host:', host);
-                        console.log('Port:', port);
-                        console.log('Password:', password);
-
-                        // Create an instance of the OBS WebSocket client
-                        const obs = new OBSWebSocket();
-
-                        // Connect to OBS
-                        obs.connect({
-                                address: webSocketUrl
-                                , password: password
-                            }) // Replace with actual password if needed
-                            .then(() => {
-                                console.log('Connected to OBS WebSocket.');
-                                // Redirect to demo route after connection is established
-                                window.location.href = "{{ route('demo') }}"; // Redirect to demo
-                            })
-                            .catch(err => {
-                                console.error('Failed to connect to OBS:', err);
-                            });
-
-                        // Event listener for messages
-                        obs.on('message', (msg) => {
-                            console.log('Message from OBS:', msg);
-                        });
-
-                        // Handle disconnect
-                        obs.on('Disconnect', () => {
-                            console.log('Disconnected from OBS WebSocket.');
-                        });
-                    }
-                    , error: function(xhr, status, error) {
-                        console.error('Error connecting to OBS:', error);
-                    }
+                event.preventDefault();
+                console.log('Connect button clicked');
+                worker.postMessage({
+                    command: 'connect',
+                    host: '{{ $setting->host }}', // Pass the host
+                    port: '{{ $setting->port }}', // Pass the port
+                    password: '{{ $password }}' // Pass the password
                 });
             });
         });
