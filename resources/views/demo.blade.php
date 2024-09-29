@@ -20,7 +20,7 @@
             $('#connect-link').on('click', function(event) {
                 event.preventDefault(); // Prevent default link behavior
                 $.ajax({
-                    url: '{{ route('connectOBS ') }}', // Adjust this URL as necessary
+                    url: '{{ route('connectOBS') }}', // Adjust this URL as necessary
                     method: 'GET'
                     , success: function(response) {
                         console.log(response.status);
