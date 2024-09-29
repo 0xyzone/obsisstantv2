@@ -20,9 +20,9 @@
             $('#connect-link').on('click', function(event) {
                 event.preventDefault(); // Prevent default link behavior
                 $.ajax({
-                    url: '{{ route('connectOBS') }}', // Adjust this URL as necessary
-                    method: 'GET',
-                    success: function(response) {
+                    url: '{{ route('connectOBS ') }}', // Adjust this URL as necessary
+                    method: 'GET'
+                    , success: function(response) {
                         console.log(response.status);
                         // Determine the correct WebSocket protocol (ws or wss)
                         const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
@@ -30,19 +30,20 @@
                         const port = '{{ $setting->port }}'; // Ensure this is populated correctly
                         const password = '{{ $password }}'; // Ensure this is populated correctly
                         const webSocketUrl = `${protocol}${host}:${port}`;
+                        console.log('WebSocket URL:', webSocketUrl);
                         console.log('Protocol:', protocol);
-                    console.log('Host:', host);
-                    console.log('Port:', port);
-                    console.log('Password:', password);
-                        
+                        console.log('Host:', host);
+                        console.log('Port:', port);
+                        console.log('Password:', password);
+
                         // Create an instance of the OBS WebSocket client
                         const obs = new OBSWebSocket();
 
                         // Connect to OBS
-                        obs.connect({ 
-                            address: webSocketUrl, 
-                            password: password
-                        }) // Replace with actual password if needed
+                        obs.connect({
+                                address: webSocketUrl
+                                , password: password
+                            }) // Replace with actual password if needed
                             .then(() => {
                                 console.log('Connected to OBS WebSocket.');
                                 // Redirect to demo route after connection is established
@@ -61,13 +62,14 @@
                         obs.on('Disconnect', () => {
                             console.log('Disconnected from OBS WebSocket.');
                         });
-                    },
-                    error: function(xhr, status, error) {
+                    }
+                    , error: function(xhr, status, error) {
                         console.error('Error connecting to OBS:', error);
                     }
                 });
             });
         });
+
     </script>
 </body>
 </html>
