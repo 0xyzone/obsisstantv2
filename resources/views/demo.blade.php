@@ -30,6 +30,10 @@
                         const port = '{{ $setting->port }}'; // Ensure this is populated correctly
                         const password = '{{ $password }}'; // Ensure this is populated correctly
                         const webSocketUrl = `${protocol}${host}:${port}`;
+                        console.log('Protocol:', protocol);
+                    console.log('Host:', host);
+                    console.log('Port:', port);
+                    console.log('Password:', password);
                         
                         // Create an instance of the OBS WebSocket client
                         const obs = new OBSWebSocket();
