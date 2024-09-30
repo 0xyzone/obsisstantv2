@@ -3,7 +3,7 @@
 let obs = null;
 let isConnected = false;
 if ("function" === typeof importScripts) {
-    importScripts('https://cdn.jsdelivr.net/npm/obs-websocket-js');
+    importScripts("https://cdn.jsdelivr.net/npm/obs-websocket-js");
     self.onmessage = function (event) {
         const { command, host, port, password } = event.data;
         console.log("self on message executed");
@@ -17,7 +17,7 @@ if ("function" === typeof importScripts) {
             const protocol =
                 self.location.protocol === "https:" ? "wss://" : "ws://";
             // const webSocketUrl = `${protocol}${host}:${port}`;
-            const webSocketUrl = 'wss://wss.suminshrestha.com.np';
+            const webSocketUrl = "wss://wss.suminshrestha.com.np";
 
             // Ensure the OBSWebSocket class is available in the worker scope
             if (!obs) {
@@ -48,7 +48,9 @@ if ("function" === typeof importScripts) {
         if (command === "disconnect") {
             if (isConnected && obs) {
                 obs.disconnect();
+                isConnected = false;
                 postMessage({ status: "disconnected" });
+                console.log("Disconnected!");
             }
         }
     };

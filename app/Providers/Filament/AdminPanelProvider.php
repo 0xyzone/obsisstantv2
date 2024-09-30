@@ -6,6 +6,7 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\Widgets;
 use Filament\PanelProvider;
+use Filament\Support\Assets\Js;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\MaxWidth;
 use Filament\Forms\Components\FileUpload;
@@ -63,6 +64,10 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+            ])
+            ->assets([
+                Js::make('obs-reconnect-script', asset('js/obsReconnect.js')),
+                Js::make('jquery', 'https://code.jquery.com/jquery-3.6.0.min.js'),
             ])
             ->plugins([
                 BreezyCore::make()

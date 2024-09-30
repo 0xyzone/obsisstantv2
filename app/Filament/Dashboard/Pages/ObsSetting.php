@@ -83,6 +83,10 @@ class ObsSetting extends Page implements HasForms
             Action::make('save')
                 ->label(__('filament-panels::resources/pages/edit-record.form.actions.save.label'))
                 ->submit('save'),
+            Action::make('Connect')
+            ->color('success'),
+            Action::make('Disconnect')
+            ->color('danger'),
         ];
     }
 }

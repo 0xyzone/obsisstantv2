@@ -8,6 +8,7 @@ use Filament\Widgets;
 use App\Models\Tournament;
 use Filament\PanelProvider;
 use Filament\Facades\Filament;
+use Filament\Support\Assets\Js;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\MaxWidth;
 use Illuminate\Support\Facades\Blade;
@@ -89,6 +90,10 @@ class AppPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+            ])
+            ->assets([
+                Js::make('obs-reconnect-script', asset('js/obsReconnect.js')),
+                Js::make('jquery', 'https://code.jquery.com/jquery-3.6.0.min.js'),
             ])
             ->plugins([
                 BreezyCore::make()

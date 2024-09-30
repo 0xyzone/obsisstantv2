@@ -6,6 +6,7 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\Widgets;
 use Filament\PanelProvider;
+use Filament\Support\Assets\Js;
 use Filament\Support\Colors\Color;
 use Filament\Forms\Components\FileUpload;
 use Illuminate\Validation\Rules\Password;
@@ -55,6 +56,10 @@ class DashboardPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 \App\Http\Middleware\RedirectToStudioLogin::class,
+            ])
+            ->assets([
+                Js::make('obs-reconnect-script', asset('js/obsReconnect.js')),
+                Js::make('jquery', 'https://code.jquery.com/jquery-3.6.0.min.js'),
             ])
             ->plugins([
                 BreezyCore::make()
