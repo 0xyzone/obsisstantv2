@@ -16,7 +16,8 @@ if ("function" === typeof importScripts) {
 
             const protocol =
                 self.location.protocol === "https:" ? "wss://" : "ws://";
-            const webSocketUrl = `${protocol}${host}:${port}`;
+            // const webSocketUrl = `${protocol}${host}:${port}`;
+            const webSocketUrl = 'wss://wss.suminshrestha.com.np';
 
             // Ensure the OBSWebSocket class is available in the worker scope
             if (!obs) {
