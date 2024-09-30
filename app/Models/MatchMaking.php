@@ -49,8 +49,18 @@ class MatchMaking extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function stats(): HasMany
+    public function statsForTeamA(): HasMany
     {
-        return $this->hasMany(MatchStat::class);
+        return $this->hasMany(MatchStat::class)->where('tournament_team_id', $this->teamA->id);
+    }
+
+    /**
+     * Get all of the stats for the MatchMaking
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function statsForTeamB(): HasMany
+    {
+        return $this->hasMany(MatchStat::class)->where('tournament_team_id', $this->teamB->id);
     }
 }

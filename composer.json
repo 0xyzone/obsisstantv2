@@ -12,6 +12,7 @@
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
         "ratchet/pawl": "^0.4.1",
+        "ryangjchandler/blade-tabler-icons": "^2.3",
         "symfony/polyfill-php72": "^1.31"
     },
     "require-dev": {

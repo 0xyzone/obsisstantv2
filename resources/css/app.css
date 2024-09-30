@@ -1,0 +1,6 @@
+.footer-item {
+    margin-top: auto; /* Pushes items to the bottom */
+    padding: 10px; /* Add padding for clickable area */
+    color: #6B7280; /* Change color as needed */
+    text-align: center; /* Center align text */
+}

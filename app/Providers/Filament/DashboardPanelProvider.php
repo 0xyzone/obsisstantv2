@@ -54,7 +54,7 @@ class DashboardPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->authMiddleware([
-                Authenticate::class,
+                \App\Http\Middleware\RedirectToStudioLogin::class,
             ])
             ->plugins([
                 BreezyCore::make()
