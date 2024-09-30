@@ -59,6 +59,7 @@
                     const response = e.data;
                     if (response.status === 'connected') {
                         console.log('Successfully connected to OBS.');
+                        window.location.reload();
                     } else if (response.status === 'disconnected') {
                         clearSessionStorage();
                     } else if (response.status === 'error') {
