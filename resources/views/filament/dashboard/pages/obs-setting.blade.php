@@ -64,6 +64,7 @@
                         clearSessionStorage();
                     } else if (response.status === 'error') {
                         alert('Error: ' + response.msg);
+                        console.log('Error: ' + response.msg);
                     }
                 };
             });
