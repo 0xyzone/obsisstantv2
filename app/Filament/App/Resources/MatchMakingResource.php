@@ -73,6 +73,7 @@ class MatchMakingResource extends Resource
                         ->numeric(),
                     Repeater::make('statsForTeamA')
                         ->relationship()
+                        ->hidden()
                         ->defaultItems(1)
                         ->schema([
                             Forms\Components\Hidden::make('game_hero_id')
@@ -152,6 +153,7 @@ class MatchMakingResource extends Resource
                         ->numeric(),
                     Repeater::make('statsForTeamB')
                         ->relationship()
+                        ->hidden()
                         ->defaultItems(1)
                         ->schema([
                             Forms\Components\Hidden::make('game_hero_id')
