@@ -4,13 +4,6 @@
         <x-filament-panels::form.actions :actions="$this->getFormActions()" />
     </x-filament-panels::form>
 
-    <!-- Connect to OBS button -->
-    <div class="mt-6">
-        <button id="connectBtn" class="filament-button filament-button-size-md">
-            Connect to OBS
-        </button>
-    </div>
-
     <!-- JavaScript for handling the connect button click -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -24,11 +17,11 @@
                 event.preventDefault();
                 console.log('Disconnect button clicked');
                 // Set the manual disconnect flag
-                setManualDisconnect(true);
-
+                
                 worker.postMessage({
                     command: 'disconnect'
                 });
+                setManualDisconnect(true);
             });
 
             // Add event listener for the connect button
