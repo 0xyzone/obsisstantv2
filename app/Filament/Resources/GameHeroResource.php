@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
-use App\Models\User;
+use App\Filament\Resources\GameHeroResource\Pages;
+use App\Filament\Resources\GameHeroResource\RelationManagers;
+use App\Models\GameHero;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,29 +13,28 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class UserResource extends Resource
+class GameHeroResource extends Resource
 {
-    protected static ?string $model = User::class;
+    protected static ?string $model = GameHero::class;
 
-    protected static ?string $navigationIcon = 'fas-users-rectangle';
-    protected static ?string $activeNavigationIcon = 'fas-users';
+    protected static ?string $navigationGroup = 'Resources';
+    protected static ?string $navigationIcon = 'far-chess-king';
+    protected static ?string $activeNavigationIcon = 'fas-chess-king';
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
+                Forms\Components\Select::make('game_id')
+                    ->relationship('game', 'name')
+                    ->required(),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('email')
-                    ->email()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\DateTimePicker::make('email_verified_at'),
-                Forms\Components\TextInput::make('password')
-                    ->password()
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\FileUpload::make('image')
+                    ->image()
+                    ->directory('images/heroImages'),
             ]);
     }
 
@@ -43,18 +42,12 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id'),
-                Tables\Columns\ImageColumn::make('avatar_url')
-                ->label('Avatar')
-                ->defaultImageUrl(fn ($record) => filament()->getUserAvatarUrl($record))
-                ->circular(),
+                Tables\Columns\TextColumn::make('game.name')
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('email')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('email_verified_at')
-                    ->dateTime()
-                    ->sortable(),
+                Tables\Columns\ImageColumn::make('image'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -68,7 +61,7 @@ class UserResource extends Resource
                 //
             ])
             ->actions([
-                // Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -87,9 +80,9 @@ class UserResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListUsers::route('/'),
-            // 'create' => Pages\CreateUser::route('/create'),
-            'edit' => Pages\EditUser::route('/{record}/edit'),
+            'index' => Pages\ListGameHeroes::route('/'),
+            'create' => Pages\CreateGameHero::route('/create'),
+            'edit' => Pages\EditGameHero::route('/{record}/edit'),
         ];
     }
 }

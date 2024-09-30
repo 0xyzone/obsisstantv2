@@ -32,7 +32,7 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->sidebarFullyCollapsibleOnDesktop()
             ->colors([
-                'primary' => Color::Emerald,
+                'primary' => Color::Lime,
             ])
             ->brandName('Obsisstant v2')
             ->brandLogo(asset('mainLogo.png'))

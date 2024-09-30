@@ -11,6 +11,7 @@
         "jeffgreco13/filament-breezy": "^2.4",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
+        "owenvoke/blade-fontawesome": "^2.6",
         "ratchet/pawl": "^0.4.1",
         "ryangjchandler/blade-tabler-icons": "^2.3",
         "symfony/polyfill-php72": "^1.31"

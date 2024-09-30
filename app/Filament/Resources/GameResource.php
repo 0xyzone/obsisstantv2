@@ -17,8 +17,9 @@ class GameResource extends Resource
 {
     protected static ?string $model = Game::class;
 
-    protected static ?string $navigationIcon = 'ionicon-game-controller-outline';
-    protected static ?string $activeNavigationIcon = 'ionicon-game-controller';
+    protected static ?string $navigationIcon = 'far-chess-knight';
+    protected static ?string $activeNavigationIcon = 'fas-chess-knight';
+    protected static ?string $navigationGroup = 'Resources';
 
     public static function form(Form $form): Form
     {
@@ -40,10 +41,12 @@ class GameResource extends Resource
     {
         return $table
             ->columns([
+                
+                Tables\Columns\TextColumn::make('id'),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('game_logo_path')
-                    ->searchable(),
+                Tables\Columns\ImageColumn::make('game_logo_path')
+                ->label('Logo'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
