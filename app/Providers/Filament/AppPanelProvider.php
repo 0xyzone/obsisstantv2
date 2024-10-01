@@ -42,7 +42,7 @@ class AppPanelProvider extends PanelProvider
             ->id('studio')
             ->default()
             ->login()
-            ->emailVerification()
+            ->emailVerification(EmailVerificationPrompt::class)
             ->passwordReset()
             ->registration()
             ->sidebarFullyCollapsibleOnDesktop()
