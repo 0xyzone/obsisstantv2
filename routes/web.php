@@ -25,3 +25,14 @@ Route::get('demo', function() {
     }
     return view('demo', compact('tenant'));
 })->name('demo');
+
+Route::get('send-test-email', function () {
+    $details = [
+        'subject' => 'Test Email',
+        'body' => 'This is a test email.'
+    ];
+
+    \Mail::to('sumnsth@gmail.com')->send(new \App\Mail\TestMail($details));
+
+    return 'Test email sent!';
+});
