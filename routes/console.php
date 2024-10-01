@@ -11,4 +11,4 @@ Artisan::command('inspire', function () {
 Schedule::call(function () {
     // Execute the custom queue worker command
     Artisan::call('queue:custom-worker');
-})->everyMinute();
+})->purpose('Listening to queue worker')->everyMinute();
