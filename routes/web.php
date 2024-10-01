@@ -39,7 +39,7 @@ Route::get('send-test-email', function () {
 
 Route::get('/test-mail', function () {
     Mail::raw('This is a test email', function ($message) {
-        $message->to('test@example.com')->subject('Test Email');
+        $message->to('sumnsth@gmail.com')->subject('Test Email');
     });
 
     return 'Email sent!';
