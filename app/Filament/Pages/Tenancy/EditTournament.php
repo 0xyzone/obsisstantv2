@@ -3,8 +3,10 @@
 namespace App\Filament\Pages\Tenancy;
 use Filament\Forms\Get;
 use Filament\Forms\Form;
+use Filament\Actions\Action;
 use App\Enums\TournamentType;
 use Filament\Facades\Filament;
+use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
@@ -123,5 +125,14 @@ class EditTournament extends EditTenantProfile
                     ->columnSpan(1)
             ])
             ->columns(4);
+    }
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            Action::make('Create New Tournament')
+            ->url(route('filament.studio.tenant.registration'))
+            ->label('Create New Tournament'),
+        ];
     }
 }

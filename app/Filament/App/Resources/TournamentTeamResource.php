@@ -53,12 +53,10 @@ class TournamentTeamResource extends Resource
                         ->maxLength(255),
                     Forms\Components\Split::make([
                         Forms\Components\TextInput::make('contact_number')
-                            ->tel()
-                            ->unique(ignoreRecord: true),
+                            ->tel(),
                         Forms\Components\TextInput::make('alternative_contact_number')
                         ->label('Alt. Number')
-                            ->tel()
-                            ->unique(ignoreRecord: true),
+                            ->tel(),
                     ]),
                 ])
                     ->columnSpan([

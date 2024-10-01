@@ -6,9 +6,12 @@ use Filament\Forms\Get;
 use Filament\Forms\Form;
 use App\Models\Tournament;
 use App\Enums\TournamentType;
+use Filament\Facades\Filament;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Actions;
 use Filament\Forms\Components\TextInput;
 use Filament\Pages\Tenancy\RegisterTenant;
+use Filament\Forms\Components\Actions\Action;
 
 class RegisterTournament extends RegisterTenant
 {
@@ -72,6 +75,18 @@ class RegisterTournament extends RegisterTenant
                             return false;
                         }
                     }),
+                Actions::make([
+                    Action::make('cancel')
+                        ->label('Cancel')
+                        ->color('danger') // Optional: set color
+                        ->action(function () {
+                                return redirect()->back();
+                        })
+                        ->extraAttributes([
+                            'class' => 'w-full',
+                        ]),
+                ])
+                    ->columnSpanFull(),
             ])
             ->columns(2);
     }
