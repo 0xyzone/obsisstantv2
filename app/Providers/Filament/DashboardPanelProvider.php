@@ -21,6 +21,7 @@ use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Filament\Pages\Auth\EmailVerification\EmailVerificationPrompt;
 
 class DashboardPanelProvider extends PanelProvider
 {
@@ -32,7 +33,7 @@ class DashboardPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Emerald,
             ])
-            ->emailVerification()
+            ->emailVerification(EmailVerificationPrompt::class)
             ->sidebarFullyCollapsibleOnDesktop()
             ->databaseNotifications()
             ->discoverResources(in: app_path('Filament/Dashboard/Resources'), for: 'App\\Filament\\Dashboard\\Resources')

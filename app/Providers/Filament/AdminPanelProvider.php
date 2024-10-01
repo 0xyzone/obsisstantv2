@@ -22,6 +22,7 @@ use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Filament\Pages\Auth\EmailVerification\EmailVerificationPrompt;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -31,7 +32,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->emailVerification()
+            ->emailVerification(EmailVerificationPrompt::class)
             ->sidebarFullyCollapsibleOnDesktop()
             ->databaseNotifications()
             ->colors([

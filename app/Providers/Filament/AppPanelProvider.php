@@ -32,6 +32,7 @@ use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Filament\Pages\Auth\EmailVerification\EmailVerificationPrompt;
 
 class AppPanelProvider extends PanelProvider
 {
@@ -41,7 +42,7 @@ class AppPanelProvider extends PanelProvider
             ->id('studio')
             ->default()
             ->login()
-            ->emailVerification()
+            ->emailVerification(EmailVerificationPrompt::class)
             ->registration()
             ->sidebarFullyCollapsibleOnDesktop()
             ->databaseNotifications()
