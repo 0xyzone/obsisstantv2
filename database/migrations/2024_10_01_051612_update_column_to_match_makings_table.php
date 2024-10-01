@@ -12,7 +12,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('match_makings', function (Blueprint $table) {
-            $table->dropColumn('match_winner');
             $table->foreignId('match_winner')
                 ->nullable() // Making the column nullable
                 ->constrained('tournament_teams')
