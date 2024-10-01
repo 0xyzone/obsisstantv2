@@ -33,7 +33,7 @@ class DashboardPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Emerald,
             ])
-            ->resetPassword()
+            ->passwordReset()
             ->emailVerification()
             ->sidebarFullyCollapsibleOnDesktop()
             ->databaseNotifications()

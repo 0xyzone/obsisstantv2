@@ -43,7 +43,7 @@ class AppPanelProvider extends PanelProvider
             ->default()
             ->login()
             ->emailVerification()
-            ->resetPassword()
+            ->passwordReset()
             ->registration()
             ->sidebarFullyCollapsibleOnDesktop()
             ->databaseNotifications()

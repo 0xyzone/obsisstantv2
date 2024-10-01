@@ -32,7 +32,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->resetPassword()
+            ->passwordReset()
             ->emailVerification()
             ->sidebarFullyCollapsibleOnDesktop()
             ->databaseNotifications()
