@@ -32,7 +32,8 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->emailVerification(EmailVerificationPrompt::class)
+            ->resetPassword()
+            ->emailVerification()
             ->sidebarFullyCollapsibleOnDesktop()
             ->databaseNotifications()
             ->colors([

@@ -33,7 +33,8 @@ class DashboardPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Emerald,
             ])
-            ->emailVerification(EmailVerificationPrompt::class)
+            ->resetPassword()
+            ->emailVerification()
             ->sidebarFullyCollapsibleOnDesktop()
             ->databaseNotifications()
             ->discoverResources(in: app_path('Filament/Dashboard/Resources'), for: 'App\\Filament\\Dashboard\\Resources')

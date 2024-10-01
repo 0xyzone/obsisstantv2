@@ -32,7 +32,7 @@ Route::get('send-test-email', function () {
         'body' => 'This is a test email.'
     ];
 
-    \Mail::to('sumnsth@gmail.com')->send(new \App\Mail\TestMail($details));
+    $mail = \Mail::to('sumnsth@gmail.com')->send(new \App\Mail\TestMail($details));
 
     return 'Test email sent!';
 });
