@@ -73,6 +73,7 @@ class MatchMakingResource extends Resource
                                 return TournamentTeam::where('id', $get('team_a'))->first()->name . '\'s Match Point';
                             }
                         })
+                        ->visibleOn('edit')
                         ->numeric(),
                     Repeater::make('statsForTeamA')
                         ->relationship(
@@ -157,6 +158,7 @@ class MatchMakingResource extends Resource
                                 return TournamentTeam::where('id', $get('team_b'))->first()->name . '\'s Match Point';
                             }
                         })
+                        ->visibleOn('edit')
                         ->numeric(),
                     Repeater::make('statsForTeamB')
                         ->relationship(
