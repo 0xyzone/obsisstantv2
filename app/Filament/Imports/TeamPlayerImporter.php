@@ -25,7 +25,7 @@ class TeamPlayerImporter extends Importer
     {
         return [
             ImportColumn::make('team')
-                ->relationship(resolveUsing: 'team'),
+                ->relationship(resolveUsing: 'name'),
             ImportColumn::make('name')
                 ->rules(['max:255']),
             ImportColumn::make('nickname')
@@ -56,5 +56,10 @@ class TeamPlayerImporter extends Importer
         }
 
         return $body;
+    }
+
+    public function getJobBatchName(): ?string
+    {
+        return 'players-import';
     }
 }

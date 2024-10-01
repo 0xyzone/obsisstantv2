@@ -36,12 +36,15 @@ class MatchMakingResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Hidden::make('user_id'),
+                Forms\Components\Hidden::make('user_id')
+                ->default(auth()->id()),
                 Section::make([
                     Forms\Components\TextInput::make('title')
                         ->placeholder('Eg. Match 1 Game 1')
-                        ->hint('ⓘ Insert Match Title'),
+                        ->hint('ⓘ Insert Match Title')
+                        ->required(),
                     Forms\Components\Select::make('match_winner')
+                        ->visibleOn('edit')
                         ->options(function (Get $get): array {
                             return TournamentTeam::where('id', $get('team_a'))->orWhere('id', $get('team_b'))->pluck('name', 'id')->toArray();
                         })
@@ -72,8 +75,12 @@ class MatchMakingResource extends Resource
                         })
                         ->numeric(),
                     Repeater::make('statsForTeamA')
-                        ->relationship()
-                        ->hidden()
+                        ->relationship(
+                            name: 'statsForTeamA',
+                            modifyQueryUsing:
+                            fn(Builder $query, Get $get) => $query->where('tournament_team_id', $get('team_a'))
+                        )
+                        ->visibleOn('edit')
                         ->defaultItems(1)
                         ->schema([
                             Forms\Components\Hidden::make('game_hero_id')
@@ -152,8 +159,12 @@ class MatchMakingResource extends Resource
                         })
                         ->numeric(),
                     Repeater::make('statsForTeamB')
-                        ->relationship()
-                        ->hidden()
+                        ->relationship(
+                            name: 'statsForTeamB',
+                            modifyQueryUsing:
+                            fn(Builder $query, Get $get) => $query->where('tournament_team_id', $get('team_b'))
+                        )
+                        ->visibleOn('edit')
                         ->defaultItems(1)
                         ->schema([
                             Forms\Components\Hidden::make('game_hero_id')

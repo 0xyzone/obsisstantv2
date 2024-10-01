@@ -19,10 +19,10 @@ class ListTournamentTeams extends ListRecords
             // \EightyNine\ExcelImport\ExcelImportAction::make()
             // ->slideOver()
             // ->color("primary"),
-            ImportAction::make()
+            ImportAction::make('teams')
                 ->label("Import Teams")
                 ->importer(TournamentTeamImporter::class),
-            ImportAction::make()
+            ImportAction::make('players')
                 ->label("Import Players")
                 ->importer(TeamPlayerImporter::class),
             Actions\CreateAction::make()
