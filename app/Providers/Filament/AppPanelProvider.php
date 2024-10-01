@@ -7,6 +7,7 @@ use Filament\Panel;
 use Filament\Widgets;
 use App\Models\Tournament;
 use Filament\PanelProvider;
+use Filament\Pages\Dashboard;
 use Filament\Facades\Filament;
 use Filament\Support\Assets\Js;
 use Filament\Support\Colors\Color;
@@ -72,6 +73,12 @@ class AppPanelProvider extends PanelProvider
                 Widgets\AccountWidget::class,
             ])
             ->navigationItems([
+                NavigationItem::make('Dashboard')
+                    ->url(fn(): string => route('filament.dashboard.pages.dashboard'))
+                    ->isActiveWhen(fn(): bool => request()->routeIs('filament.dashboard.pages.dashboard'))
+                    ->icon('heroicon-o-home')
+                    ->activeIcon('heroicon-s-trophy')
+                    ->sort(-3),
                 NavigationItem::make('Edit Tournament')
                     ->url(fn(): string => EditTournament::getUrl())
                     ->isActiveWhen(fn(): bool => request()->routeIs('filament.studio.tenant.profile'))

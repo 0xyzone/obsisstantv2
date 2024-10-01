@@ -33,7 +33,7 @@ class TournamentWidget extends BaseWidget
                 ImageColumn::make('logo')
                 ->url(fn($record) => route('filament.studio.tenant.profile', $record)),
                 TextColumn::make('name')
-                ->url(fn($record) => route('filament.studio.tenant.profile', $record))
+                ->url(fn($record) => route('filament.studio.tenant.profile', $record)),
             ])
             ->actions([
                 Tables\Actions\Action::make('Edit')

@@ -96,24 +96,14 @@ class MatchMakingResource extends Resource
                                         return TeamPlayer::where('tournament_team_id', $get('../../team_a'))->pluck('name', 'id')->toArray();
                                     })
                                     ->live()
+                                    ->preload()
                                     ->distinct()
+                                    ->searchable()
                                     ->columnSpan(7),
                                 Toggle::make('is_mvp')
                                     ->inline(false)
                                     ->live()
-                                    ->reactive()
-                                    ->afterStateUpdated(function (callable $set, $state, $get) {
-                                        // If this MVP is set to true, make all others false
-                                        if ($state) {
-                                            $items = $get('statsForTeamA') ?? [];
-                                            foreach ($items as $index => $item) {
-                                                // Check if this item is the current one and avoid setting it to false
-                                                if ($item['is_mvp'] && $item !== $get('.')) {
-                                                    $set("statsForTeamA.{$index}.is_mvp", false);
-                                                }
-                                            }
-                                        }
-                                    })->distinct(),
+                                    ->distinct(),
                             ])
                                 ->columns(8),
                             Group::make([
@@ -182,10 +172,13 @@ class MatchMakingResource extends Resource
                                     })
                                     ->live()
                                     ->distinct()
+                                    ->searchable()
+                                    ->preload()
                                     ->columnSpan(7),
                                 Toggle::make('is_mvp')
                                     ->inline(false)
-                                    ->live(),
+                                    ->live()
+                                    ->distinct(),
                             ])
                                 ->columns(8),
                             Group::make([

@@ -37,14 +37,16 @@ class TeamPlayerImporter extends Importer
 
     public function resolveRecord(): ?TeamPlayer
     {
-        // return TeamPlayer::firstOrNew([
-        //     // Update existing records, matching them by `$this->data['column_name']`
-        //     'email' => $this->data['email'],
-        // ]);
-
-        return new TeamPlayer([
-            'tournament_id' => $this->tenant->id,
+        return TeamPlayer::firstOrNew([
+            // Update existing records, matching them by `$this->data['column_name']`
+            'ingame_id' => $this->data['ingame_id'],
+        ],[
+            'tournament_id' => $this->tenant->id
         ]);
+
+        // return new TeamPlayer([
+        //     'tournament_id' => $this->tenant->id,
+        // ]);
     }
 
     public static function getCompletedNotificationBody(Import $import): string

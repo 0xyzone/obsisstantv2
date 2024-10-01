@@ -7,6 +7,7 @@ use Filament\Facades\Filament;
 use Filament\Actions\Imports\Importer;
 use Filament\Actions\Imports\ImportColumn;
 use Filament\Actions\Imports\Models\Import;
+use Exception;
 
 class TournamentTeamImporter extends Importer
 {
@@ -43,14 +44,19 @@ class TournamentTeamImporter extends Importer
 
     public function resolveRecord(): ?TournamentTeam
     {
-        // return TournamentTeam::firstOrNew([
-        //     // Update existing records, matching them by `$this->data['column_name']`
-        //     'email' => $this->data['email'],
-        // ]);
-
-        return new TournamentTeam([
-            'tournament_id' => $this->tenant->id,
+        return TournamentTeam::firstOrNew([
+            // Update existing records, matching them by `$this->data['column_name']`
+            'name' => $this->data['name'],
+            'short_name' => $this->data['short_name'],
+            'email' => $this->data['email'],
+            'tournament_id' => $this->tenant->id
+        ], [
+            'tournament_id' => $this->tenant->id
         ]);
+
+        // return new TournamentTeam([
+        //     'tournament_id' => $this->tenant->id,
+        // ]);
     }
 
     public static function getCompletedNotificationBody(Import $import): string
