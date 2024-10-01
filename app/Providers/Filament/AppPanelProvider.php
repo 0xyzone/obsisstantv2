@@ -41,6 +41,7 @@ class AppPanelProvider extends PanelProvider
             ->id('studio')
             ->default()
             ->login()
+            ->emailVerification()
             ->registration()
             ->sidebarFullyCollapsibleOnDesktop()
             ->databaseNotifications()
@@ -110,6 +111,11 @@ class AppPanelProvider extends PanelProvider
                         requiresCurrentPassword: true, // when false, the user can update their password without entering their current password. (default = true)
                     )
                     ->avatarUploadComponent(fn() => FileUpload::make('avatar_url')->directory('images/profile-photos'))
+                    ->enableTwoFactorAuthentication(
+                        force: false, // force the user to enable 2FA before they can use the application (default = false)
+                    )->enableSanctumTokens(
+                        permissions: ['view'] // optional, customize the permissions (default = ["create", "view", "update", "delete"])
+                    )
             ]);
     }
 }

@@ -18,6 +18,7 @@ class ObsSetting extends Page implements HasForms
 {
     use InteractsWithForms;
     public ?array $data = [];
+    protected static bool $shouldRegisterNavigation = false;
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
     protected static string $view = 'filament.dashboard.pages.obs-setting';

@@ -32,6 +32,7 @@ class DashboardPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Emerald,
             ])
+            ->emailVerification()
             ->sidebarFullyCollapsibleOnDesktop()
             ->databaseNotifications()
             ->discoverResources(in: app_path('Filament/Dashboard/Resources'), for: 'App\\Filament\\Dashboard\\Resources')
@@ -70,13 +71,18 @@ class DashboardPanelProvider extends PanelProvider
                         shouldRegisterNavigation: true, // Adds a main navigation item for the My Profile page (default = false)
                         navigationGroup: 'Settings', // Sets the navigation group for the My Profile page (default = null)
                         hasAvatars: true, // Enables the avatar upload form component (default = false)
-                        slug: 'my-profile' // Sets the slug for the profile page (default = 'my-profile')
+                        slug: 'my-profile', // Sets the slug for the profile page (default = 'my-profile')
                     )
                     ->passwordUpdateRules(
                         rules: [Password::default()->mixedCase()->uncompromised(3)], // you may pass an array of validation rules as well. (default = ['min:8'])
                         requiresCurrentPassword: true, // when false, the user can update their password without entering their current password. (default = true)
                     )
                     ->avatarUploadComponent(fn() => FileUpload::make('avatar_url')->directory('images/profile-photos'))
+                    ->enableTwoFactorAuthentication(
+                        force: false, // force the user to enable 2FA before they can use the application (default = false)
+                    )->enableSanctumTokens(
+                        permissions: ['view'] // optional, customize the permissions (default = ["create", "view", "update", "delete"])
+                    )
             ]);
     }
 }
