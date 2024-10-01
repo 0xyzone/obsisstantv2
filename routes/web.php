@@ -36,3 +36,11 @@ Route::get('send-test-email', function () {
 
     return 'Test email sent!';
 });
+
+Route::get('/test-mail', function () {
+    Mail::raw('This is a test email', function ($message) {
+        $message->to('test@example.com')->subject('Test Email');
+    });
+
+    return 'Email sent!';
+});
