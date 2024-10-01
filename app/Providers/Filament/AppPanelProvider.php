@@ -43,6 +43,7 @@ class AppPanelProvider extends PanelProvider
             ->login()
             ->registration()
             ->sidebarFullyCollapsibleOnDesktop()
+            ->databaseNotifications()
             ->tenant(Tournament::class, ownershipRelationship: 'tournament')
             ->tenantRoutePrefix('tournament')
             ->tenantRegistration(RegisterTournament::class)
@@ -95,6 +96,7 @@ class AppPanelProvider extends PanelProvider
                 Js::make('obs-reconnect-script', asset('js/obsReconnect.js')),
                 Js::make('jquery', 'https://code.jquery.com/jquery-3.6.0.min.js'),
             ])
+            ->viteTheme('resources/css/filament/studio/theme.css')
             ->plugins([
                 BreezyCore::make()
                     ->myProfile(

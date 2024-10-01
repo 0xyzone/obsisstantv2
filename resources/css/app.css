@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .footer-item {
     margin-top: auto; /* Pushes items to the bottom */
     padding: 10px; /* Add padding for clickable area */

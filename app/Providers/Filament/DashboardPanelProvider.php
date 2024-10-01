@@ -33,6 +33,7 @@ class DashboardPanelProvider extends PanelProvider
                 'primary' => Color::Emerald,
             ])
             ->sidebarFullyCollapsibleOnDesktop()
+            ->databaseNotifications()
             ->discoverResources(in: app_path('Filament/Dashboard/Resources'), for: 'App\\Filament\\Dashboard\\Resources')
             ->discoverPages(in: app_path('Filament/Dashboard/Pages'), for: 'App\\Filament\\Dashboard\\Pages')
             ->pages([
@@ -61,6 +62,7 @@ class DashboardPanelProvider extends PanelProvider
                 Js::make('obs-reconnect-script', asset('js/obsReconnect.js')),
                 Js::make('jquery', 'https://code.jquery.com/jquery-3.6.0.min.js'),
             ])
+            ->viteTheme('resources/css/filament/dashboard/theme.css')
             ->plugins([
                 BreezyCore::make()
                     ->myProfile(

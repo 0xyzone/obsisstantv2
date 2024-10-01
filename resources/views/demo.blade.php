@@ -20,6 +20,7 @@ $password = $setting ? Illuminate\Support\Facades\Crypt::decryptString($setting-
         @csrf
         <button type="submit">Run Command</button>
     </form> --}}
+    {{ $tenant }}
     @if ($setting)
     <a href="#" id="connect-link">Connect</a>
     <a href="#" id="disconnect-link">Disconnect</a>

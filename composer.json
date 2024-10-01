@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "eightynine/filament-excel-import": "^3.1",
         "faisal50x/blade-ionicons": "^1.0",
         "filament/filament": "^3.2",
         "jeffgreco13/filament-breezy": "^2.4",
