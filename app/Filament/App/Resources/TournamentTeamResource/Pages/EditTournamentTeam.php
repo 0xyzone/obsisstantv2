@@ -13,7 +13,12 @@ class EditTournamentTeam extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            Actions\DeleteAction::make(),Actions\Action::make('submit')
+            ->label('Save')
+            ->action('save')
+            ->color('primary')
+            ->requiresConfirmation() // Optional: Adds confirmation dialog
+            ->button(),
         ];
     }
 }

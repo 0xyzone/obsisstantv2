@@ -63,4 +63,14 @@ class MatchMaking extends Model
     {
         return $this->hasMany(MatchStat::class);
     }
+
+    /**
+     * Get the winner that owns the MatchMaking
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function winner(): BelongsTo
+    {
+        return $this->belongsTo(TournamentTeam::class, 'match_winner', 'id');
+    }
 }

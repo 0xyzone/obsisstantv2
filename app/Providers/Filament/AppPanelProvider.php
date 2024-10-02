@@ -60,7 +60,7 @@ class AppPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Emerald,
             ])
-            ->unsavedChangesAlerts()
+            // ->unsavedChangesAlerts()
             ->maxContentWidth(MaxWidth::Full)
             ->font('Poppins')
             ->discoverResources(in: app_path('Filament/App/Resources'), for: 'App\\Filament\\App\\Resources')

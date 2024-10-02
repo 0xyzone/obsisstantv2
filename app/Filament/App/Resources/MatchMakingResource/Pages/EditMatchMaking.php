@@ -14,6 +14,12 @@ class EditMatchMaking extends EditRecord
     {
         return [
             Actions\DeleteAction::make(),
+            Actions\Action::make('submit')
+                ->label('Save')
+                ->action('save')
+                ->color('primary')
+                ->requiresConfirmation() // Optional: Adds confirmation dialog
+                ->button(),
         ];
     }
 }

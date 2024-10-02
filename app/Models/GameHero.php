@@ -32,4 +32,14 @@ class GameHero extends Model
     {
         return $this->belongsTo(Game::class);
     }
+
+    /**
+     * Get the full URL for the hero image
+     *
+     * @return string
+     */
+    public function getImageUrlAttribute(): string
+    {
+        return asset('storage/' . $this->image); // Assuming $this->image contains the asset path
+    }
 }

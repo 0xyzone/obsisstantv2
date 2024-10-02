@@ -68,6 +68,7 @@ class RegisterTournament extends RegisterTenant
                     ->default(1)
                     ->numeric()
                     ->required()
+                    ->gte('min_player')
                     ->hidden(function (Get $get): bool {
                         if ($get('type') == null || $get('type') != 'team' && $get('type') != 'ffa') {
                             return true;

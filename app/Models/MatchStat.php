@@ -40,6 +40,6 @@ class MatchStat extends Model
      */
     public function hero(): BelongsTo
     {
-        return $this->belongsTo(GameHero::class);
+        return $this->belongsTo(GameHero::class, 'game_hero_id');
     }
 }

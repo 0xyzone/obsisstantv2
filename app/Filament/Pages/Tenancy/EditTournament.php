@@ -83,7 +83,7 @@ class EditTournament extends EditTenantProfile
                         TextInput::make('max_players')
                             ->numeric()
                             ->required()
-                            ->gt('min_players')
+                            ->gte('min_players')
                             ->hidden(function (Get $get): bool {
                                 if ($get('min_players') == null || $get('type') != 'team' && $get('type') != 'ffa') {
                                     return true;

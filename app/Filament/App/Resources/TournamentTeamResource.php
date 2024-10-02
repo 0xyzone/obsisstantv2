@@ -40,22 +40,20 @@ class TournamentTeamResource extends Resource
             ->schema([
                 Section::make([
                     Forms\Components\TextInput::make('name')
-                        ->required()
-                        ->maxLength(255),
-                    Forms\Components\TextInput::make('short_name')
-                        ->maxLength(255),
+                        ->required(),
+                    Forms\Components\TextInput::make('short_name'),
                 ])
                     ->columnSpan(3)
-                    ->heading('Basic Detaaails'),
+                    ->heading('Basic Details'),
                 Section::make([
                     Forms\Components\TextInput::make('email')
-                        ->email()
-                        ->maxLength(255),
+                        ->email(),
                     Forms\Components\Split::make([
                         Forms\Components\TextInput::make('contact_number')
                             ->tel(),
                         Forms\Components\TextInput::make('alternative_contact_number')
-                        ->label('Alt. Number')
+                            ->label('Alt. Number')
+                            ->different('contact_number')
                             ->tel(),
                     ]),
                 ])
@@ -89,7 +87,7 @@ class TournamentTeamResource extends Resource
                 Repeater::make('players')
                     ->relationship()
                     ->columnSpan([
-                        'default'=> '3',
+                        'default' => '3',
                         'md' => 'full'
                     ])
                     ->columns(16)
@@ -100,18 +98,13 @@ class TournamentTeamResource extends Resource
                             ->label('Playing')
                             ->inline(false)
                             ->grow(false)
-                            ->default(true)
                             ->columnSpan(1),
                         Forms\Components\TextInput::make('name')
                             ->required()
-                            ->maxLength(255)
                             ->columnSpan(3),
                         Forms\Components\TextInput::make('nickname')
-                            ->required()
-                            ->maxLength(255)
                             ->columnSpan(3),
                         Forms\Components\TextInput::make('ingame_id')
-                            ->maxLength(255)
                             ->columnSpan(3),
                         Forms\Components\Select::make('gender')
                             ->options([
@@ -138,7 +131,7 @@ class TournamentTeamResource extends Resource
                         $data['tournament_id'] = Filament::getTenant()->id;
                         return $data;
                     })
-                    ->maxItems(fn() => Filament::getTenant()->max_players ? Filament::getTenant()->max_players : null)
+                    ->maxItems(fn() => Filament::getTenant()->max_players ?? PHP_INT_MAX)
                     ->itemLabel(fn(array $state): ?string => $state['name'] ?? null)
             ])
             ->columns(6);
@@ -152,7 +145,10 @@ class TournamentTeamResource extends Resource
                     Split::make([
                         ImageColumn::make('logo')
                             ->grow(false)
-                            ->size(150),
+                            ->size(150)
+                            ->hidden(function ($state) {
+                                return $state ? false : true;
+                            }),
                         Stack::make([
                             Stack::make([
                                 TextColumn::make('name')
@@ -209,9 +205,9 @@ class TournamentTeamResource extends Resource
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                // Tables\Actions\BulkActionGroup::make([
-                //     Tables\Actions\DeleteBulkAction::make(),
-                // ]),
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
             ]);
     }
 
