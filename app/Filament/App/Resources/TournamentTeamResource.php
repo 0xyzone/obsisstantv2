@@ -145,7 +145,7 @@ class TournamentTeamResource extends Resource
                     Split::make([
                         ImageColumn::make('logo')
                             ->grow(false)
-                            ->size(150)
+                            ->size(100)
                             ->hidden(function ($state) {
                                 return $state ? false : true;
                             }),
