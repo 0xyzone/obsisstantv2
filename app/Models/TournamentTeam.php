@@ -41,4 +41,12 @@ class TournamentTeam extends Model
     {
         return $this->hasMany(TournamentMatch::class);
     }
+
+    public function getLogoUrlAttribute(): string
+    {
+        if($this->logo) {
+            return asset('storage/' . $this->logo); // Assuming $this->image contains the asset path
+        }
+        return null; // Assuming $this->image contains the asset path
+    }
 }

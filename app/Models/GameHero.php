@@ -40,6 +40,9 @@ class GameHero extends Model
      */
     public function getImageUrlAttribute(): string
     {
-        return asset('storage/' . $this->image); // Assuming $this->image contains the asset path
+        if ($this->image) {
+            return asset('storage/' . $this->image); // Assuming $this->image contains the asset path
+        }
+        return null;
     }
 }

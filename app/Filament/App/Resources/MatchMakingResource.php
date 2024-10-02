@@ -21,6 +21,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Repeater;
+use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
@@ -287,14 +288,25 @@ class MatchMakingResource extends Resource
                 Tables\Columns\TextColumn::make('id')
                     ->alignCenter(),
                 Tables\Columns\TextColumn::make('title')
-                    ->searchable(),
+                    ->searchable()
+                    ->limit(24)
+                    ->tooltip(function (TextColumn $column): ?string {
+                        $state = $column->getState();
+
+                        if (strlen($state) <= $column->getCharacterLimit()) {
+                            return null;
+                        }
+
+                        // Only render the tooltip if the column content exceeds the length limit.
+                        return $state;
+                    }),
                 Tables\Columns\TextColumn::make('teamA.name')
                     ->extraAttributes(function ($record) {
                         if ($record->match_winner != null) {
                             if ($record->match_winner == $record->team_a) {
-                                return ['class' => 'bg-lime-500 text-gray-800'];
+                                return ['class' => 'dark:bg-lime-700 bg-lime-300'];
                             } else {
-                                return ['class' => 'bg-red-500 text-gray-800'];
+                                return ['class' => 'dark:bg-red-700 bg-red-300'];
                             }
                         } else {
                             return [];
@@ -320,9 +332,9 @@ class MatchMakingResource extends Resource
                     ->extraAttributes(function ($record) {
                         if ($record->match_winner != null) {
                             if ($record->match_winner == $record->team_b) {
-                                return ['class' => 'bg-lime-500 text-gray-800'];
+                                return ['class' => 'dark:bg-lime-700 bg-lime-300'];
                             } else {
-                                return ['class' => 'bg-red-500 text-gray-800'];
+                                return ['class' => 'dark:bg-red-700 bg-red-300'];
                             }
                         } else {
                             return [];

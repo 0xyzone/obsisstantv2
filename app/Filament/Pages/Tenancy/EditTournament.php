@@ -15,12 +15,14 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Pages\Tenancy\EditTenantProfile;
+use Illuminate\Support\HtmlString;
 
 class EditTournament extends EditTenantProfile
 {
     public static function getLabel(): string
     {
-        return "Edit Tournament";
+        return "Tournament Id: " . Filament::getTenant()->id;
+        // return new HtmlString('<em>Test</em>');
     }
 
     public function form(Form $form): Form

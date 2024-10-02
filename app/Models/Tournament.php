@@ -59,4 +59,12 @@ class Tournament extends Model
     protected $casts = [
         "type"=> TournamentType::class,
     ];
+
+    public function getLogoUrlAttribute(): string
+    {
+        if($this->logo) {
+            return asset('storage/' . $this->logo); // Assuming $this->image contains the asset path
+        }
+        return null;
+    }
 }

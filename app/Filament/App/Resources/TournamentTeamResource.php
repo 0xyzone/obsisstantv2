@@ -163,8 +163,7 @@ class TournamentTeamResource extends Resource
                                     ->since()
                                     ->size(TextColumnSize::ExtraSmall)
                                     ->color('gray')
-                                    ->prefix('Created ')
-                                    ->toggleable(isToggledHiddenByDefault: true),
+                                    ->prefix('Created '),
                             ]),
                             Panel::make([
                                 Stack::make([

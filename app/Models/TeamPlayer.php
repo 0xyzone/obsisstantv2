@@ -43,4 +43,12 @@ class TeamPlayer extends Model
     {
         return $this->hasMany(MatchStat::class);
     }
+
+    public function getPhotoUrlAttribute(): string
+    {
+        if($this->photo) {
+            return asset('storage/' . $this->photo); // Assuming $this->image contains the asset path
+        }
+        return null;
+    }
 }

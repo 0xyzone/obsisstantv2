@@ -31,7 +31,18 @@ class TournamentWidget extends BaseWidget
                 ImageColumn::make('logo')
                 ->url(fn($record) => route('filament.studio.tenant.profile', $record)),
                 TextColumn::make('name')
-                ->url(fn($record) => route('filament.studio.tenant.profile', $record)),
+                ->url(fn($record) => route('filament.studio.tenant.profile', $record))
+                ->limit(50)
+                ->tooltip(function (TextColumn $column): ?string {
+                    $state = $column->getState();
+
+                    if (strlen($state) <= $column->getCharacterLimit()) {
+                        return null;
+                    }
+
+                    // Only render the tooltip if the column content exceeds the length limit.
+                    return $state;
+                }),
                 TextColumn::make('teams_count')->counts('teams')
                 ->label('Total Teams')
                 ->alignCenter()
