@@ -148,7 +148,8 @@ class TournamentTeamResource extends Resource
                             ->size(100)
                             ->hidden(function ($state) {
                                 return $state ? false : true;
-                            }),
+                            })
+                            ->visibleFrom('md'),
                         Stack::make([
                             Stack::make([
                                 TextColumn::make('name')
