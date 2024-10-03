@@ -42,6 +42,7 @@ class GameHeroResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('id'),
                 Tables\Columns\TextColumn::make('game.name')
                     ->numeric()
                     ->sortable(),
