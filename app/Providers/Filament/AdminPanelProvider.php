@@ -16,6 +16,7 @@ use Jeffgreco13\FilamentBreezy\BreezyCore;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Routing\Middleware\SubstituteBindings;
+use Rupadana\FilamentAnnounce\FilamentAnnouncePlugin;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -100,6 +101,8 @@ class AdminPanelProvider extends PanelProvider
                     ->setNavigationGroup('Settings')
                     ->setTitle('General Settings')
                     ->setNavigationLabel('General Settings'),
+                FilamentAnnouncePlugin::make()
+                    ->pollingInterval('30s')
             ]);
     }
 }

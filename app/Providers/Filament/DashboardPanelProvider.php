@@ -16,6 +16,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Guava\FilamentKnowledgeBase\KnowledgeBasePlugin;
 use Illuminate\Routing\Middleware\SubstituteBindings;
+use Rupadana\FilamentAnnounce\FilamentAnnouncePlugin;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -86,8 +87,10 @@ class DashboardPanelProvider extends PanelProvider
                         permissions: ['view'] // optional, customize the permissions (default = ["create", "view", "update", "delete"])
                     ),
                 KnowledgeBasePlugin::make()
-                ->modalPreviews()
-                ->slideOverPreviews(),
+                    ->modalPreviews()
+                    ->slideOverPreviews(),
+                FilamentAnnouncePlugin::make()
+                    ->pollingInterval('30s')
             ]);
     }
 }
