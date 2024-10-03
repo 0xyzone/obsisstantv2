@@ -23,6 +23,7 @@ use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Filament\Pages\Auth\EmailVerification\EmailVerificationPrompt;
+use Joaopaulolndev\FilamentGeneralSettings\FilamentGeneralSettingsPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -91,7 +92,14 @@ class AdminPanelProvider extends PanelProvider
                         force: false, // force the user to enable 2FA before they can use the application (default = false)
                     )->enableSanctumTokens(
                         permissions: ['view'] // optional, customize the permissions (default = ["create", "view", "update", "delete"])
-                    )
+                    ),
+                FilamentGeneralSettingsPlugin::make()
+                    ->canAccess(fn() => auth()->user()->id === 1)
+                    ->setSort(3)
+                    ->setIcon('heroicon-o-cog')
+                    ->setNavigationGroup('Settings')
+                    ->setTitle('General Settings')
+                    ->setNavigationLabel('General Settings'),
             ]);
     }
 }
