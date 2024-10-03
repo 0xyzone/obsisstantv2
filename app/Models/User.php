@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use BezhanSalleh\FilamentShield\Traits\HasPanelShield;
 use Filament\Panel;
 use App\Models\ObsSetting;
 use Laravel\Sanctum\HasApiTokens;
@@ -23,7 +24,7 @@ use Althinect\FilamentSpatieRolesPermissions\Concerns\HasSuperAdmin;
 
 class User extends Authenticatable implements HasTenants, FilamentUser, HasAvatar, MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, TwoFactorAuthenticatable, HasRoles, HasSuperAdmin;
+    use HasApiTokens, HasFactory, Notifiable, TwoFactorAuthenticatable, HasRoles, HasSuperAdmin, HasPanelShield;
 
     /**
      * The attributes that are mass assignable.
@@ -75,18 +76,22 @@ class User extends Authenticatable implements HasTenants, FilamentUser, HasAvata
         return $this->tournaments->contains($tenant);
     }
 
-    public function canAccessPanel(Panel $panel): bool
-    {
-        if ($panel->getId() === 'admin') {
-            return $this->name === "Super Admin";
-        }
+    // public function canAccessPanel(Panel $panel): bool
+    // {
+    //     if ($panel->getId() === 'admin') {
+    //         return $this->name === "Super Admin";
+    //     }
 
-        if ($panel->getId() === 'studio') {
-            return $this->name !== 'Super Admin';
-        }
+    //     if ($panel->getId() === 'studio') {
+    //         return $this->name !== 'Super Admin';
+    //     }
 
-        return true;
-    }
+    //     if ($panel->getId() === 'api') {
+    //         return true;
+    //     }
+
+    //     return true;
+    // }
 
     public function getFilamentAvatarUrl(): ?string
     {

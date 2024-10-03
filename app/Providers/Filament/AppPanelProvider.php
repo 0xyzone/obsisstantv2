@@ -131,7 +131,8 @@ class AppPanelProvider extends PanelProvider
                     ->modalPreviews()
                     ->slideOverPreviews(),
                 FilamentAnnouncePlugin::make()
-                    ->pollingInterval('30s')
+                    ->pollingInterval('30s'),
+                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make()
             ]);
     }
 }

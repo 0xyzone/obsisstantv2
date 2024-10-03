@@ -2,9 +2,10 @@
 
 namespace App\Filament\App\Resources\MatchMakingResource\Pages;
 
-use App\Filament\App\Resources\MatchMakingResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
+use TomatoPHP\FilamentApi\Traits\InteractWithAPI;
+use App\Filament\App\Resources\MatchMakingResource;
 
 class ListMatchMakings extends ListRecords
 {

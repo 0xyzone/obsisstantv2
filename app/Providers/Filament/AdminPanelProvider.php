@@ -96,7 +96,7 @@ class AdminPanelProvider extends PanelProvider
                         permissions: ['view'] // optional, customize the permissions (default = ["create", "view", "update", "delete"])
                     ),
                 FilamentGeneralSettingsPlugin::make()
-                    ->canAccess(fn() => auth()->user()->id === 1)
+                    ->canAccess(fn() => auth()->user()->hasRole('super_admin'))
                     ->setSort(3)
                     ->setIcon('heroicon-o-cog')
                     ->setNavigationGroup('Settings')
@@ -104,7 +104,7 @@ class AdminPanelProvider extends PanelProvider
                     ->setNavigationLabel('General Settings'),
                 FilamentAnnouncePlugin::make()
                     ->pollingInterval('30s'),
-                FilamentSpatieRolesPermissionsPlugin::make()
+                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
             ]);
     }
 }

@@ -42,9 +42,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Model::unguard();
-        Gate::before(function (User $user, string $ability) {
-            return $user->isSuperAdmin() ? true: null;
-        });
+        Gate::policy(\Spatie\Permission\Models\Role::class, \App\Policies\RolePolicy::class);
 
         PanelSwitch::configureUsing(function (PanelSwitch $panelSwitch) {
             $panelSwitch
