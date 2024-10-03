@@ -28,6 +28,7 @@ class TournamentTeamResource extends Resource
 {
     protected static ?string $model = TournamentTeam::class;
     protected static ?string $navigationLabel = 'Teams';
+    protected static ?int $navigationSort = 3;
     protected static ?string $navigationIcon = 'heroicon-o-users';
     protected static ?string $activeNavigationIcon = 'heroicon-m-users';
     protected static ?string $tenantOwnershipRelationshipName = null;

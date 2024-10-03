@@ -14,6 +14,7 @@ use Filament\Http\Middleware\Authenticate;
 use Jeffgreco13\FilamentBreezy\BreezyCore;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
+use Guava\FilamentKnowledgeBase\KnowledgeBasePlugin;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
@@ -83,7 +84,10 @@ class DashboardPanelProvider extends PanelProvider
                         force: false, // force the user to enable 2FA before they can use the application (default = false)
                     )->enableSanctumTokens(
                         permissions: ['view'] // optional, customize the permissions (default = ["create", "view", "update", "delete"])
-                    )
+                    ),
+                KnowledgeBasePlugin::make()
+                ->modalPreviews()
+                ->slideOverPreviews(),
             ]);
     }
 }

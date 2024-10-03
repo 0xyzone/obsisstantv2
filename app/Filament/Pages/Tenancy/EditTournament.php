@@ -21,7 +21,7 @@ class EditTournament extends EditTenantProfile
 {
     public static function getLabel(): string
     {
-        return "Tournament Id: " . Filament::getTenant()->id;
+        return "Edit Tournament";
         // return new HtmlString('<em>Test</em>');
     }
 

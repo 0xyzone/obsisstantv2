@@ -2,10 +2,13 @@
 
 namespace App\Providers;
 
+use Filament\Facades\Filament;
 use App\Http\Responses\LogoutResponse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
+use BezhanSalleh\PanelSwitch\PanelSwitch;
 use Filament\Http\Responses\Auth\Contracts\LoginResponse;
+use Guava\FilamentKnowledgeBase\Filament\Panels\KnowledgeBasePanel;
 use Filament\Http\Responses\Auth\Contracts\LogoutResponse as LogoutResponseContract;
 
 class AppServiceProvider extends ServiceProvider
@@ -20,6 +23,13 @@ class AppServiceProvider extends ServiceProvider
             LoginResponse::class,
             \App\Http\Responses\LoginResponse::class
         );
+        KnowledgeBasePanel::configureUsing(
+            fn(KnowledgeBasePanel $panel) => $panel
+                ->viteTheme('resources/css/filament/studio/theme.css') // your filament vite theme path here
+                ->brandName('Obsisstant Sahayatri')
+                ->disableBreadcrumbs()
+                ->guestAccess()
+        );
     }
 
     /**
@@ -28,5 +38,29 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Model::unguard();
+
+        PanelSwitch::configureUsing(function (PanelSwitch $panelSwitch) {
+            $panelSwitch
+                ->modalHeading('Available Panels')
+                ->simple()
+                ->visible(function () {
+                    $panelAdmin = Filament::getPanel('admin');
+                    $panelStudio = Filament::getPanel('studio');
+                    $panelDashboard = Filament::getPanel('dashboard');
+
+                    if (Filament::getCurrentPanel()->getId() === $panelAdmin->getId()) {
+                        return false;
+                    } elseif (Filament::getCurrentPanel()->getId() === $panelStudio->getId()) {
+                        return true;
+                    } elseif (Filament::getCurrentPanel()->getId() === $panelDashboard->getId()) {
+                        return false;  // Same for studio and dashboard
+                    }
+                })
+                ->excludes([
+                    'admin',
+                    'knowledge-base',
+                    'studio'
+                ]);
+        });
     }
 }

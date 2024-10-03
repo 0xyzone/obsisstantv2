@@ -33,7 +33,7 @@ use App\Filament\App\Resources\MatchMakingResource\RelationManagers;
 class MatchMakingResource extends Resource
 {
     protected static ?string $model = MatchMaking::class;
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 4;
     protected static ?string $navigationLabel = 'Manage Matches';
     protected static ?string $navigationIcon = 'tabler-tournament';
     protected static ?string $tenantOwnershipRelationshipName = 'tournament';

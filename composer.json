@@ -6,9 +6,11 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "bezhansalleh/filament-panel-switch": "^1.0",
         "eightynine/filament-excel-import": "^3.1",
         "faisal50x/blade-ionicons": "^1.0",
         "filament/filament": "^3.2",
+        "guava/filament-knowledge-base": "^1.10",
         "jeffgreco13/filament-breezy": "^2.4",
         "joaopaulolndev/filament-general-settings": "^1.0",
         "laravel/framework": "^11.9",
@@ -17,6 +19,7 @@
         "owenvoke/blade-fontawesome": "^2.6",
         "ratchet/pawl": "^0.4.1",
         "ryangjchandler/blade-tabler-icons": "^2.3",
+        "spatie/shiki-php": "2.0",
         "symfony/polyfill-php72": "^1.31"
     },
     "require-dev": {

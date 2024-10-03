@@ -76,18 +76,6 @@ class RegisterTournament extends RegisterTenant
                             return false;
                         }
                     }),
-                Actions::make([
-                    Action::make('cancel')
-                        ->label('Cancel')
-                        ->color('danger') // Optional: set color
-                        ->action(function () {
-                                return redirect()->back();
-                        })
-                        ->extraAttributes([
-                            'class' => 'w-full',
-                        ]),
-                ])
-                    ->columnSpanFull(),
             ])
             ->columns(2);
     }

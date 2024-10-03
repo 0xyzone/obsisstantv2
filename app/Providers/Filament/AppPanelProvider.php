@@ -26,6 +26,7 @@ use App\Filament\Pages\Tenancy\EditTournament;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use App\Filament\Pages\Tenancy\RegisterTournament;
+use Guava\FilamentKnowledgeBase\KnowledgeBasePlugin;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
@@ -78,13 +79,13 @@ class AppPanelProvider extends PanelProvider
                     ->isActiveWhen(fn(): bool => request()->routeIs('filament.dashboard.pages.dashboard'))
                     ->icon('heroicon-o-home')
                     ->activeIcon('heroicon-s-trophy')
-                    ->sort(-3),
+                    ->sort(1),
                 NavigationItem::make('Edit Tournament')
                     ->url(fn(): string => EditTournament::getUrl())
                     ->isActiveWhen(fn(): bool => request()->routeIs('filament.studio.tenant.profile'))
                     ->icon('heroicon-o-trophy')
                     ->activeIcon('heroicon-s-trophy')
-                    ->sort(-2),
+                    ->sort(2),
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -124,7 +125,10 @@ class AppPanelProvider extends PanelProvider
                         force: false, // force the user to enable 2FA before they can use the application (default = false)
                     )->enableSanctumTokens(
                         permissions: ['view'] // optional, customize the permissions (default = ["create", "view", "update", "delete"])
-                    )
+                    ),
+                KnowledgeBasePlugin::make()
+                ->modalPreviews()
+                ->slideOverPreviews(),
             ]);
     }
 }
