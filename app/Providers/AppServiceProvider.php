@@ -2,10 +2,14 @@
 
 namespace App\Providers;
 
+use App\Models\User;
 use Filament\Facades\Filament;
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Gate;
 use App\Http\Responses\LogoutResponse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
+use Spatie\Permission\Models\Permission;
 use BezhanSalleh\PanelSwitch\PanelSwitch;
 use Filament\Http\Responses\Auth\Contracts\LoginResponse;
 use Guava\FilamentKnowledgeBase\Filament\Panels\KnowledgeBasePanel;
@@ -38,6 +42,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Model::unguard();
+        Gate::before(function (User $user, string $ability) {
+            return $user->isSuperAdmin() ? true: null;
+        });
 
         PanelSwitch::configureUsing(function (PanelSwitch $panelSwitch) {
             $panelSwitch

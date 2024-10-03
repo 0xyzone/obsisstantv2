@@ -25,6 +25,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Filament\Pages\Auth\EmailVerification\EmailVerificationPrompt;
 use Joaopaulolndev\FilamentGeneralSettings\FilamentGeneralSettingsPlugin;
+use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -102,7 +103,8 @@ class AdminPanelProvider extends PanelProvider
                     ->setTitle('General Settings')
                     ->setNavigationLabel('General Settings'),
                 FilamentAnnouncePlugin::make()
-                    ->pollingInterval('30s')
+                    ->pollingInterval('30s'),
+                FilamentSpatieRolesPermissionsPlugin::make()
             ]);
     }
 }

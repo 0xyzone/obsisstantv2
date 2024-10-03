@@ -39,6 +39,9 @@ class DashboardPanelProvider extends PanelProvider
             ->emailVerification(EmailVerificationPrompt::class)
             ->sidebarFullyCollapsibleOnDesktop()
             ->databaseNotifications()
+            ->brandLogo(asset('mainLogo.png'))
+            ->favicon(asset('ObsistanT.png'))
+            ->brandLogoHeight('6rem')
             ->discoverResources(in: app_path('Filament/Dashboard/Resources'), for: 'App\\Filament\\Dashboard\\Resources')
             ->discoverPages(in: app_path('Filament/Dashboard/Pages'), for: 'App\\Filament\\Dashboard\\Pages')
             ->pages([

@@ -6,6 +6,6 @@ return [
         'sort' => 1,
     ],
     'can_access' => [
-        'name' => ['Super Admin'],
+        'role' => ['Super Admin'],
     ],
 ];
