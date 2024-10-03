@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\User;
 use Filament\Facades\Filament;
+use Filament\Support\Colors\Color;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Responses\LogoutResponse;
@@ -31,8 +32,14 @@ class AppServiceProvider extends ServiceProvider
             fn(KnowledgeBasePanel $panel) => $panel
                 ->viteTheme('resources/css/filament/studio/theme.css') // your filament vite theme path here
                 ->brandName('Obsisstant Sahayatri')
+                ->colors([
+                    'primary' => Color::Emerald,
+                ])
                 ->disableBreadcrumbs()
                 ->guestAccess()
+                ->middleware([
+                    \App\Http\Middleware\ReplaceMarkdownPlaceholders::class,
+                ])
         );
     }
 
