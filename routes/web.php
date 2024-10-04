@@ -11,6 +11,10 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+Route::get('phpinfo', function () {
+    return phpinfo();
+})->name('phpinfo');
+
 // Route::get('/connectOBS', [ObsController::class, 'connectToObs'])->name('connectOBS');
 Route::get('/connectOBS', function () {
     // Here you might validate user permissions or check settings
@@ -25,22 +29,3 @@ Route::get('demo', function() {
     }
     return view('demo', compact('tenant'));
 })->name('demo');
-
-Route::get('send-test-email', function () {
-    $details = [
-        'subject' => 'Test Email',
-        'body' => 'This is a test email.'
-    ];
-
-    $mail = \Mail::to('sumnsth@gmail.com')->send(new \App\Mail\TestMail($details));
-
-    return 'Test email sent!';
-});
-
-Route::get('/test-mail', function () {
-    Mail::raw('This is a test email', function ($message) {
-        $message->to('sumnsth@gmail.com')->subject('Test Email');
-    });
-
-    return 'Email sent!';
-});

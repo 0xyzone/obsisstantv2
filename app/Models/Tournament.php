@@ -6,13 +6,15 @@ use App\Models\Game;
 use App\Models\User;
 use App\Enums\TournamentType;
 use App\Models\TournamentTeam;
+use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Tournament extends Model
+class Tournament extends Model implements HasAvatar
 {
     use HasFactory;
     
@@ -66,5 +68,10 @@ class Tournament extends Model
             return asset('storage/' . $this->logo); // Assuming $this->image contains the asset path
         }
         return null;
+    }
+
+    public function getFilamentAvatarUrl(): ?string
+    {
+        return $this->logo ? Storage::url($this->logo) : null ;
     }
 }
