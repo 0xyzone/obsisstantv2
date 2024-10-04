@@ -5,6 +5,7 @@ namespace App\Providers\Filament;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\Widgets;
+use Filament\Forms\Form;
 use Filament\PanelProvider;
 use Filament\Support\Assets\Js;
 use Filament\Support\Colors\Color;
@@ -24,11 +25,19 @@ use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Filament\Pages\Auth\EmailVerification\EmailVerificationPrompt;
+use AbanoubNassem\FilamentGRecaptchaField\Forms\Components\GRecaptcha;
 use Joaopaulolndev\FilamentGeneralSettings\FilamentGeneralSettingsPlugin;
 use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
+    public static function form(Form $form): Form
+    {
+        return $form->schema([
+            // other fields like email, password
+            GRecaptcha::make('captcha'),
+        ]);
+    }
     public function panel(Panel $panel): Panel
     {
         return $panel
@@ -73,8 +82,8 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->assets([
-                Js::make('obs-reconnect-script', asset('js/obsReconnect.js')),
-                Js::make('jquery', 'https://code.jquery.com/jquery-3.6.0.min.js'),
+                // Js::make('obs-reconnect-script', asset('js/obsReconnect.js')),
+                // Js::make('jquery', 'https://code.jquery.com/jquery-3.6.0.min.js'),
             ])
             ->plugins([
                 BreezyCore::make()

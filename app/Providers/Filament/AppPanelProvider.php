@@ -12,6 +12,7 @@ use Filament\Facades\Filament;
 use Filament\Support\Assets\Js;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\MaxWidth;
+use App\Filament\Auth\CustomRegister;
 use Illuminate\Support\Facades\Blade;
 use App\Http\Middleware\AuthMiddleware;
 use Filament\Navigation\NavigationItem;
@@ -47,7 +48,7 @@ class AppPanelProvider extends PanelProvider
             ->login()
             ->emailVerification(EmailVerificationPrompt::class)
             ->passwordReset()
-            ->registration()
+            ->registration(CustomRegister::class)
             ->sidebarFullyCollapsibleOnDesktop()
             ->databaseNotifications()
             ->tenant(Tournament::class, ownershipRelationship: 'tournament')
@@ -105,8 +106,8 @@ class AppPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->assets([
-                Js::make('obs-reconnect-script', asset('js/obsReconnect.js')),
-                Js::make('jquery', 'https://code.jquery.com/jquery-3.6.0.min.js'),
+                // Js::make('obs-reconnect-script', asset('js/obsReconnect.js')),
+                // Js::make('jquery', 'https://code.jquery.com/jquery-3.6.0.min.js'),
             ])
             ->viteTheme('resources/css/filament/studio/theme.css')
             ->plugins([

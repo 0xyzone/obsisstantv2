@@ -66,8 +66,8 @@ class DashboardPanelProvider extends PanelProvider
                 \App\Http\Middleware\RedirectToStudioLogin::class,
             ])
             ->assets([
-                Js::make('obs-reconnect-script', asset('js/obsReconnect.js')),
-                Js::make('jquery', 'https://code.jquery.com/jquery-3.6.0.min.js'),
+                // Js::make('obs-reconnect-script', asset('js/obsReconnect.js')),
+                // Js::make('jquery', 'https://code.jquery.com/jquery-3.6.0.min.js'),
             ])
             ->viteTheme('resources/css/filament/dashboard/theme.css')
             ->plugins([
