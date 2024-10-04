@@ -22,7 +22,7 @@ icon: heroicon-s-user-plus
 
     > If you face any issue with the registration then feel free to email us at ===[support@suminshrestha.com.np][2]===
 
-5. After clicking on the ===Verify Email Address=== button you will be redirected to our dashboard page.\
+5. After clicking on the ===Verify Email Address=== button you will be redirected to our dashboard page.
 
 > And that is all! You have now officially registered for Obsisstant with a verified email. Enjoy the services.
 
