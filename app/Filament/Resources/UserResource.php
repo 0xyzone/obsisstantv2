@@ -9,14 +9,22 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Select;
+use Guava\FilamentKnowledgeBase\Contracts\HasKnowledgeBase;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\UserResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\UserResource\RelationManagers;
 
-class UserResource extends Resource
+class UserResource extends Resource implements HasKnowledgeBase
 {
     protected static ?string $model = User::class;
+
+    public static function getDocumentation(): array
+    {
+        return [
+            'users.registration',
+        ];
+    }
 
     protected static ?string $navigationIcon = 'fas-users-rectangle';
     protected static ?string $activeNavigationIcon = 'fas-users';
