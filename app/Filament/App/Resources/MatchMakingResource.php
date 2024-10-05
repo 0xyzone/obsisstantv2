@@ -52,6 +52,9 @@ class MatchMakingResource extends Resource
                         ->required(),
                     Forms\Components\Select::make('match_winner')
                         ->visibleOn('edit')
+                        ->disabled(function (Get $get) {
+                            return ($get('team_a_mp') == null || $get('team_b_mp') == null) ?? true;
+                        })
                         ->options(function (Get $get): array {
                             return TournamentTeam::where('id', $get('team_a'))->orWhere('id', $get('team_b'))->pluck('name', 'id')->toArray();
                         })
@@ -80,8 +83,8 @@ class MatchMakingResource extends Resource
                                 return TournamentTeam::where('id', $get('team_a'))->first()->name . '\'s Match Point';
                             }
                         })
-                        ->visibleOn('edit')
-                        ->numeric(),
+                        ->live()
+                        ->visibleOn('edit'),
                     Repeater::make('statsForTeamA')
                         ->label('Players')
                         ->relationship(
@@ -206,8 +209,8 @@ class MatchMakingResource extends Resource
                                 return TournamentTeam::where('id', $get('team_b'))->first()->name . '\'s Match Point';
                             }
                         })
-                        ->visibleOn('edit')
-                        ->numeric(),
+                        ->live()
+                        ->visibleOn('edit'),
                     Repeater::make('statsForTeamB')
                         ->label('Players')
                         ->relationship(

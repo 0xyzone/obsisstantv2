@@ -9,6 +9,7 @@ use App\Enums\TournamentType;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Actions;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Pages\Tenancy\RegisterTenant;
 use Filament\Forms\Components\Actions\Action;
@@ -39,46 +40,55 @@ class RegisterTournament extends RegisterTenant
                     ->default('team')
                     ->columnSpanFull()
                     ->required(),
-                TextInput::make('max_teams')
-                    ->numeric()
-                    ->required()
-                    ->default(1)
-                    ->hidden(function (Get $get): bool {
-                        if ($get('type') == null || $get('type') != 'team' && $get('type') != 'ffa') {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    })
-                    ->columnSpanFull(),
-                TextInput::make('min_players')
-                    ->label('Min. Player(s) Per Team')
-                    ->default(1)
-                    ->numeric()
-                    ->required()
-                    ->hidden(function (Get $get): bool {
-                        if ($get('type') == null || $get('type') != 'team' && $get('type') != 'ffa') {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    }),
-                TextInput::make('max_players')
-                    ->label('Max. Player(s) Per Team')
-                    ->default(1)
-                    ->numeric()
-                    ->required()
-                    ->gte('min_players')
-                    ->validationMessages([
-                        'gte' => 'The max player should be greater than or equal to min players.'
+                Section::make('Team')
+                    ->schema([
+                        TextInput::make('max_teams')
+                        ->label('Max teams')
+                        ->placeholder('Max teams')
+                            ->numeric()
+                            ->required()
+                            ->default(1)
+                            ->hidden(function (Get $get): bool {
+                                if ($get('type') == null || $get('type') != 'team' && $get('type') != 'ffa') {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            })
+                            ->columnSpanFull(),
+                    ]),
+                Section::make('Players')
+                    ->schema([
+                        TextInput::make('min_players')
+                            ->label('Min. Player(s) Per Team')
+                            ->default(1)
+                            ->numeric()
+                            ->required()
+                            ->hidden(function (Get $get): bool {
+                                if ($get('type') == null || $get('type') != 'team' && $get('type') != 'ffa') {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            }),
+                        TextInput::make('max_players')
+                            ->label('Max. Player(s) Per Team')
+                            ->placeholder('Max. Player(s) Per Team')
+                            ->default(1)
+                            ->numeric()
+                            ->required()
+                            ->gte('min_players')
+                            ->validationMessages([
+                                'gte' => 'The max player should be greater than or equal to min players.'
+                            ])
+                            ->hidden(function (Get $get): bool {
+                                if ($get('type') == null || $get('type') != 'team' && $get('type') != 'ffa') {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            }),
                     ])
-                    ->hidden(function (Get $get): bool {
-                        if ($get('type') == null || $get('type') != 'team' && $get('type') != 'ffa') {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    }),
             ])
             ->columns(2);
     }
