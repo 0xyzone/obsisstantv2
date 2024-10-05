@@ -49,4 +49,4 @@ That’s it! You’re now officially registered on Obsisstant with a verified em
 
 <!-- Links -->
 [1]: https://ov2.suminshrestha.com.np/studio/register  
-[2]: mail:support@suminshrestha.com.np
+[2]: mailto:support@suminshrestha.com.np
