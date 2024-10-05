@@ -55,7 +55,7 @@ class AnnouncementPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('{{ DeleteAny }}');
+        return $user->can('delete_any_announcement');
     }
 
     /**
@@ -63,7 +63,7 @@ class AnnouncementPolicy
      */
     public function forceDelete(User $user, Announcement $announcement): bool
     {
-        return $user->can('{{ ForceDelete }}');
+        return $user->can('force_delete_announcement');
     }
 
     /**
@@ -71,7 +71,7 @@ class AnnouncementPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('{{ ForceDeleteAny }}');
+        return $user->can('force_delete_any_announcement');
     }
 
     /**

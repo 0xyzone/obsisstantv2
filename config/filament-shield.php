@@ -40,9 +40,9 @@ return [
             // 'replicate',
             // 'reorder',
             'delete',
-            // 'delete_any',
-            // 'force_delete',
-            // 'force_delete_any',
+            'delete_any',
+            'force_delete',
+            'force_delete_any',
         ],
 
         'page' => 'page',

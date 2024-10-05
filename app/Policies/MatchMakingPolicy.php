@@ -55,7 +55,7 @@ class MatchMakingPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('{{ DeleteAny }}');
+        return $user->can('delete_any_match::making');
     }
 
     /**
@@ -63,7 +63,7 @@ class MatchMakingPolicy
      */
     public function forceDelete(User $user, MatchMaking $matchMaking): bool
     {
-        return $user->can('{{ ForceDelete }}');
+        return $user->can('force_delete_match::making');
     }
 
     /**
@@ -71,7 +71,7 @@ class MatchMakingPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('{{ ForceDeleteAny }}');
+        return $user->can('force_delete_any_match::making');
     }
 
     /**

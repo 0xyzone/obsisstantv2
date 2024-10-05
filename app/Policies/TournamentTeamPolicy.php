@@ -55,7 +55,7 @@ class TournamentTeamPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('{{ DeleteAny }}');
+        return $user->can('delete_any_tournament::team');
     }
 
     /**
@@ -63,7 +63,7 @@ class TournamentTeamPolicy
      */
     public function forceDelete(User $user, TournamentTeam $tournamentTeam): bool
     {
-        return $user->can('{{ ForceDelete }}');
+        return $user->can('force_delete_tournament::team');
     }
 
     /**
@@ -71,7 +71,7 @@ class TournamentTeamPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('{{ ForceDeleteAny }}');
+        return $user->can('force_delete_any_tournament::team');
     }
 
     /**

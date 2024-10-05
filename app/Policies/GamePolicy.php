@@ -55,7 +55,7 @@ class GamePolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('{{ DeleteAny }}');
+        return $user->can('delete_any_game');
     }
 
     /**
@@ -63,7 +63,7 @@ class GamePolicy
      */
     public function forceDelete(User $user, Game $game): bool
     {
-        return $user->can('{{ ForceDelete }}');
+        return $user->can('force_delete_game');
     }
 
     /**
@@ -71,7 +71,7 @@ class GamePolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('{{ ForceDeleteAny }}');
+        return $user->can('force_delete_any_game');
     }
 
     /**
