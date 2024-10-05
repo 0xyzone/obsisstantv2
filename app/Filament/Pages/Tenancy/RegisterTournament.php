@@ -68,7 +68,10 @@ class RegisterTournament extends RegisterTenant
                     ->default(1)
                     ->numeric()
                     ->required()
-                    ->gte('min_player')
+                    ->gte('min_players')
+                    ->validationMessages([
+                        'gte' => 'The max player should be greater than or equal to min players.'
+                    ])
                     ->hidden(function (Get $get): bool {
                         if ($get('type') == null || $get('type') != 'team' && $get('type') != 'ffa') {
                             return true;

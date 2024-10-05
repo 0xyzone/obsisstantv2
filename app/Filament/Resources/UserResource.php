@@ -40,8 +40,12 @@ class UserResource extends Resource implements HasKnowledgeBase
                     ->email()
                     ->required()
                     ->maxLength(255),
+                Forms\Components\TextInput::make('password')
+                    ->password()
+                    ->required()
+                    ->maxLength(255),
                 Select::make('roles')->multiple()->relationship('roles', 'name')
-                ->preload()
+                    ->preload()
             ]);
     }
 
@@ -59,7 +63,7 @@ class UserResource extends Resource implements HasKnowledgeBase
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('roles.name')
-                ->badge(),
+                    ->badge(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

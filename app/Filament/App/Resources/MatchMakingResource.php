@@ -143,14 +143,31 @@ class MatchMakingResource extends Resource
                             ])
                                 ->columns(8),
                             Group::make([
-                                TextInput::make('kills'),
-                                TextInput::make('deaths'),
-                                TextInput::make('assists'),
-                                TextInput::make('net_worth'),
-                                TextInput::make('hero_damage'),
-                                TextInput::make('turret_damage'),
-                                TextInput::make('damage_taken'),
-                                TextInput::make('fight_participation'),
+                                TextInput::make('kills')
+                                ->label('')
+                                ->prefixIcon('fas-k')
+                                ->placeholder('Kills'),
+                                TextInput::make('deaths')
+                                ->label('')
+                                ->prefixIcon('fas-d')
+                                ->placeholder('Deaths'),
+                                TextInput::make('assists')
+                                ->label('')
+                                ->prefixIcon('fas-a')
+                                ->placeholder('Assists'),
+                                TextInput::make('net_worth')
+                                ->label('')
+                                ->prefixIcon('fas-g')
+                                ->placeholder('Net worth'),
+                                TextInput::make('hero_damage')
+                                ->placeholder('Hero Damage'),
+                                TextInput::make('turret_damage')
+                                ->placeholder('Turret Damage'),
+                                TextInput::make('damage_taken')
+                                ->placeholder('Damage Taken'),
+                                TextInput::make('fight_participation')
+                                ->placeholder('Fight Participation')
+                                ->helperText('Type without %'),
                             ])->columns(4)
                         ])
                         ->columnSpanFull()
@@ -163,7 +180,7 @@ class MatchMakingResource extends Resource
                             $data['tournament_team_id'] = $get('team_a');
                             return $data;
                         })
-                        ->maxItems(fn() => Filament::getTenant()->max_players ?? PHP_INT_MAX)
+                        ->maxItems(5)
                 ])
                     ->columns(2)
                     ->columnSpan(1),
@@ -253,14 +270,31 @@ class MatchMakingResource extends Resource
                             ])
                                 ->columns(8),
                             Group::make([
-                                TextInput::make('kills'),
-                                TextInput::make('deaths'),
-                                TextInput::make('assists'),
-                                TextInput::make('net_worth'),
-                                TextInput::make('hero_damage'),
-                                TextInput::make('turret_damage'),
-                                TextInput::make('damage_taken'),
-                                TextInput::make('fight_participation'),
+                                TextInput::make('kills')
+                                ->label('')
+                                ->prefixIcon('fas-k')
+                                ->placeholder('Kills'),
+                                TextInput::make('deaths')
+                                ->label('')
+                                ->prefixIcon('fas-d')
+                                ->placeholder('Deaths'),
+                                TextInput::make('assists')
+                                ->label('')
+                                ->prefixIcon('fas-a')
+                                ->placeholder('Assists'),
+                                TextInput::make('net_worth')
+                                ->label('')
+                                ->prefixIcon('fas-g')
+                                ->placeholder('Net worth'),
+                                TextInput::make('hero_damage')
+                                ->placeholder('Hero Damage'),
+                                TextInput::make('turret_damage')
+                                ->placeholder('Turret Damage'),
+                                TextInput::make('damage_taken')
+                                ->placeholder('Damage Taken'),
+                                TextInput::make('fight_participation')
+                                ->placeholder('Fight Participation')
+                                ->helperText('Type without %'),
                             ])->columns(4)
                         ])
                         ->itemLabel(fn(array $state): ?string => $state['team_player_id'] ? TeamPlayer::where('id', $state['team_player_id'])->first()->name : null)
@@ -268,7 +302,7 @@ class MatchMakingResource extends Resource
                         ->collapseAllAction(
                             fn(Action $action) => $action->label('Collapse all'),
                         )
-                        ->maxItems(fn() => Filament::getTenant()->max_players ?? PHP_INT_MAX)
+                        ->maxItems(5)
                         ->columnSpanFull()
                         ->mutateRelationshipDataBeforeCreateUsing(function (array $data, Get $get): array {
                             $data['tournament_team_id'] = $get('team_b');

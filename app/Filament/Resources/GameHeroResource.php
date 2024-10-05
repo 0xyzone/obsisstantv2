@@ -82,8 +82,8 @@ class GameHeroResource extends Resource
     {
         return [
             'index' => Pages\ListGameHeroes::route('/'),
-            'create' => Pages\CreateGameHero::route('/create'),
-            'edit' => Pages\EditGameHero::route('/{record}/edit'),
+            // 'create' => Pages\CreateGameHero::route('/create'),
+            // 'edit' => Pages\EditGameHero::route('/{record}/edit'),
         ];
     }
 }

@@ -43,6 +43,6 @@ class GameHero extends Model
         if ($this->image) {
             return asset('storage/' . $this->image); // Assuming $this->image contains the asset path
         }
-        return null;
+        return '';
     }
 }
