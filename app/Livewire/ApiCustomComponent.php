@@ -13,7 +13,7 @@ use Jeffgreco13\FilamentBreezy\Livewire\MyProfileComponent;
 class ApiCustomComponent extends MyProfileComponent implements HasTable
 {
     use InteractsWithTable;
-    public static $sort = 4;
+    public static $sort = 20;
     protected string $view = "livewire.api-custom-component";
 
     public function mount()
@@ -28,14 +28,38 @@ class ApiCustomComponent extends MyProfileComponent implements HasTable
         return Table::make($this)
             ->query($this->getTableQuery())
             ->columns([
-                TextColumn::make('name')->label('Token Name')->sortable()->searchable(),
                 TextColumn::make('created_at')->label('Created At')->date()->sortable(),
-                TextColumn::make('token')->label('Token')->limit(50),
+                TextColumn::make('token')
+                    ->label('Token')
+                    ->formatStateUsing(fn($state) => $this->maskSensitiveData($state))
+                    ->copyable()->copyMessage('Token Copied!')->copyMessageDuration(3000)
+                    ->tooltip('Click to copy the token!'),
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([])
             ->headerActions([])
             ->actions([]); // No row actions as per your requirement
+    }
+
+    protected function maskSensitiveData(string $data, int $visibleLength = 4): string
+    {
+        $length = strlen($data);
+
+        // If the string is shorter than or equal to the visible length, return it as is.
+        if ($length <= $visibleLength) {
+            return $data;
+        }
+
+        // Maximum number of asterisks to show
+        $maxAsterisks = 5;
+
+        // Calculate how many asterisks to display
+        $maskedLength = min($length - $visibleLength, $maxAsterisks);
+
+        // Create the masked string with asterisks and the visible part
+        $maskedData = str_repeat('*', $maskedLength) . substr($data, -$visibleLength);
+
+        return $maskedData;
     }
 
     public function getTableQuery(): \Illuminate\Database\Eloquent\Builder

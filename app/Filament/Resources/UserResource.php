@@ -70,6 +70,10 @@ class UserResource extends Resource implements HasKnowledgeBase
                     ->searchable(),
                 Tables\Columns\TextColumn::make('roles.name')
                     ->badge(),
+                Tables\Columns\TextColumn::make('tokens_count')
+                    ->counts('tokens')
+                    ->alignCenter()
+                    ->badge(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -92,12 +96,14 @@ class UserResource extends Resource implements HasKnowledgeBase
                         $token = $record->createToken('API Token')->plainTextToken;
                         $recipient = auth()->user();
                         $userName = $record->name;
+
                         // Return token back to the user interface
                         Notification::make('api-generation')
                             ->success()
                             ->title('Token Generated')
                             ->body("Token: $token <br> For user: $userName")
-                            ->sendToDatabase($recipient);
+                            ->sendToDatabase($recipient)
+                            ->send();
 
                         return redirect()->back();
                     }),

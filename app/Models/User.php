@@ -109,8 +109,9 @@ class User extends Authenticatable implements HasTenants, FilamentUser, HasAvata
         return $this->hasOne(ObsSetting::class);
     }
 
-    public function tokens()
-{
-    return $this->hasMany(PersonalAccessToken::class, 'tokenable_id');
-}
+//     public function tokens()
+// {
+//     return $this->hasMany(PersonalAccessToken::class, 'tokenable_id')
+//     ->where('tokenable_type', self::class);
+// }
 }
