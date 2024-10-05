@@ -37,6 +37,7 @@ class AppServiceProvider extends ServiceProvider
                 ])
                 ->disableBreadcrumbs()
                 ->guestAccess()
+                ->favicon(asset('ObsistanT.png'))
                 ->middleware([
                     \App\Http\Middleware\ReplaceMarkdownPlaceholders::class,
                 ])
