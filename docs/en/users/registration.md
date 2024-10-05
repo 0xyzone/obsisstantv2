@@ -1,33 +1,52 @@
+
+# User Registration Guide
+
+## Welcome to Obsisstant!
+
+Follow these steps to easily register and start using Obsisstant:
+
 ---
-title: User Registration
-icon: heroicon-s-user-plus
+
+## Step 1: Register Your Account
+
+- To begin, visit our [registration page][1].
+  
+  ![Registration Form](https://ov2.suminshrestha.com.np/docs/users/registration_form.png)
+
+- Fill in all the required details and click **Sign Up**.
+
+  > **Important:** Ensure your email address is entered correctly. A verified email is crucial for accessing all features. Without verification, you won’t be able to fully enjoy the services.
+
 ---
 
-# Get Started
+## Step 2: Verify Your Email
 
-1. To register for an account at Obsisstant, please go through the [registration link][1]
-    ![registration form](https://ov2.suminshrestha.com.np/docs/users/registration_form.png)
+After signing up, you’ll be redirected to an **Email Verification** page. Here, you’ll see a prompt similar to the one below. If everything goes smoothly, you’ll receive an email with instructions to verify your email address.
 
-2. Fill all the necessary information and click on sign up.
-    > ℹ️ Note: Make sure you type in your ===email correctly===. As it is required for verification and if you fail to verify your email then you wont be able to get the full experience of your services.
+  ![Verification Page](https://ov2.suminshrestha.com.np/docs/users/verification_page.png)
 
-3. After signing up you will be redirected to a ===email verification page=== with a promt as shown on the image below. Once you are there then that means everything went well and you should be getting an email from us to verify your email address.
-`Note: If you didn't get any email from us, consider checking your spam folder as well and if you are unable to find it there as well then click on the ===Resend it.=== option as well.
-    ![verification page](https://ov2.suminshrestha.com.np/docs/users/verification_page.png)
+> **Tip:** If you don’t receive the email, check your spam/junk folder. If you still don’t find it, click **Resend** on the verification page.
 
-## Email Verification
-4. Open your email and click on the ===Verify Email Address=== button as shown in the image below. If the button doesn't work for you then you can click on the link below the button as well.
+---
 
-    ![email page](https://ov2.suminshrestha.com.np/docs/users/verificatioon_button.png)
+## Step 3: Complete Email Verification
 
-    > If you face any issue with the registration then feel free to email us at ===[support@suminshrestha.com.np][2]===
+1. Open the email you received from us and click the **Verify Email Address** button as shown below. If the button isn’t working, use the link provided below it.
 
-5. After clicking on the ===Verify Email Address=== button you will be redirected to our dashboard page.
+  ![Email Page](https://ov2.suminshrestha.com.np/docs/users/verificatioon_button.png)
 
-> And that is all! You have now officially registered for Obsisstant with a verified email. Enjoy the services.
+2. Once you click **Verify Email Address**, you’ll be redirected to your **Obsisstant Dashboard**.
 
+> If you encounter any issues during the process, don’t hesitate to contact us at [support@suminshrestha.com.np][2].
 
+---
+
+## Done!
+
+That’s it! You’re now officially registered on Obsisstant with a verified email. Enjoy exploring our features and services!
+
+---
 
 <!-- Links -->
-[1]: https://ov2.suminshrestha.com.np/studio/register
+[1]: https://ov2.suminshrestha.com.np/studio/register  
 [2]: mail:support@suminshrestha.com.np
