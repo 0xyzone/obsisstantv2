@@ -9,7 +9,7 @@ Follow these steps to easily register and start using Obsisstant:
 
 ## Step 1: Register Your Account
 
-- To begin, visit our [registration page][1].
+- To begin, visit our ===[registration page][1]===.
   
   ![Registration Form](https://ov2.suminshrestha.com.np/docs/users/registration_form.png)
 
