@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use Filament\Forms;
 use App\Models\User;
+use Filament\Notifications\Notification;
 use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
@@ -24,6 +25,11 @@ class UserResource extends Resource implements HasKnowledgeBase
         return [
             'users.registration',
         ];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
     }
 
     protected static ?string $navigationIcon = 'fas-users-rectangle';
@@ -78,6 +84,23 @@ class UserResource extends Resource implements HasKnowledgeBase
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('generateToken')
+                    ->label('Generate Token')
+                    ->icon('heroicon-o-key')
+                    ->action(function (User $record, array $data, $livewire) {
+                        // Generate token for the user
+                        $token = $record->createToken('API Token')->plainTextToken;
+                        $recipient = auth()->user();
+                        $userName = $record->name;
+                        // Return token back to the user interface
+                        Notification::make('api-generation')
+                            ->success()
+                            ->title('Token Generated')
+                            ->body("Token: $token <br> For user: $userName")
+                            ->sendToDatabase($recipient);
+
+                        return redirect()->back();
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

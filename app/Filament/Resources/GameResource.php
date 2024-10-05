@@ -21,6 +21,11 @@ class GameResource extends Resource
     protected static ?string $activeNavigationIcon = 'fas-chess-knight';
     protected static ?string $navigationGroup = 'Resources';
 
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -29,11 +34,11 @@ class GameResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\FileUpload::make('game_logo_path')
-                ->label('Game Logo')
-                ->required()
-                ->directory('images/game_logo')
-                ->image()
-                ->downloadable(true),
+                    ->label('Game Logo')
+                    ->required()
+                    ->directory('images/game_logo')
+                    ->image()
+                    ->downloadable(true),
             ]);
     }
 
@@ -41,12 +46,12 @@ class GameResource extends Resource
     {
         return $table
             ->columns([
-                
+
                 Tables\Columns\TextColumn::make('id'),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\ImageColumn::make('game_logo_path')
-                ->label('Logo'),
+                    ->label('Logo'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

@@ -11,6 +11,7 @@ use Filament\Pages\Dashboard;
 use Filament\Facades\Filament;
 use Filament\Support\Assets\Js;
 use Filament\Support\Colors\Color;
+use App\Livewire\ApiCustomComponent;
 use Filament\Support\Enums\MaxWidth;
 use App\Filament\Auth\CustomRegister;
 use Illuminate\Support\Facades\Blade;
@@ -127,7 +128,9 @@ class AppPanelProvider extends PanelProvider
                         force: false, // force the user to enable 2FA before they can use the application (default = false)
                     )->enableSanctumTokens(
                         permissions: ['view'] // optional, customize the permissions (default = ["create", "view", "update", "delete"])
-                    ),
+                    )->myProfileComponents([
+                        'sanctum_tokens' => ApiCustomComponent::class,
+                    ]),
                 KnowledgeBasePlugin::make()
                     ->modalPreviews()
                     ->slideOverPreviews(),

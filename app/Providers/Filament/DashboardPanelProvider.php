@@ -8,6 +8,7 @@ use Filament\Widgets;
 use Filament\PanelProvider;
 use Filament\Support\Assets\Js;
 use Filament\Support\Colors\Color;
+use App\Livewire\ApiCustomComponent;
 use Filament\Forms\Components\FileUpload;
 use Illuminate\Validation\Rules\Password;
 use Filament\Http\Middleware\Authenticate;
@@ -88,7 +89,9 @@ class DashboardPanelProvider extends PanelProvider
                         force: false, // force the user to enable 2FA before they can use the application (default = false)
                     )->enableSanctumTokens(
                         permissions: ['view'] // optional, customize the permissions (default = ["create", "view", "update", "delete"])
-                    ),
+                    )->myProfileComponents([
+                        'sanctum_tokens' => ApiCustomComponent::class,
+                    ]),
                 KnowledgeBasePlugin::make()
                     ->modalPreviews()
                     ->slideOverPreviews(),

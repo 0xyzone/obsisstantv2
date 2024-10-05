@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use BezhanSalleh\FilamentShield\Traits\HasPanelShield;
 use Filament\Panel;
 use App\Models\ObsSetting;
 use Laravel\Sanctum\HasApiTokens;
@@ -12,10 +11,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\PersonalAccessToken;
 use Filament\Models\Contracts\HasTenants;
 use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use BezhanSalleh\FilamentShield\Traits\HasPanelShield;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -107,4 +108,9 @@ class User extends Authenticatable implements HasTenants, FilamentUser, HasAvata
     {
         return $this->hasOne(ObsSetting::class);
     }
+
+    public function tokens()
+{
+    return $this->hasMany(PersonalAccessToken::class, 'tokenable_id');
+}
 }
