@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Enums\TournamentType;
 use App\Models\TournamentTeam;
 use App\Models\TournamentGroup;
+use App\Models\TournamentGroupTeam;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Filament\Models\Contracts\HasAvatar;
@@ -84,5 +85,15 @@ class Tournament extends Model implements HasAvatar
     public function getFilamentAvatarUrl(): ?string
     {
         return $this->logo ? Storage::url($this->logo) : null ;
+    }
+
+    /**
+     * Get all of the groupTeams for the Tournament
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function groupTeams(): HasMany
+    {
+        return $this->hasMany(TournamentGroupTeam::class);
     }
 }

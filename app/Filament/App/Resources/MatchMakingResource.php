@@ -34,7 +34,8 @@ class MatchMakingResource extends Resource
 {
     protected static ?string $model = MatchMaking::class;
     protected static ?int $navigationSort = 4;
-    protected static ?string $navigationLabel = 'Manage Matches';
+    protected static ?string $navigationGroup = 'Manage';
+    protected static ?string $navigationLabel = 'Matches';
     protected static ?string $navigationIcon = 'tabler-tournament';
     protected static ?string $tenantOwnershipRelationshipName = 'tournament';
     protected static ?string $tenantRelationshipName = 'matches';

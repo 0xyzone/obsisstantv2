@@ -3,24 +3,25 @@
 namespace App\Filament\App\Resources;
 
 use Filament\Forms;
-use Filament\Forms\Components\Section;
 use Filament\Tables;
 use Filament\Forms\Form;
-use Filament\Tables\Columns\Layout\Split;
-use Filament\Tables\Columns\Layout\Stack;
-use Filament\Tables\Columns\TextColumn\TextColumnSize;
 use Filament\Tables\Table;
 use App\Models\TournamentTeam;
 use Filament\Facades\Filament;
 use Filament\Resources\Resource;
+use Filament\Support\Enums\Alignment;
+use Filament\Forms\Components\Section;
 use Filament\Support\Enums\FontWeight;
 use Filament\Forms\Components\Repeater;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\Layout\Panel;
+use Filament\Tables\Columns\Layout\Split;
+use Filament\Tables\Columns\Layout\Stack;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Columns\TextColumn\TextColumnSize;
 use App\Filament\App\Resources\TournamentTeamResource\Pages;
 use App\Filament\App\Resources\TournamentTeamResource\RelationManagers;
 
@@ -28,6 +29,7 @@ class TournamentTeamResource extends Resource
 {
     protected static ?string $model = TournamentTeam::class;
     protected static ?string $navigationLabel = 'Teams';
+    protected static ?string $navigationGroup = 'Manage';
     protected static ?int $navigationSort = 3;
     protected static ?string $navigationIcon = 'heroicon-o-users';
     protected static ?string $activeNavigationIcon = 'heroicon-m-users';
@@ -153,13 +155,19 @@ class TournamentTeamResource extends Resource
                             ->visibleFrom('md'),
                         Stack::make([
                             Stack::make([
-                                TextColumn::make('name')
-                                    ->size(TextColumnSize::Large)
-                                    ->weight(FontWeight::Bold)
-                                    ->icon('heroicon-o-users')
-                                    ->iconColor('primary')
-                                    ->searchable(isIndividual: true)
-                                    ->suffix(fn($record) => " (" . $record->short_name . ")"),
+                                Split::make([
+                                    TextColumn::make('name')
+                                        ->size(TextColumnSize::Large)
+                                        ->weight(FontWeight::Bold)
+                                        ->icon('heroicon-o-users')
+                                        ->iconColor('primary')
+                                        ->searchable(isIndividual: true)
+                                        ->suffix(fn($record) => " (" . $record->short_name . ")"),
+                                    TextColumn::make("groupTeams.group.name")
+                                        ->icon('fluentui-people-team-24')
+                                        ->iconColor('primary')
+                                        ->alignment(Alignment::End)
+                                ]),
                                 TextColumn::make('created_at')
                                     ->since()
                                     ->size(TextColumnSize::ExtraSmall)

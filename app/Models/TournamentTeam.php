@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\TeamPlayer;
+use App\Models\TournamentGroupTeam;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -48,5 +49,15 @@ class TournamentTeam extends Model
             return asset('storage/' . $this->logo); // Assuming $this->image contains the asset path
         }
         return null; // Assuming $this->image contains the asset path
+    }
+
+    /**
+     * Get all of the groupteams for the TournamentTeam
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function groupTeams(): HasMany
+    {
+        return $this->hasMany(TournamentGroupTeam::class);
     }
 }

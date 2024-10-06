@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Blade;
 use App\Http\Middleware\AuthMiddleware;
 use Filament\Navigation\NavigationItem;
 use App\Http\Middleware\CheckUserTenant;
+use Filament\Navigation\NavigationGroup;
 use Filament\Forms\Components\FileUpload;
 use Illuminate\Validation\Rules\Password;
 use App\Http\Middleware\ApplyTenantScopes;
@@ -76,19 +77,14 @@ class AppPanelProvider extends PanelProvider
             ->widgets([
                 Widgets\AccountWidget::class,
             ])
+            ->navigationGroups([
+            ])
             ->navigationItems([
-                NavigationItem::make('Dashboard')
-                    ->url(fn(): string => route('filament.dashboard.pages.dashboard'))
-                    ->isActiveWhen(fn(): bool => request()->routeIs('filament.dashboard.pages.dashboard'))
-                    ->icon('heroicon-o-home')
-                    ->activeIcon('heroicon-s-trophy')
-                    ->sort(1),
                 NavigationItem::make('Edit Tournament')
                     ->url(fn(): string => EditTournament::getUrl())
                     ->isActiveWhen(fn(): bool => request()->routeIs('filament.studio.tenant.profile'))
                     ->icon('heroicon-o-trophy')
-                    ->activeIcon('heroicon-s-trophy')
-                    ->sort(2),
+                    ->activeIcon('heroicon-s-trophy'),
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -129,8 +125,8 @@ class AppPanelProvider extends PanelProvider
                     )->enableSanctumTokens(
                         permissions: ['view'] // optional, customize the permissions (default = ["create", "view", "update", "delete"])
                     )->myProfileComponents([
-                        'sanctum_tokens' => ApiCustomComponent::class,
-                    ]),
+                            'sanctum_tokens' => ApiCustomComponent::class,
+                        ]),
                 KnowledgeBasePlugin::make()
                     ->modalPreviews()
                     ->slideOverPreviews(),

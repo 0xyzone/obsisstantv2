@@ -3,12 +3,14 @@
 namespace App\Filament\App\Resources;
 
 use Filament\Forms;
+use Filament\Forms\Components\Hidden;
 use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Facades\Filament;
 use App\Models\TournamentGroup;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\Repeater;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\App\Resources\TournamentGroupResource\Pages;
@@ -18,8 +20,9 @@ class TournamentGroupResource extends Resource
 {
     protected static ?string $model = TournamentGroup::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-trophy';
-    protected static ?string $activeNavigationIcon = 'heroicon-m-trophy';
+    protected static ?string $navigationGroup = 'Manage';
+    protected static ?string $navigationIcon = 'fluentui-people-team-24';
+    protected static ?string $activeNavigationIcon = 'fluentui-people-team-24-o';
     protected static ?string $tenantOwnershipRelationshipName = 'tournament';
     protected static ?string $tenantRelationshipName = 'groups';
     protected static ?int $navigationSort = 5;
@@ -35,6 +38,23 @@ class TournamentGroupResource extends Resource
                 Forms\Components\Toggle::make('is_active')
                     ->required()
                     ->inline(false),
+                Repeater::make('groupTeams')
+                ->relationship('groupTeams')
+                    ->schema([
+                        Hidden::make('tournament_id')
+                        ->default(fn () => Filament::getTenant()->id),
+                        Forms\Components\Select::make('tournament_team_id')
+                        ->relationship(
+                            name: 'team',
+                            titleAttribute: 'name',
+                            modifyQueryUsing:
+                                fn(Builder $query) => $query->whereBelongsTo(Filament::getTenant())
+                        ),
+                        Forms\Components\TextInput::make('w'),
+                        Forms\Components\TextInput::make('d'),
+                        Forms\Components\TextInput::make('l'),
+                        Forms\Components\TextInput::make('f'),
+                    ])
             ]);
     }
 
