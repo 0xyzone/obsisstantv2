@@ -6,9 +6,10 @@ use App\Models\Game;
 use App\Models\User;
 use App\Enums\TournamentType;
 use App\Models\TournamentTeam;
-use Filament\Models\Contracts\HasAvatar;
+use App\Models\TournamentGroup;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -41,6 +42,16 @@ class Tournament extends Model implements HasAvatar
     public function teams(): HasMany
     {
         return $this->hasMany(TournamentTeam::class);
+    }
+
+    /**
+     * Get all of the groups for the Tournament
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function groups(): HasMany
+    {
+        return $this->hasMany(TournamentGroup::class);
     }
 
     /**
