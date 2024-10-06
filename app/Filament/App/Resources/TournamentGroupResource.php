@@ -44,6 +44,7 @@ class TournamentGroupResource extends Resource
                         Hidden::make('tournament_id')
                         ->default(fn () => Filament::getTenant()->id),
                         Forms\Components\Select::make('tournament_team_id')
+                        ->required()
                         ->relationship(
                             name: 'team',
                             titleAttribute: 'name',
@@ -67,8 +68,10 @@ class TournamentGroupResource extends Resource
                     ->searchable(),
                 Tables\Columns\ImageColumn::make('tournament.logo')
                     ->alignCenter(),
-                Tables\Columns\IconColumn::make('is_active')
-                    ->boolean(),
+                Tables\Columns\ToggleColumn::make('is_active')
+                ->beforeStateUpdated(function(TournamentGroup $record) {
+                    TournamentGroup::where('id', '!=', $record->id)->where('tournament_id', Filament::getTenant()->id)->update(['is_active' => false]);
+                }),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
