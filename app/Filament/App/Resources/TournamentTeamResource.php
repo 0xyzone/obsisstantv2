@@ -155,19 +155,13 @@ class TournamentTeamResource extends Resource
                             ->visibleFrom('md'),
                         Stack::make([
                             Stack::make([
-                                Split::make([
-                                    TextColumn::make('name')
-                                        ->size(TextColumnSize::Large)
-                                        ->weight(FontWeight::Bold)
-                                        ->icon('heroicon-o-users')
-                                        ->iconColor('primary')
-                                        ->searchable(isIndividual: true)
-                                        ->suffix(fn($record) => " (" . $record->short_name . ")"),
-                                    TextColumn::make("groupTeams.group.name")
-                                        ->icon('fluentui-people-team-24')
-                                        ->iconColor('primary')
-                                        ->alignment(Alignment::End)
-                                ]),
+                                TextColumn::make('name')
+                                    ->size(TextColumnSize::Large)
+                                    ->weight(FontWeight::Bold)
+                                    ->icon('heroicon-o-users')
+                                    ->iconColor('primary')
+                                    ->searchable(isIndividual: true)
+                                    ->suffix(fn($record) => " (" . $record->short_name . ")"),
                                 TextColumn::make('created_at')
                                     ->since()
                                     ->size(TextColumnSize::ExtraSmall)
@@ -189,7 +183,10 @@ class TournamentTeamResource extends Resource
                                             ->searchable(isIndividual: true)
                                             ->iconColor('primary')
                                             ->icon('heroicon-s-device-phone-mobile'),
-                                    ])
+                                    ]),
+                                    TextColumn::make("groupTeams.group.name")
+                                        ->icon('fluentui-people-team-24')
+                                        ->iconColor('primary')
                                 ])->space(2)
                             ])
                         ])
