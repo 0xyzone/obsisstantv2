@@ -114,6 +114,8 @@ class MatchMakingResource extends Resource
                                     ->options(function (Get $get): array {
                                         return TeamPlayer::where('tournament_team_id', $get('../../team_a'))->pluck('name', 'id')->toArray();
                                     })
+                                    ->required()
+                                    ->label('Player')
                                     ->disableOptionsWhenSelectedInSiblingRepeaterItems()
                                     ->live()
                                     ->preload()
@@ -242,6 +244,8 @@ class MatchMakingResource extends Resource
                                         return TeamPlayer::where('tournament_team_id', $get('../../team_b'))->pluck('name', 'id')->toArray();
                                     })
                                     ->disableOptionsWhenSelectedInSiblingRepeaterItems()
+                                    ->required()
+                                    ->label('Player')
                                     ->live()
                                     ->distinct()
                                     ->searchable()
