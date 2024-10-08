@@ -29,6 +29,7 @@ use Filament\Forms\Components\Actions\Action;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\App\Resources\MatchMakingResource\Pages;
 use App\Filament\App\Resources\MatchMakingResource\RelationManagers;
+use Closure;
 
 class MatchMakingResource extends Resource
 {
@@ -50,6 +51,17 @@ class MatchMakingResource extends Resource
                     Forms\Components\TextInput::make('title')
                         ->placeholder('Eg. Match 1 Game 1')
                         ->hint('ⓘ Insert Match Title')
+                        ->rules([ 
+                            function (Model $record = null) {
+                                return function (string $attribute, $value, Closure $fail) use ($record) {
+                                    $currentRecordId = $record ? $record->id : null;
+                                    $matches = Filament::getTenant()->matches;
+                                    if ($matches->where('id', '!=', $currentRecordId)->contains('title', $value)) {
+                                        $fail('The :attribute must be unique per tournament.');
+                                    };
+                                };
+                            }
+                        ])
                         ->required(),
                     Forms\Components\Select::make('match_winner')
                         ->visibleOn('edit')
@@ -73,7 +85,7 @@ class MatchMakingResource extends Resource
                             name: 'teamA',
                             titleAttribute: 'name',
                             modifyQueryUsing:
-                            fn(Builder $query) => $query->whereBelongsTo(Filament::getTenant())
+                            fn(Builder $query, Get $get) => $query->whereBelongsTo(Filament::getTenant())->where('id', '!=', $get('team_b'))
                         )
                         ->live()
                         ->disabledOn('edit')
@@ -201,7 +213,7 @@ class MatchMakingResource extends Resource
                             name: 'teamB',
                             titleAttribute: 'name',
                             modifyQueryUsing:
-                            fn(Builder $query) => $query->whereBelongsTo(Filament::getTenant())
+                            fn(Builder $query, Get $get) => $query->whereBelongsTo(Filament::getTenant())->where('id', '!=', $get('team_a'))
                         )
                         ->live()
                         ->disabledOn('edit')
@@ -398,6 +410,10 @@ class MatchMakingResource extends Resource
                             }
                         }
                     ),
+                Tables\Columns\ToggleColumn::make('is_active')
+                ->beforeStateUpdated(function (MatchMaking $record) {
+                    MatchMaking::where('id', '!=', $record->id)->where('tournament_id', Filament::getTenant()->id)->update(['is_active' => false]);
+                }),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

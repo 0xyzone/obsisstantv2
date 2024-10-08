@@ -104,7 +104,7 @@ class AppPanelProvider extends PanelProvider
             ])
             ->assets([
                 // Js::make('obs-reconnect-script', asset('js/obsReconnect.js')),
-                // Js::make('jquery', 'https://code.jquery.com/jquery-3.6.0.min.js'),
+                Js::make('jquery', 'https://code.jquery.com/jquery-3.6.0.min.js'),
             ])
             ->viteTheme('resources/css/filament/studio/theme.css')
             ->plugins([

@@ -62,7 +62,7 @@ class Tournament extends Model implements HasAvatar
      */
     public function matches(): HasMany
     {
-        return $this->hasMany(TournamentMatch::class);
+        return $this->hasMany(MatchMaking::class);
     }
 
     public function players(): HasMany
