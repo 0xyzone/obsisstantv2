@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\StartingSoon;
 use App\Models\ObsSetting;
 use Filament\Facades\Filament;
 use Illuminate\Support\Facades\Crypt;
@@ -29,3 +30,6 @@ Route::get('demo', function() {
     }
     return view('demo', compact('tenant'));
 })->name('demo');
+
+
+Route::get('/{user}/start', StartingSoon::class)->name('starting');

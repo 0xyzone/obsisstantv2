@@ -12,6 +12,7 @@ use Illuminate\Support\HtmlString;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
+use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
@@ -23,6 +24,7 @@ class EditTournament extends EditTenantProfile
 {
     public static function getLabel(): string
     {
+        
         return "Edit Tournament";
         // return new HtmlString('<em>Test</em>');
     }
