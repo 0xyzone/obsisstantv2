@@ -44,7 +44,6 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->id('admin')
             ->path('admin')
-            ->login()
             ->passwordReset()
             ->emailVerification(EmailVerificationPrompt::class)
             ->sidebarFullyCollapsibleOnDesktop()
@@ -80,7 +79,7 @@ class AdminPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->authMiddleware([
-                Authenticate::class,
+                \App\Http\Middleware\RedirectToStudioLogin::class,
             ])
             ->assets([
                 // Js::make('obs-reconnect-script', asset('js/obsReconnect.js')),

@@ -2,6 +2,8 @@
 
 namespace App\Livewire;
 
+use App\Models\Tournament;
+use App\Models\TournamentUser;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\Attributes\Title;
@@ -15,6 +17,7 @@ class StartingSoon extends Component
     public function mount($user)
     {
         $this->user = User::find($user);
+        $this->tournament = $this->user->tournaments->where('is_active', true)->first();
     }
 
 

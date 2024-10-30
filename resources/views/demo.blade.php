@@ -1,1 +1,3 @@
-<x-screen></x-screen>
+<x-screen>
+    test
+</x-screen>

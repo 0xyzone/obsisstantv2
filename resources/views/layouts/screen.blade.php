@@ -7,7 +7,9 @@
     <title>Obsisstant</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="w-[1920px] h-[1080px] bg-red-500">
-    
+<body>
+    <div class="w-[1920px] h-[1080px] bg-red-500 border relative">
+        {{ $slot }}
+    </div>
 </body>
 </html>
