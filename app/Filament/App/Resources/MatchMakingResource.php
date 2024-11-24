@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Resources;
 
+use Closure;
 use Filament\Forms;
 use Filament\Tables;
 use Filament\Forms\Get;
@@ -24,12 +25,12 @@ use Filament\Forms\Components\Repeater;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\Actions\Action;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\App\Resources\MatchMakingResource\Pages;
 use App\Filament\App\Resources\MatchMakingResource\RelationManagers;
-use Closure;
 
 class MatchMakingResource extends Resource
 {
@@ -51,7 +52,7 @@ class MatchMakingResource extends Resource
                     Forms\Components\TextInput::make('title')
                         ->placeholder('Eg. Match 1 Game 1')
                         ->hint('ⓘ Insert Match Title')
-                        ->rules([ 
+                        ->rules([
                             function (Model $record = null) {
                                 return function (string $attribute, $value, Closure $fail) use ($record) {
                                     $currentRecordId = $record ? $record->id : null;
@@ -72,8 +73,17 @@ class MatchMakingResource extends Resource
                             return TournamentTeam::where('id', $get('team_a'))->orWhere('id', $get('team_b'))->pluck('name', 'id')->toArray();
                         })
                         ->hidden(fn(Get $get): bool => ($get('team_a') != null && $get('team_b') != null) ? false : true),
+                    Forms\Components\Select::make('tournament_admin_id')
+                        ->visibleOn('edit')
+                        ->relationship(
+                            name: 'admin',
+                            titleAttribute: 'ig_name',
+                            modifyQueryUsing:
+                            fn(Builder $query, Get $get) => $query->whereBelongsTo(Filament::getTenant())
+                        )
+                        ->hidden(fn(Get $get): bool => ($get('team_a') != null && $get('team_b') != null) ? false : true),
                 ])
-                    ->columns(2),
+                    ->columns(3),
                 Section::make([
                     Forms\Components\Select::make('team_a')
                         ->label(function ($state) {
@@ -162,30 +172,30 @@ class MatchMakingResource extends Resource
                                 ->columns(8),
                             Group::make([
                                 TextInput::make('kills')
-                                ->label('')
-                                ->prefixIcon('fas-k')
-                                ->placeholder('Kills'),
+                                    ->label('')
+                                    ->prefixIcon('fas-k')
+                                    ->placeholder('Kills'),
                                 TextInput::make('deaths')
-                                ->label('')
-                                ->prefixIcon('fas-d')
-                                ->placeholder('Deaths'),
+                                    ->label('')
+                                    ->prefixIcon('fas-d')
+                                    ->placeholder('Deaths'),
                                 TextInput::make('assists')
-                                ->label('')
-                                ->prefixIcon('fas-a')
-                                ->placeholder('Assists'),
+                                    ->label('')
+                                    ->prefixIcon('fas-a')
+                                    ->placeholder('Assists'),
                                 TextInput::make('net_worth')
-                                ->label('')
-                                ->prefixIcon('fas-g')
-                                ->placeholder('Net worth'),
+                                    ->label('')
+                                    ->prefixIcon('fas-g')
+                                    ->placeholder('Net worth'),
                                 TextInput::make('hero_damage')
-                                ->placeholder('Hero Damage'),
+                                    ->placeholder('Hero Damage'),
                                 TextInput::make('turret_damage')
-                                ->placeholder('Turret Damage'),
+                                    ->placeholder('Turret Damage'),
                                 TextInput::make('damage_taken')
-                                ->placeholder('Damage Taken'),
+                                    ->placeholder('Damage Taken'),
                                 TextInput::make('fight_participation')
-                                ->placeholder('Fight Participation')
-                                ->helperText('Type without %'),
+                                    ->placeholder('Fight Participation')
+                                    ->helperText('Type without %'),
                             ])->columns(4)
                         ])
                         ->columnSpanFull()
@@ -291,30 +301,30 @@ class MatchMakingResource extends Resource
                                 ->columns(8),
                             Group::make([
                                 TextInput::make('kills')
-                                ->label('')
-                                ->prefixIcon('fas-k')
-                                ->placeholder('Kills'),
+                                    ->label('')
+                                    ->prefixIcon('fas-k')
+                                    ->placeholder('Kills'),
                                 TextInput::make('deaths')
-                                ->label('')
-                                ->prefixIcon('fas-d')
-                                ->placeholder('Deaths'),
+                                    ->label('')
+                                    ->prefixIcon('fas-d')
+                                    ->placeholder('Deaths'),
                                 TextInput::make('assists')
-                                ->label('')
-                                ->prefixIcon('fas-a')
-                                ->placeholder('Assists'),
+                                    ->label('')
+                                    ->prefixIcon('fas-a')
+                                    ->placeholder('Assists'),
                                 TextInput::make('net_worth')
-                                ->label('')
-                                ->prefixIcon('fas-g')
-                                ->placeholder('Net worth'),
+                                    ->label('')
+                                    ->prefixIcon('fas-g')
+                                    ->placeholder('Net worth'),
                                 TextInput::make('hero_damage')
-                                ->placeholder('Hero Damage'),
+                                    ->placeholder('Hero Damage'),
                                 TextInput::make('turret_damage')
-                                ->placeholder('Turret Damage'),
+                                    ->placeholder('Turret Damage'),
                                 TextInput::make('damage_taken')
-                                ->placeholder('Damage Taken'),
+                                    ->placeholder('Damage Taken'),
                                 TextInput::make('fight_participation')
-                                ->placeholder('Fight Participation')
-                                ->helperText('Type without %'),
+                                    ->placeholder('Fight Participation')
+                                    ->helperText('Type without %'),
                             ])->columns(4)
                         ])
                         ->itemLabel(fn(array $state): ?string => $state['team_player_id'] ? TeamPlayer::where('id', $state['team_player_id'])->first()->name : null)
@@ -411,9 +421,9 @@ class MatchMakingResource extends Resource
                         }
                     ),
                 Tables\Columns\ToggleColumn::make('is_active')
-                ->beforeStateUpdated(function (MatchMaking $record) {
-                    MatchMaking::where('id', '!=', $record->id)->where('tournament_id', Filament::getTenant()->id)->update(['is_active' => false]);
-                }),
+                    ->beforeStateUpdated(function (MatchMaking $record) {
+                        MatchMaking::where('id', '!=', $record->id)->where('tournament_id', Filament::getTenant()->id)->update(['is_active' => false]);
+                    }),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -428,6 +438,14 @@ class MatchMakingResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('test')
+                    ->action(function () {
+                        // dd('test');
+                        Notification::make()
+                            ->title('Hi')
+                            ->body('Welcome On The Moon!')
+                            ->sendToDiscord();
+                    })
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

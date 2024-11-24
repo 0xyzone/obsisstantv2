@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\MatchStat;
 use App\Models\Tournament;
 use App\Models\TournamentTeam;
+use App\Models\TournamentAdmin;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -72,5 +73,15 @@ class MatchMaking extends Model
     public function winner(): BelongsTo
     {
         return $this->belongsTo(TournamentTeam::class, 'match_winner', 'id');
+    }
+
+    /**
+     * Get the admin that owns the MatchMaking
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function admin(): BelongsTo
+    {
+        return $this->belongsTo(TournamentAdmin::class, 'tournament_admin_id');
     }
 }

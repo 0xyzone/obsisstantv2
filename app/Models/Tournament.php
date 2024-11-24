@@ -70,6 +70,16 @@ class Tournament extends Model implements HasAvatar
         return $this->hasMany(TeamPlayer::class);
     }
 
+    /**
+     * Get all of the admins for the Tournament
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function admins(): HasMany
+    {
+        return $this->hasMany(TournamentAdmin::class);
+    }
+
     protected $casts = [
         "type"=> TournamentType::class,
     ];

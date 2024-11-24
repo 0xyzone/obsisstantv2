@@ -7,6 +7,7 @@ use Filament\Facades\Filament;
 use Filament\Support\Colors\Color;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Http;
 use App\Http\Responses\LogoutResponse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
@@ -51,6 +52,10 @@ class AppServiceProvider extends ServiceProvider
     {
         Model::unguard();
         Gate::policy(\Spatie\Permission\Models\Role::class, \App\Policies\RolePolicy::class);
+
+        Http::macro('withoutSsl', function () {
+            return Http::withOptions(['verify' => false]);
+        });
 
         PanelSwitch::configureUsing(function (PanelSwitch $panelSwitch) {
             $panelSwitch
