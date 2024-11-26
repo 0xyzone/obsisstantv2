@@ -444,7 +444,7 @@ class MatchMakingResource extends Resource
                         Notification::make()
                             ->title('Hi')
                             ->body('Welcome On The Moon!')
-                            ->sendToDiscord();
+                            ->sendToDiscord(env('DISCORD_WEBHOOK'));
                     })
             ])
             ->bulkActions([
