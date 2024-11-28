@@ -13,6 +13,8 @@ return [
         'cluster' => null,
     ],
 
+    'tenant_model' => null,
+
     'auth_provider_model' => [
         'fqcn' => 'App\\Models\\User',
     ],
@@ -35,10 +37,10 @@ return [
             'view_any',
             'create',
             'update',
-            // 'restore',
-            // 'restore_any',
-            // 'replicate',
-            // 'reorder',
+            'restore',
+            'restore_any',
+            'replicate',
+            'reorder',
             'delete',
             'delete_any',
             'force_delete',
@@ -79,7 +81,7 @@ return [
     'discovery' => [
         'discover_all_resources' => true,
         'discover_all_widgets' => false,
-        'discover_all_pages' => false,
+        'discover_all_pages' => true,
     ],
 
     'register_role_policy' => [

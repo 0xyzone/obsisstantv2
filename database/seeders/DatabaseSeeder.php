@@ -19,13 +19,13 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => 'Super Admin',
             'email' => 'admin@admin.com',
-            'password' => Hash::make('malaiktha1290'),
+            'password' => bcrypt('malaiktha1290'),
             'email_verified_at' => now()
         ]);
         User::create([
             'name' => 'Basic User',
             'email' => 'sumnsth@gmail.com',
-            'password' => Hash::make('malaiktha1290'),
+            'password' => bcrypt('malaiktha1290'),
             'email_verified_at' => now()
         ]);
     }

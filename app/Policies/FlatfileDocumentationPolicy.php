@@ -79,7 +79,7 @@ class FlatfileDocumentationPolicy
      */
     public function restore(User $user, FlatfileDocumentation $flatfileDocumentation): bool
     {
-        return $user->can('{{ Restore }}');
+        return $user->can('restore_documentation');
     }
 
     /**
@@ -87,7 +87,7 @@ class FlatfileDocumentationPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('{{ RestoreAny }}');
+        return $user->can('restore_any_documentation');
     }
 
     /**
@@ -95,7 +95,7 @@ class FlatfileDocumentationPolicy
      */
     public function replicate(User $user, FlatfileDocumentation $flatfileDocumentation): bool
     {
-        return $user->can('{{ Replicate }}');
+        return $user->can('replicate_documentation');
     }
 
     /**
@@ -103,6 +103,6 @@ class FlatfileDocumentationPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('{{ Reorder }}');
+        return $user->can('reorder_documentation');
     }
 }

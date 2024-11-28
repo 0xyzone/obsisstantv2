@@ -79,7 +79,7 @@ class MatchMakingPolicy
      */
     public function restore(User $user, MatchMaking $matchMaking): bool
     {
-        return $user->can('{{ Restore }}');
+        return $user->can('restore_match::making');
     }
 
     /**
@@ -87,7 +87,7 @@ class MatchMakingPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('{{ RestoreAny }}');
+        return $user->can('restore_any_match::making');
     }
 
     /**
@@ -95,7 +95,7 @@ class MatchMakingPolicy
      */
     public function replicate(User $user, MatchMaking $matchMaking): bool
     {
-        return $user->can('{{ Replicate }}');
+        return $user->can('replicate_match::making');
     }
 
     /**
@@ -103,6 +103,6 @@ class MatchMakingPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('{{ Reorder }}');
+        return $user->can('reorder_match::making');
     }
 }

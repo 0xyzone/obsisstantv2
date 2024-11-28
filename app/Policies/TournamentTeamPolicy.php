@@ -79,7 +79,7 @@ class TournamentTeamPolicy
      */
     public function restore(User $user, TournamentTeam $tournamentTeam): bool
     {
-        return $user->can('{{ Restore }}');
+        return $user->can('restore_tournament::team');
     }
 
     /**
@@ -87,7 +87,7 @@ class TournamentTeamPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('{{ RestoreAny }}');
+        return $user->can('restore_any_tournament::team');
     }
 
     /**
@@ -95,7 +95,7 @@ class TournamentTeamPolicy
      */
     public function replicate(User $user, TournamentTeam $tournamentTeam): bool
     {
-        return $user->can('{{ Replicate }}');
+        return $user->can('replicate_tournament::team');
     }
 
     /**
@@ -103,6 +103,6 @@ class TournamentTeamPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('{{ Reorder }}');
+        return $user->can('reorder_tournament::team');
     }
 }

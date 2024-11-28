@@ -79,7 +79,7 @@ class GameHeroPolicy
      */
     public function restore(User $user, GameHero $gameHero): bool
     {
-        return $user->can('{{ Restore }}');
+        return $user->can('restore_game::hero');
     }
 
     /**
@@ -87,7 +87,7 @@ class GameHeroPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('{{ RestoreAny }}');
+        return $user->can('restore_any_game::hero');
     }
 
     /**
@@ -95,7 +95,7 @@ class GameHeroPolicy
      */
     public function replicate(User $user, GameHero $gameHero): bool
     {
-        return $user->can('{{ Replicate }}');
+        return $user->can('replicate_game::hero');
     }
 
     /**
@@ -103,6 +103,6 @@ class GameHeroPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('{{ Reorder }}');
+        return $user->can('reorder_game::hero');
     }
 }
