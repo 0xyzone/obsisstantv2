@@ -438,13 +438,17 @@ class MatchMakingResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\Action::make('test')
-                    ->action(function () {
+                Tables\Actions\Action::make('Send to discord')
+                    ->action(function (Model $record) {
                         // dd('test');
+                        $teamA = $record->teamA->name;
+                        $teamB = $record->teamB->name;
+                        $admin = $record->admin->ig_name . " - " . $record->admin->ig_id . " (" . $record->admin->server_id . ")";
+                        // dd([$admin, $teamA, $teamB]);
                         Notification::make()
-                            ->title('Hi')
-                            ->body('Welcome On The Moon!')
-                            ->sendToDiscord(env('DISCORD_WEBHOOK'));
+                            ->title('Lobby Details for: ' . $teamA .' vs '. $teamB)
+                            ->body('Admin: ' . $admin)
+                            ->sendToDiscord();
                     })
             ])
             ->bulkActions([

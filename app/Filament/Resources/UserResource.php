@@ -46,10 +46,6 @@ class UserResource extends Resource implements HasKnowledgeBase
                     ->email()
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('password')
-                    ->password()
-                    ->required()
-                    ->maxLength(255),
                 Select::make('roles')->multiple()->relationship('roles', 'name')
                     ->preload()
             ]);
