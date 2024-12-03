@@ -16,8 +16,10 @@ use App\Models\MatchMaking;
 use App\Models\TournamentTeam;
 use Filament\Facades\Filament;
 use Filament\Resources\Resource;
+use App\Models\TournamentWebhook;
 use Illuminate\Support\HtmlString;
 use Filament\Forms\Components\Group;
+use Illuminate\Support\Facades\Http;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Section;
@@ -438,17 +440,41 @@ class MatchMakingResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\Action::make('Send to discord')
-                    ->action(function (Model $record) {
+                Tables\Actions\Action::make('Publish Admin info')
+                ->button()
+                ->form([
+                    Select::make('tournament.webhook')
+                    ->label('Select Channel')
+                    ->required()
+                    ->relationship(
+                        name: 'tournament.webhooks',
+                        titleAttribute: 'channel_name',
+                        modifyQueryUsing:
+                        fn(Builder $query, Get $get) => $query->whereBelongsTo(Filament::getTenant())
+                    )
+                ])
+                    ->action(function (Model $record, array $data) {
                         // dd('test');
+                        $webhook = TournamentWebhook::find($data['tournament']['webhook']);
+                        $webhookUrl = $webhook->link;
+                        // dd($webhook->link);
                         $teamA = $record->teamA->name;
                         $teamB = $record->teamB->name;
                         $admin = $record->admin->ig_name . " - " . $record->admin->ig_id . " (" . $record->admin->server_id . ")";
                         // dd([$admin, $teamA, $teamB]);
-                        Notification::make()
-                            ->title('Lobby Details for: ' . $teamA .' vs '. $teamB)
-                            ->body('Admin: ' . $admin)
-                            ->sendToDiscord();
+
+                        $payload = [
+                            'embeds' => [
+                                [
+                                    'title' => 'Lobby Details for: ' . $teamA . ' vs ' . $teamB,
+                                    'description' => 'Admin: ' . $admin,
+                                    'color' => 0xFF5733,
+                                ]
+                            ]
+                        ];
+
+                        Http::post($webhookUrl, $payload);
+                        
                     })
             ])
             ->bulkActions([

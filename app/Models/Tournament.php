@@ -80,6 +80,16 @@ class Tournament extends Model implements HasAvatar
         return $this->hasMany(TournamentAdmin::class);
     }
 
+    /**
+     * Get all of the webhooks for the Tournament
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function webhooks(): HasMany
+    {
+        return $this->hasMany(TournamentWebhook::class);
+    }
+
     protected $casts = [
         "type"=> TournamentType::class,
     ];
