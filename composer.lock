@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "edf162816fa5b29f25348444e72cb545",
+    "content-hash": "a23c715b7d3d6f8008504cf8f9e0ebf9",
     "packages": [
         {
             "name": "abanoubnassem/filament-grecaptcha-field",
@@ -1683,6 +1683,77 @@
                 }
             ],
             "time": "2024-02-09T16:56:22+00:00"
+        },
+        {
+            "name": "codeat3/blade-eos-icons",
+            "version": "1.14.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/codeat3/blade-eos-icons.git",
+                "reference": "b03837f7e9a746715e73f1445390822629fdd77f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/codeat3/blade-eos-icons/zipball/b03837f7e9a746715e73f1445390822629fdd77f",
+                "reference": "b03837f7e9a746715e73f1445390822629fdd77f",
+                "shasum": ""
+            },
+            "require": {
+                "blade-ui-kit/blade-icons": "^1.1",
+                "illuminate/support": "^8.0|^9.0|^10.0|^11.0",
+                "php": "^7.4|^8.0"
+            },
+            "require-dev": {
+                "codeat3/blade-icon-generation-helpers": "^0.8",
+                "codeat3/phpcs-styles": "^1.0",
+                "orchestra/testbench": "^6.0|^7.0|^8.0|^9.0",
+                "phpunit/phpunit": "^9.0|^10.5|^11.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Codeat3\\BladeEosIcons\\BladeEosIconsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Codeat3\\BladeEosIcons\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Swapnil Sarwe",
+                    "homepage": "https://swapnilsarwe.com"
+                },
+                {
+                    "name": "Dries Vints",
+                    "homepage": "https://driesvints.com"
+                }
+            ],
+            "description": "A package to easily make use of \"EOS Icons\" in your Laravel Blade views.",
+            "homepage": "https://github.com/codeat3/blade-eos-icons",
+            "keywords": [
+                "blade",
+                "eos-icons",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/codeat3/blade-eos-icons/issues",
+                "source": "https://github.com/codeat3/blade-eos-icons/tree/1.14.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/swapnilsarwe",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-02-28T14:46:57+00:00"
         },
         {
             "name": "codeat3/blade-fluentui-system-icons",
@@ -11223,130 +11294,6 @@
                 "source": "https://github.com/tijsverkoyen/CssToInlineStyles/tree/v2.2.7"
             },
             "time": "2023-12-08T13:03:43+00:00"
-        },
-        {
-            "name": "tomatophp/console-helpers",
-            "version": "v1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/tomatophp/console-helpers.git",
-                "reference": "69dd818a2bfa7d038467fb526be6c9b573d36a34"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/tomatophp/console-helpers/zipball/69dd818a2bfa7d038467fb526be6c9b573d36a34",
-                "reference": "69dd818a2bfa7d038467fb526be6c9b573d36a34",
-                "shasum": ""
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "TomatoPHP\\ConsoleHelpers\\ConsoleHelpersServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "TomatoPHP\\ConsoleHelpers\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fady Mondy",
-                    "email": "EngFadyMondy@gmail.com"
-                }
-            ],
-            "description": "tons of helper you need for you artisan command line application",
-            "keywords": [
-                "application",
-                "artisan",
-                "command",
-                "console",
-                "helpers",
-                "line"
-            ],
-            "support": {
-                "issues": "https://github.com/tomatophp/console-helpers/issues",
-                "source": "https://github.com/tomatophp/console-helpers/tree/v1.1.0"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/3x1io",
-                    "type": "github"
-                }
-            ],
-            "time": "2023-02-12T12:00:38+00:00"
-        },
-        {
-            "name": "tomatophp/filament-discord",
-            "version": "v1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/tomatophp/filament-discord.git",
-                "reference": "274c6654b6d491a80985001458a7b001ad342b84"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/tomatophp/filament-discord/zipball/274c6654b6d491a80985001458a7b001ad342b84",
-                "reference": "274c6654b6d491a80985001458a7b001ad342b84",
-                "shasum": ""
-            },
-            "require": {
-                "filament/filament": "^3.0.0",
-                "filament/notifications": "^3.0.0",
-                "php": "^8.1|^8.2",
-                "tomatophp/console-helpers": "^1.1"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "TomatoPHP\\FilamentDiscord\\FilamentDiscordServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "TomatoPHP\\FilamentDiscord\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fady Mondy",
-                    "email": "info@3x1.io"
-                }
-            ],
-            "description": "Send Notification to discord channel Webhook using native FilamentPHP Notification Facade class",
-            "keywords": [
-                "discord",
-                "filament-plugin",
-                "filamentphp",
-                "laravel",
-                "notificaiton",
-                "notification-driver",
-                "php",
-                "tomatophp"
-            ],
-            "support": {
-                "issues": "https://github.com/tomatophp/filament-discord/issues",
-                "source": "https://github.com/tomatophp/filament-discord/tree/v1.0.1"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/3x1io",
-                    "type": "github"
-                }
-            ],
-            "time": "2024-07-09T14:30:28+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

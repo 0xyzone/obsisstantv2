@@ -20,7 +20,7 @@ class TournamentWebhookResource extends Resource
 {
     protected static ?string $model = TournamentWebhook::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'eos-webhook';
     protected static ?string $tenantOwnershipRelationshipName = 'tournament';
     protected static ?string $tenantRelationshipName = 'webhooks';
 
@@ -55,7 +55,7 @@ class TournamentWebhookResource extends Resource
                             $channelResponse = Http::withHeaders([
                                 'Authorization' => "Bot {$botToken}",
                             ])->get("https://discord.com/api/channels/{$channelId}");
-                    
+
                             if ($channelResponse->successful()) {
                                 $channelData = $channelResponse->json();
                                 $channelName = $channelData['name'] ?? 'Unknown';
@@ -79,13 +79,17 @@ class TournamentWebhookResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('index')
+                ->label('S. No.')
+                    ->rowIndex()
+                    ->alignRight(),
                 Tables\Columns\TextColumn::make('tournament.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('link')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('channel_name')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('link')
+                    ->limit(20),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

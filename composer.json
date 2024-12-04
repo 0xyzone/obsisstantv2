@@ -10,6 +10,7 @@
         "althinect/filament-spatie-roles-permissions": "^2.2",
         "bezhansalleh/filament-panel-switch": "^1.0",
         "bezhansalleh/filament-shield": "^3.2",
+        "codeat3/blade-eos-icons": "^1.14",
         "codeat3/blade-fluentui-system-icons": "^1.33",
         "eightynine/filament-excel-import": "^3.1",
         "faisal50x/blade-ionicons": "^1.0",
@@ -25,8 +26,7 @@
         "rupadana/filament-announce": "^3.2",
         "ryangjchandler/blade-tabler-icons": "^2.3",
         "spatie/shiki-php": "2.0",
-        "symfony/polyfill-php72": "^1.31",
-        "tomatophp/filament-discord": "^1.0"
+        "symfony/polyfill-php72": "^1.31"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

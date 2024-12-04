@@ -442,6 +442,7 @@ class MatchMakingResource extends Resource
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\Action::make('Publish Admin info')
                 ->button()
+                ->hidden(fn ($record): bool => $record->admin ? false : true)
                 ->form([
                     Select::make('tournament.webhook')
                     ->label('Select Channel')

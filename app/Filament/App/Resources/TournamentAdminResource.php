@@ -17,7 +17,8 @@ class TournamentAdminResource extends Resource
 {
     protected static ?string $model = TournamentAdmin::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'eos-admin-panel-settings-o';
+    protected static ?string $activeNavigationIcon = 'eos-admin-panel-settings';
     protected static ?string $tenantOwnershipRelationshipName = 'tournament';
     protected static ?string $tenantRelationshipName = 'admins';
 
@@ -47,10 +48,8 @@ class TournamentAdminResource extends Resource
                 Tables\Columns\TextColumn::make('ig_name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('ig_id')
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('server_id')
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
