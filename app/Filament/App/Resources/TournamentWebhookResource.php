@@ -27,6 +27,7 @@ class TournamentWebhookResource extends Resource
     protected static ?string $navigationIcon = 'eos-webhook';
     protected static ?string $tenantOwnershipRelationshipName = 'tournament';
     protected static ?string $tenantRelationshipName = 'webhooks';
+    protected static ?string $slug = 'discord-webhooks';
 
     public static function form(Form $form): Form
     {
