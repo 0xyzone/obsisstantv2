@@ -379,22 +379,8 @@ class MatchMakingResource extends Resource
                             return [];
                         }
                     }),
-                Tables\Columns\TextColumn::make('team_a_mp')
-                    ->alignCenter()
-                    ->badge()
-                    ->color(
-                        function ($record) {
-                            if ($record->match_winner != null) {
-                                if ($record->match_winner == $record->team_a) {
-                                    return 'success';
-                                } else {
-                                    return 'danger';
-                                }
-                            } else {
-                                return 'gray';
-                            }
-                        }
-                    ),
+                Tables\Columns\TextInputColumn::make('team_a_mp')
+                    ->alignCenter(),
                 Tables\Columns\TextColumn::make('teamB.name')
                     ->extraAttributes(function ($record) {
                         if ($record->match_winner != null) {
@@ -407,26 +393,19 @@ class MatchMakingResource extends Resource
                             return [];
                         }
                     }),
-                Tables\Columns\TextColumn::make('team_b_mp')
-                    ->alignCenter()
-                    ->badge()
-                    ->color(
-                        function ($record) {
-                            if ($record->match_winner != null) {
-                                if ($record->match_winner == $record->team_b) {
-                                    return 'success';
-                                } else {
-                                    return 'danger';
-                                }
-                            } else {
-                                return 'gray';
-                            }
-                        }
-                    ),
+                Tables\Columns\TextInputColumn::make('team_b_mp')
+                    ->alignCenter(),
                 Tables\Columns\ToggleColumn::make('is_active')
                     ->beforeStateUpdated(function (MatchMaking $record) {
                         MatchMaking::where('id', '!=', $record->id)->where('tournament_id', Filament::getTenant()->id)->update(['is_active' => false]);
                     }),
+                Tables\Columns\SelectColumn::make('match_winner')
+                ->options(function ($record): array {
+                    return TournamentTeam::where('id', $record->team_a)->orWhere('id', $record->team_b)->pluck('name', 'id')->toArray();
+                })
+                ->disabled(function ($record) {
+                    return ($record->team_a_mp == null || $record->team_b_mp == null) ?? true;
+                }),
                 Tables\Columns\SelectColumn::make('tournament_admin_id')
                 ->options(TournamentAdmin::where('tournament_id', Filament::getTenant()->id)->pluck('ig_name', 'id')),
                 Tables\Columns\TextColumn::make('created_at')
