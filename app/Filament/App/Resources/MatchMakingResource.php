@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Resources;
 
+use App\Models\TournamentAdmin;
 use Closure;
 use Filament\Forms;
 use Filament\Tables;
@@ -426,6 +427,8 @@ class MatchMakingResource extends Resource
                     ->beforeStateUpdated(function (MatchMaking $record) {
                         MatchMaking::where('id', '!=', $record->id)->where('tournament_id', Filament::getTenant()->id)->update(['is_active' => false]);
                     }),
+                Tables\Columns\SelectColumn::make('tournament_admin_id')
+                ->options(TournamentAdmin::where('tournament_id', Filament::getTenant()->id)->pluck('ig_name', 'id')),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
