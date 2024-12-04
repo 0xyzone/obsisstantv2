@@ -4,6 +4,7 @@ namespace App\Filament\App\Resources;
 
 use Closure;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
 use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
@@ -36,7 +37,7 @@ class TournamentGroupResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
-                    ->rules([ 
+                    ->rules([
                         function (Model $record = null) {
                             return function (string $attribute, $value, Closure $fail) use ($record) {
                                 $currentRecordId = $record ? $record->id : null;
@@ -52,23 +53,27 @@ class TournamentGroupResource extends Resource
                     ->required()
                     ->inline(false),
                 Repeater::make('groupTeams')
+                ->columnSpanFull()
                     ->relationship('groupTeams')
                     ->hiddenOn('create')
                     ->schema([
                         Hidden::make('tournament_id')
                             ->default(fn() => Filament::getTenant()->id),
-                        Forms\Components\Select::make('tournament_team_id')
-                            ->required()
-                            ->relationship(
-                                name: 'team',
-                                titleAttribute: 'name',
-                                modifyQueryUsing:
-                                fn(Builder $query) => $query->whereBelongsTo(Filament::getTenant())
-                            ),
-                        Forms\Components\TextInput::make('w'),
-                        Forms\Components\TextInput::make('d'),
-                        Forms\Components\TextInput::make('l'),
-                        Forms\Components\TextInput::make('f'),
+                        Section::make([
+                            Forms\Components\Select::make('tournament_team_id')
+                                ->columnSpan(2)
+                                ->required()
+                                ->relationship(
+                                    name: 'team',
+                                    titleAttribute: 'name',
+                                    modifyQueryUsing:
+                                    fn(Builder $query) => $query->whereBelongsTo(Filament::getTenant())
+                                ),
+                            Forms\Components\TextInput::make('w'),
+                            Forms\Components\TextInput::make('d'),
+                            Forms\Components\TextInput::make('l'),
+                            Forms\Components\TextInput::make('f'),
+                        ])->columns(6)
                     ])
             ]);
     }
@@ -81,7 +86,7 @@ class TournamentGroupResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\ImageColumn::make('tournament.logo')
-                ->label('Tournament Logo')
+                    ->label('Tournament Logo')
                     ->alignCenter(),
                 Tables\Columns\ToggleColumn::make('is_active')
                     ->beforeStateUpdated(function (TournamentGroup $record) {
