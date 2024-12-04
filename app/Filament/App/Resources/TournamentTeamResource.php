@@ -200,8 +200,9 @@ class TournamentTeamResource extends Resource
                     ->space(3),
             ])
             ->contentGrid([
-                'md' => 2,
-                'xl' => 3,
+                'lg' => 2,
+                'xl' => 2,
+                '2xl' => 3,
             ])
             ->filters([
                 //
