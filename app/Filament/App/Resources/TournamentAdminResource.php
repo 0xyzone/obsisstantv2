@@ -17,6 +17,7 @@ class TournamentAdminResource extends Resource
 {
     protected static ?string $model = TournamentAdmin::class;
 
+    protected static ?string $navigationGroup = 'Manage';
     protected static ?string $navigationIcon = 'eos-admin-panel-settings-o';
     protected static ?string $activeNavigationIcon = 'eos-admin-panel-settings';
     protected static ?string $tenantOwnershipRelationshipName = 'tournament';

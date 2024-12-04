@@ -11,6 +11,7 @@ use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use App\Models\TournamentWebhook;
 use Illuminate\Support\Facades\Http;
+use Filament\Navigation\NavigationItem;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\App\Resources\TournamentWebhookResource\Pages;
@@ -19,6 +20,7 @@ use App\Filament\App\Resources\TournamentWebhookResource\RelationManagers;
 class TournamentWebhookResource extends Resource
 {
     protected static ?string $model = TournamentWebhook::class;
+    protected static ?string $navigationGroup = 'Manage';
 
     protected static ?string $navigationIcon = 'eos-webhook';
     protected static ?string $tenantOwnershipRelationshipName = 'tournament';
@@ -80,7 +82,7 @@ class TournamentWebhookResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('index')
-                ->label('S. No.')
+                    ->label('S. No.')
                     ->rowIndex()
                     ->alignRight(),
                 Tables\Columns\TextColumn::make('tournament.name')
