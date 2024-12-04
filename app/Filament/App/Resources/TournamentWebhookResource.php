@@ -20,6 +20,8 @@ use App\Filament\App\Resources\TournamentWebhookResource\RelationManagers;
 class TournamentWebhookResource extends Resource
 {
     protected static ?string $model = TournamentWebhook::class;
+    protected static ?string $modelLabel = "Discord Webhooks";
+    protected static ?string $navigationLabel = "Discord Webhooks";
     protected static ?string $navigationGroup = 'Manage';
 
     protected static ?string $navigationIcon = 'eos-webhook';
