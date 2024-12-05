@@ -9,7 +9,7 @@ use Symfony\Component\Process\Process;
 use App\Http\Controllers\ObsController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('filament.dashboard.pages.dashboard');
 })->name('home');
 
 Route::get('phpinfo', function () {
