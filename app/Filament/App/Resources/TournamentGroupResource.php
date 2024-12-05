@@ -4,14 +4,15 @@ namespace App\Filament\App\Resources;
 
 use Closure;
 use Filament\Forms;
-use Filament\Forms\Components\Section;
 use Filament\Tables;
+use Filament\Forms\Get;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Facades\Filament;
 use App\Models\TournamentGroup;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Repeater;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -63,11 +64,12 @@ class TournamentGroupResource extends Resource
                             Forms\Components\Select::make('tournament_team_id')
                                 ->columnSpan(2)
                                 ->required()
+                                ->disableOptionsWhenSelectedInSiblingRepeaterItems()
                                 ->relationship(
                                     name: 'team',
                                     titleAttribute: 'name',
                                     modifyQueryUsing:
-                                    fn(Builder $query) => $query->whereBelongsTo(Filament::getTenant())
+                                    fn(Builder $query, Get $get) => $query->whereBelongsTo(Filament::getTenant())
                                 ),
                             Forms\Components\TextInput::make('w'),
                             Forms\Components\TextInput::make('d'),
