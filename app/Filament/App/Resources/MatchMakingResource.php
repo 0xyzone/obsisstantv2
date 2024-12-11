@@ -2,7 +2,6 @@
 
 namespace App\Filament\App\Resources;
 
-use App\Models\TournamentAdmin;
 use Closure;
 use Filament\Forms;
 use Filament\Tables;
@@ -16,6 +15,7 @@ use Filament\Tables\Table;
 use App\Models\MatchMaking;
 use App\Models\TournamentTeam;
 use Filament\Facades\Filament;
+use App\Models\TournamentAdmin;
 use Filament\Resources\Resource;
 use App\Models\TournamentWebhook;
 use Illuminate\Support\HtmlString;
@@ -197,6 +197,7 @@ class MatchMakingResource extends Resource
                                 TextInput::make('damage_taken')
                                     ->placeholder('Damage Taken'),
                                 TextInput::make('fight_participation')
+                                    ->label('F. Participation')
                                     ->placeholder('Fight Participation')
                                     ->helperText('Type without %'),
                             ])->columns(4)
@@ -326,6 +327,7 @@ class MatchMakingResource extends Resource
                                 TextInput::make('damage_taken')
                                     ->placeholder('Damage Taken'),
                                 TextInput::make('fight_participation')
+                                    ->label('F. Participation')
                                     ->placeholder('Fight Participation')
                                     ->helperText('Type without %'),
                             ])->columns(4)
@@ -400,14 +402,14 @@ class MatchMakingResource extends Resource
                         MatchMaking::where('id', '!=', $record->id)->where('tournament_id', Filament::getTenant()->id)->update(['is_active' => false]);
                     }),
                 Tables\Columns\SelectColumn::make('match_winner')
-                ->options(function ($record): array {
-                    return TournamentTeam::where('id', $record->team_a)->orWhere('id', $record->team_b)->pluck('name', 'id')->toArray();
-                })
-                ->disabled(function ($record) {
-                    return ($record->team_a_mp == null || $record->team_b_mp == null) ?? true;
-                }),
+                    ->options(function ($record): array {
+                        return TournamentTeam::where('id', $record->team_a)->orWhere('id', $record->team_b)->pluck('name', 'id')->toArray();
+                    })
+                    ->disabled(function ($record) {
+                        return ($record->team_a_mp == null || $record->team_b_mp == null) ?? true;
+                    }),
                 Tables\Columns\SelectColumn::make('tournament_admin_id')
-                ->options(TournamentAdmin::where('tournament_id', Filament::getTenant()->id)->pluck('ig_name', 'id')),
+                    ->options(TournamentAdmin::where('tournament_id', Filament::getTenant()->id)->pluck('ig_name', 'id')),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -423,19 +425,19 @@ class MatchMakingResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\Action::make('Publish Admin info')
-                ->button()
-                ->hidden(fn ($record): bool => $record->admin ? false : true)
-                ->form([
-                    Select::make('tournament.webhook')
-                    ->label('Select Channel')
-                    ->required()
-                    ->relationship(
-                        name: 'tournament.webhooks',
-                        titleAttribute: 'channel_name',
-                        modifyQueryUsing:
-                        fn(Builder $query, Get $get) => $query->whereBelongsTo(Filament::getTenant())
-                    )
-                ])
+                    ->button()
+                    ->hidden(fn($record): bool => $record->admin ? false : true)
+                    ->form([
+                        Select::make('tournament.webhook')
+                            ->label('Select Channel')
+                            ->required()
+                            ->relationship(
+                                name: 'tournament.webhooks',
+                                titleAttribute: 'channel_name',
+                                modifyQueryUsing:
+                                fn(Builder $query, Get $get) => $query->whereBelongsTo(Filament::getTenant())
+                            )
+                    ])
                     ->action(function (Model $record, array $data) {
                         // dd('test');
                         $webhook = TournamentWebhook::find($data['tournament']['webhook']);
@@ -445,7 +447,7 @@ class MatchMakingResource extends Resource
                         $teamB = $record->teamB->name;
                         $admin = $record->admin->ig_name . " - " . $record->admin->ig_id . " (" . $record->admin->server_id . ")";
                         // dd([$admin, $teamA, $teamB]);
-
+            
                         $payload = [
                             'embeds' => [
                                 [
@@ -457,7 +459,7 @@ class MatchMakingResource extends Resource
                         ];
 
                         Http::post($webhookUrl, $payload);
-                        
+
                     })
             ])
             ->bulkActions([

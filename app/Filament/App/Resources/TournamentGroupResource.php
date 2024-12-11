@@ -54,7 +54,7 @@ class TournamentGroupResource extends Resource
                     ->required()
                     ->inline(false),
                 Repeater::make('groupTeams')
-                ->columnSpanFull()
+                    ->columnSpanFull()
                     ->relationship('groupTeams')
                     ->hiddenOn('create')
                     ->schema([
@@ -87,9 +87,10 @@ class TournamentGroupResource extends Resource
                 Tables\Columns\TextColumn::make('id'),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\ImageColumn::make('tournament.logo')
-                    ->label('Tournament Logo')
-                    ->alignCenter(),
+                Tables\Columns\TextColumn::make('groupTeams.team.name')
+                    ->listWithLineBreaks()
+                    ->badge()
+                    ->limitList(2),
                 Tables\Columns\ToggleColumn::make('is_active')
                     ->beforeStateUpdated(function (TournamentGroup $record) {
                         TournamentGroup::where('id', '!=', $record->id)->where('tournament_id', Filament::getTenant()->id)->update(['is_active' => false]);

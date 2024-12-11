@@ -31,5 +31,11 @@ Route::get('demo', function() {
     return view('demo', compact('tenant'));
 })->name('demo');
 
+Route::group(['prefix'=> 'screen'], function () {
+    Route::get('/{tournament_id}/{match_id}', function () {
+        return view('screen.assets.versus');
+    });
+});
+
 
 Route::get('/{user}/start', StartingSoon::class)->name('starting');

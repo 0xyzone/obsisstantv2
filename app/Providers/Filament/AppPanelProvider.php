@@ -78,6 +78,9 @@ class AppPanelProvider extends PanelProvider
                 Widgets\AccountWidget::class,
             ])
             ->navigationGroups([
+                NavigationGroup::make()
+                    ->label('Assets')
+                    ->icon('eos-config-map'),
             ])
             ->navigationItems([
                 NavigationItem::make('Edit Tournament')
