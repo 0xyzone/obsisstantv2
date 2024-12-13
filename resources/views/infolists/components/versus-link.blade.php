@@ -1,5 +1,5 @@
 <x-dynamic-component :component="$getEntryWrapperView()" :entry="$entry">
     <div>
-        {{ $getState() }}test 
+        {{ $getState() }} 
     </div>
 </x-dynamic-component>

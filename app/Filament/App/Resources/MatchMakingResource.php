@@ -355,6 +355,7 @@ class MatchMakingResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id')
+                ->sortable()
                     ->alignCenter(),
                 Tables\Columns\TextColumn::make('title')
                     ->searchable()
@@ -462,6 +463,7 @@ class MatchMakingResource extends Resource
 
                     })
             ])
+            ->defaultSort('id', 'desc')
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),

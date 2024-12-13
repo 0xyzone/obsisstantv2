@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@tailwind variants;
 
 .footer-item {
     margin-top: auto; /* Pushes items to the bottom */

@@ -164,10 +164,10 @@ class EditTournament extends EditTenantProfile
                             ->schema([
                                 ColorPicker::make("primary_color")
                                     ->rgba()
-                                    ->required(),
+                                    ->default('rgba(0, 0, 0, 1)'),
                                 ColorPicker::make("secondary_color")
                                     ->rgba()
-                                    ->required(),
+                                    ->default('rgba(0, 0, 0, 1)'),
                                 ColorPicker::make("accent_color")
                                     ->rgba(),
                             ])

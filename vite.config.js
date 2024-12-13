@@ -8,7 +8,8 @@ export default defineConfig({
                 'resources/css/app.css', 
                 'resources/js/app.js',
                 'resources/css/filament/studio/theme.css',
-                'resources/css/filament/dashboard/theme.css'
+                'resources/css/filament/dashboard/theme.css',
+                'app/Livewire/**',
             ],
             refresh: true,
         }),

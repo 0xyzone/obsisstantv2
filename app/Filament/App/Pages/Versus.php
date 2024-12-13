@@ -5,11 +5,17 @@ namespace App\Filament\App\Pages;
 use Filament\Pages\Page;
 use Filament\Infolists\Infolist;
 use Filament\Support\Enums\MaxWidth;
+use Filament\Forms\Contracts\HasForms;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ViewEntry;
+use Filament\Infolists\Contracts\HasInfolists;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Infolists\Concerns\InteractsWithInfolists;
 
-class Versus extends Page
+class Versus extends Page implements HasForms, HasInfolists
 {
+    use InteractsWithForms;
+    use InteractsWithInfolists;
     protected static ?string $navigationGroup = 'Assets';
 
     protected static string $view = 'filament.app.pages.versus';
@@ -25,8 +31,13 @@ class Versus extends Page
     public function infolist(Infolist $infolist): Infolist
     {
         return $infolist
+            ->state([
+                'link' => 'link',
+                'test' => 'test',
+            ])
+            ->add(TextEntry::make('test'))
             ->schema([
-                TextEntry::make('test')
+                TextEntry::make('link')
                     ->label('Test')
                     ->formatStateUsing(function () {
                         return 'Hello world';
@@ -35,7 +46,8 @@ class Versus extends Page
                     ->copyMessage('Copied!')
                     ->copyMessageDuration(1500),
                 ViewEntry::make('link')
-                    ->view('filament.infolists.components.versus-link')
+                    ->view('infolists.components.versus-link')
+                    ->label('link')
             ]);
     }
 }
