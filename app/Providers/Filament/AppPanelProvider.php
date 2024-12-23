@@ -92,7 +92,6 @@ class AppPanelProvider extends PanelProvider
                 ->url(fn (): string => route('filament.dashboard.pages.dashboard'))
                 ->icon('heroicon-o-home')
                 ->isActiveWhen(fn () => request()->routeIs('filament.admin.pages.dashboard'))
-                ->sort(-999)
             ])
             ->middleware([
                 EncryptCookies::class,
