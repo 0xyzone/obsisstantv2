@@ -87,12 +87,12 @@ class AppPanelProvider extends PanelProvider
                     ->url(fn(): string => EditTournament::getUrl())
                     ->isActiveWhen(fn(): bool => request()->routeIs('filament.studio.tenant.profile'))
                     ->icon('heroicon-o-trophy')
-                    ->activeIcon('heroicon-s-trophy')
-                    ->sort(2),
+                    ->activeIcon('heroicon-s-trophy'),
                 NavigationItem::make('Dashboard')
                 ->url(fn (): string => route('filament.dashboard.pages.dashboard'))
                 ->icon('heroicon-o-home')
                 ->isActiveWhen(fn () => request()->routeIs('filament.admin.pages.dashboard'))
+                ->sort(-999)
             ])
             ->middleware([
                 EncryptCookies::class,
