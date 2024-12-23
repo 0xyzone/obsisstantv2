@@ -61,11 +61,14 @@ class AppServiceProvider extends ServiceProvider
             $panelSwitch
                 ->modalHeading('Available Panels')
                 ->simple()
+                ->panels(['studio', 'dashboard'])
+                ->canSwitchPanels(fn (): bool => true)
                 ->visible(function () {
                     $panelAdmin = Filament::getPanel('admin');
                     $panelStudio = Filament::getPanel('studio');
                     $panelDashboard = Filament::getPanel('dashboard');
 
+                    // return true;
                     if (Filament::getCurrentPanel()->getId() === $panelAdmin->getId()) {
                         return false;
                     } elseif (Filament::getCurrentPanel()->getId() === $panelStudio->getId()) {
@@ -73,12 +76,7 @@ class AppServiceProvider extends ServiceProvider
                     } elseif (Filament::getCurrentPanel()->getId() === $panelDashboard->getId()) {
                         return false;  // Same for studio and dashboard
                     }
-                })
-                ->excludes([
-                    'admin',
-                    'knowledge-base',
-                    'studio'
-                ]);
+                });
         });
     }
 }

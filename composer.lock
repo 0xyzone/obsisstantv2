@@ -1217,12 +1217,12 @@
             "type": "library",
             "extra": {
                 "laravel": {
-                    "providers": [
-                        "BezhanSalleh\\PanelSwitch\\PanelSwitchServiceProvider"
-                    ],
                     "aliases": {
                         "PanelSwitch": "BezhanSalleh\\PanelSwitch\\Facades\\PanelSwitch"
-                    }
+                    },
+                    "providers": [
+                        "BezhanSalleh\\PanelSwitch\\PanelSwitchServiceProvider"
+                    ]
                 }
             },
             "autoload": {

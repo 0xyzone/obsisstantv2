@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Pages;
 
+use Filament\Infolists\Components\Section;
 use Filament\Pages\Page;
 use Filament\Infolists\Infolist;
 use Filament\Support\Enums\MaxWidth;
@@ -32,22 +33,21 @@ class Versus extends Page implements HasForms, HasInfolists
     {
         return $infolist
             ->state([
-                'link' => 'link',
-                'test' => 'test',
+                'link' => 'something',
             ])
-            ->add(TextEntry::make('test'))
             ->schema([
-                TextEntry::make('link')
-                    ->label('Test')
-                    ->formatStateUsing(function () {
-                        return 'Hello world';
-                    })
-                    ->copyable()
-                    ->copyMessage('Copied!')
-                    ->copyMessageDuration(1500),
-                ViewEntry::make('link')
-                    ->view('infolists.components.versus-link')
-                    ->label('link')
+                Section::make()
+                    ->schema([
+                        TextEntry::make('link')
+                            ->label('OBS Browser Link')
+                            ->formatStateUsing(function () {
+                                $full_url = "http" . (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 's' : '') . "://" . $_SERVER['HTTP_HOST'];
+                                return $full_url;
+                            })
+                            ->copyable()
+                            ->copyMessage('Copied!')
+                            ->copyMessageDuration(1500),
+                    ])
             ]);
     }
 }
