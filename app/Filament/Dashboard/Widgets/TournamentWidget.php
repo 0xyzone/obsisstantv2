@@ -53,6 +53,13 @@ class TournamentWidget extends BaseWidget
                 // ->listWithLineBreaks()
                 ->badge()
                 ->url(fn($record) => route('filament.studio.tenant.profile', $record)),
+                Tables\Columns\ToggleColumn::make('is_active')
+                    ->beforeStateUpdated(function (Tournament $record) {
+                        $userId = auth()->user()->id;
+                        Tournament::query()->whereHas('users', function ($query) use ($userId) {
+                            $query->where('users.id', $userId);
+                        })->where('id', '!=', $record->id)->update(['is_active' => false]);
+                    }),
             ])
             ->actions([
                 Tables\Actions\Action::make('Edit')

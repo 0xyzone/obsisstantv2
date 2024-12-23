@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ScreenController;
 use App\Livewire\StartingSoon;
 use App\Models\ObsSetting;
 use Filament\Facades\Filament;
@@ -35,6 +36,10 @@ Route::group(['prefix'=> 'screen'], function () {
     Route::get('/{tournament_id}/{match_id}', function () {
         return view('screen.assets.versus');
     });
+});
+
+Route::group(['prefix'=> '/{id}'], function () {
+    Route::get('/vs', [ScreenController::class,'versus'])->name('screen.versus');
 });
 
 

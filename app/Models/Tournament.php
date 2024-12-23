@@ -91,7 +91,8 @@ class Tournament extends Model implements HasAvatar
     }
 
     protected $casts = [
-        "type"=> TournamentType::class,
+        "type" => TournamentType::class,
+        'is_active' => 'boolean'
     ];
 
     public function getLogoUrlAttribute(): string

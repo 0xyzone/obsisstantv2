@@ -41,8 +41,8 @@ class Versus extends Page implements HasForms, HasInfolists
                         TextEntry::make('link')
                             ->label('OBS Browser Link')
                             ->formatStateUsing(function () {
-                                $full_url = "http" . (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 's' : '') . "://" . $_SERVER['HTTP_HOST'];
-                                return $full_url;
+                                $url = route('screen.versus', ['id' => auth()->id()]);
+                                return $url;
                             })
                             ->copyable()
                             ->copyMessage('Copied!')
