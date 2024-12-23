@@ -33,17 +33,13 @@ class Versus extends Page implements HasForms, HasInfolists
     {
         return $infolist
             ->state([
-                'link' => 'something',
+                'link' => route('screen.versus', ['id' => auth()->id()]),
             ])
             ->schema([
                 Section::make()
                     ->schema([
                         TextEntry::make('link')
                             ->label('OBS Browser Link')
-                            ->formatStateUsing(function () {
-                                $url = route('screen.versus', ['id' => auth()->id()]);
-                                return $url;
-                            })
                             ->copyable()
                             ->copyMessage('Copied!')
                             ->copyMessageDuration(1500),
