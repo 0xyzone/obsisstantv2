@@ -6,7 +6,7 @@
         <div class="flex flex-col items-center gap-2 min-w-[1000px] max-w-[1000px] text-center">
             @foreach ($activeMatch->statsForTeamA as $stat)
             <div style="background-color: {{ $tournamentPrimaryColor }};" class="py-4 {{ $textColor }} w-full skew-x-[45deg]">
-                <p class="-skew-x-[45deg]">{{ $stat->player->name }}</p>
+                <p class="-skew-x-[45deg]">{{ $stat->player->nickname }}</p>
             </div>
             @endforeach
 
