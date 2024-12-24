@@ -40,6 +40,8 @@ Route::group(['prefix'=> 'screen'], function () {
 
 Route::group(['prefix'=> '/{id}'], function () {
     Route::get('/vs', [ScreenController::class,'versus'])->name('screen.versus');
+    Route::get('/teama', [ScreenController::class,'teama'])->name('screen.teama');
+    Route::get('/teamb', [ScreenController::class,'teamb'])->name('screen.teamb');
 });
 
 

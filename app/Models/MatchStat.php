@@ -30,7 +30,7 @@ class MatchStat extends Model
      */
     public function player(): BelongsTo
     {
-        return $this->belongsTo(TeamPlayer::class);
+        return $this->belongsTo(TeamPlayer::class, "team_player_id");
     }
 
     /**
