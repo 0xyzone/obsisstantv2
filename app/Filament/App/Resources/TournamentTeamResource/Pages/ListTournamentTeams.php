@@ -36,8 +36,7 @@ class ListTournamentTeams extends ListRecords
                 ->hidden(fn (): bool => $this->hidden),
             ImportAction::make('players')
                 ->label("Import Players")
-                ->importer(TeamPlayerImporter::class)
-                ->hidden(fn (): bool => $this->hidden),
+                ->importer(TeamPlayerImporter::class),
             Actions\CreateAction::make()
                 ->label('Add Team')
                 ->hidden(fn (): bool => $this->hidden),
