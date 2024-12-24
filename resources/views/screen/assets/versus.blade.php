@@ -14,8 +14,8 @@
             </p>
         </div>
         @if ($activeMatch !== null) 
-            <div class="w-full h-full flex absolute top-0 justify-center items-center text-2xl font-bold">
-                <div class="flex justify-between w-6/12 items-center gap-8">
+            <div class="w-full h-full flex absolute top-0 items-center text-2xl font-bold">
+                <div class="flex w-max items-center gap-8 mx-auto">
                     <div class="flex flex-col justify-center items-center">
                         <div><img src="{{ $activeMatch->teamA->logo ? asset('/storage/' . $activeMatch->teamA->logo) : "" }}" alt="" class="min-w-[20rem] max-w-[20rem] aspect-square bg-white object-cover"></div>
                         <div class="w-max py-2 px-8 bg-gray-200 -skew-x-[30deg] text-6xl font-bold shadow-xl -translate-y-5">
