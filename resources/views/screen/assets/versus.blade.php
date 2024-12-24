@@ -5,12 +5,12 @@
     <div class="relative w-full h-full">
         <div class="w-max pt-8 pb-5 pl-20 pr-10 bg-gray-800 text-gray-200 -skew-x-[30deg] absolute top-24 text-4xl font-bold -left-10 shadow-xl">
             <p class="skew-x-[30deg]">
-                {{ $activeMatch->title }}
+                {{ $activeMatch->title ?? 'No match has been Selected' }}
             </p>
         </div>
         <div class="w-max py-5 pl-20 pr-10 bg-gray-200 -skew-x-[30deg] absolute top-10 text-4xl font-bold -left-10 shadow-xl">
             <p class="skew-x-[30deg]">
-                {{ $tournament->name }}
+                {{ $tournament->name ?? 'No match has been Selected' }}
             </p>
         </div>
         <div class="w-full h-full flex absolute top-0 justify-center items-center text-2xl font-bold">
