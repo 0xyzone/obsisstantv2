@@ -15,9 +15,9 @@
         </div>
         @if ($activeMatch !== null) 
             <div class="w-full h-full flex absolute top-0 justify-center items-center text-2xl font-bold">
-                <div class="flex justify-between w-6/12 items-center">
+                <div class="flex justify-between w-6/12 items-center gap-8">
                     <div class="flex flex-col justify-center items-center">
-                        <div><img src="{{ $activeMatch->teamA->logo ? asset('/storage/' . $activeMatch->teamA->logo) : "" }}" alt="" class="min-w-[20rem] aspect-square bg-white"></div>
+                        <div><img src="{{ $activeMatch->teamA->logo ? asset('/storage/' . $activeMatch->teamA->logo) : "" }}" alt="" class="min-w-[20rem] aspect-square bg-white object-cover"></div>
                         <div class="w-max py-2 px-8 bg-gray-200 -skew-x-[30deg] text-6xl font-bold shadow-xl -translate-y-5">
                             <p class="skew-x-[30deg]">{{ $activeMatch->teamA->name }}</p>
                         </div>
@@ -26,7 +26,7 @@
                         <p class="text-9xl">vs</p>
                     </div>
                     <div class="flex flex-col justify-center items-center">
-                        <div><img src="{{ $activeMatch->teamB->logo ? asset('/storage/' . $activeMatch->teamB->logo) : "" }}" alt="" class="min-w-[20rem] aspect-square bg-white"></div>
+                        <div><img src="{{ $activeMatch->teamB->logo ? asset('/storage/' . $activeMatch->teamB->logo) : "" }}" alt="" class="min-w-[20rem] aspect-square bg-white object-cover"></div>
                         <div class="w-max py-2 px-8 bg-gray-200 skew-x-[30deg] text-6xl font-bold shadow-xl -translate-y-5">
                             <p class="-skew-x-[30deg]">{{ $activeMatch->teamB->name }}</p>
                         </div>
