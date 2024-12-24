@@ -35,4 +35,6 @@ return [
         ],
     ],
 
+    'bot_token' => env('BOT_TOKKEN'),
+
 ];

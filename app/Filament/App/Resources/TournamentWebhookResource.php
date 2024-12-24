@@ -56,7 +56,9 @@ class TournamentWebhookResource extends Resource
 
                         if ($channelId) {
                             // Step 2: Fetch channel details using the bot token
-                            $botToken = env('BOT_TOKKEN'); // Replace with your actual bot token
+                            // dd(config('services.bot_token'));
+                            $botToken = config('services.bot_token'); // Replace with your actual bot token
+                            // dd($botToken);
                             $channelResponse = Http::withHeaders([
                                 'Authorization' => "Bot {$botToken}",
                             ])->get("https://discord.com/api/channels/{$channelId}");
