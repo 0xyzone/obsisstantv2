@@ -210,6 +210,7 @@ class MatchMakingResource extends Resource
                         )
                         ->mutateRelationshipDataBeforeCreateUsing(function (array $data, Get $get): array {
                             $data['tournament_team_id'] = $get('team_a');
+                            $data['match_making_id'] = $get('../../record.id');
                             return $data;
                         })
                         ->maxItems(5)
@@ -341,6 +342,7 @@ class MatchMakingResource extends Resource
                         ->columnSpanFull()
                         ->mutateRelationshipDataBeforeCreateUsing(function (array $data, Get $get): array {
                             $data['tournament_team_id'] = $get('team_b');
+                            $data['match_making_id'] = $get('../../record.id');
                             return $data;
                         })
                 ])
