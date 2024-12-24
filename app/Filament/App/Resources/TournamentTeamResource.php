@@ -97,11 +97,6 @@ class TournamentTeamResource extends Resource
                     ->schema([
                         Forms\Components\Hidden::make('tournament_id')
                             ->default(Filament::getTenant()->id),
-                        Forms\Components\Toggle::make('is_playing')
-                            ->label('Playing')
-                            ->inline(false)
-                            ->grow(false)
-                            ->columnSpan(1),
                         Forms\Components\TextInput::make('name')
                             ->required()
                             ->columnSpan(3),
