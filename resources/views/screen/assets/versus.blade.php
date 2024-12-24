@@ -17,7 +17,7 @@
             <div class="flex justify-between w-6/12 items-center">
                 <div class="flex flex-col justify-center items-center">
                     <div><img src="{{ $activeMatch->teamA->logo ? asset('/storage/' . $activeMatch->teamA->logo) : "" }}" alt="" class="max-w-[20rem]"></div>
-                    <div class="w-max py-2 px-5 bg-gray-200 -skew-x-[30deg] text-4xl font-bold shadow-xl -translate-y-5">
+                    <div class="w-max py-2 px-5 bg-gray-200 -skew-x-[30deg] text-6xl font-bold shadow-xl -translate-y-5">
                         <p class="skew-x-[30deg]">{{ $activeMatch->teamA->name }}</p>
                     </div>
                 </div>
@@ -26,7 +26,7 @@
                 </div>
                 <div class="flex flex-col justify-center items-center">
                     <div><img src="{{ $activeMatch->teamB->logo ? asset('/storage/' . $activeMatch->teamB->logo) : "" }}" alt="" class="max-w-[20rem]"></div>
-                    <div class="w-max py-2 px-5 bg-gray-200 skew-x-[30deg] text-4xl font-bold shadow-xl -translate-y-5">
+                    <div class="w-max py-2 px-5 bg-gray-200 skew-x-[30deg] text-6xl font-bold shadow-xl -translate-y-5">
                         <p class="-skew-x-[30deg]">{{ $activeMatch->teamB->name }}</p>
                     </div>
                 </div>
