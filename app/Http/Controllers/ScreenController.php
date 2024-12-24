@@ -13,8 +13,8 @@ class ScreenController extends Controller
         $userId = $id->id;
         $tournament = Tournament::query()->whereHas('users', function ($query) use ($userId) {
             $query->where('users.id', $userId);
-        })->where('is_active', true)->first();
-        $activeMatch = MatchMaking::query()->where('tournament_id', $tournament->id)->where('is_active', true)->with(['teamA', 'teamB'])->first();
+        })->where('is_active', true)->firstOrFail();
+        $activeMatch = MatchMaking::query()->where('tournament_id', $tournament->id)->where('is_active', true)->with(['teamA', 'teamB'])->firstOrFail();
         return view('screen.assets.versus', compact('tournament', 'activeMatch'));
     }
 
@@ -36,8 +36,8 @@ class ScreenController extends Controller
         $userId = $id->id;
         $tournament = Tournament::query()->whereHas('users', function ($query) use ($userId) {
             $query->where('users.id', $userId);
-        })->where('is_active', true)->first();
-        $activeMatch = MatchMaking::query()->where('tournament_id', $tournament->id)->where('is_active', true)->with(['teamA'])->first();
+        })->where('is_active', true)->firstOrFail();
+        $activeMatch = MatchMaking::query()->where('tournament_id', $tournament->id)->where('is_active', true)->with(['teamA'])->firstOrFail();
         
         $tournamentPrimaryColor = $tournament->primary_color ?: 'rgba(51, 51, 51, 1)';
         $textColor = calculateBrightnessFromRgba($tournamentPrimaryColor) > 125 ? 'text-black' : 'text-white';
@@ -62,8 +62,8 @@ class ScreenController extends Controller
         $userId = $id->id;
         $tournament = Tournament::query()->whereHas('users', function ($query) use ($userId) {
             $query->where('users.id', $userId);
-        })->where('is_active', true)->first();
-        $activeMatch = MatchMaking::query()->where('tournament_id', $tournament->id)->where('is_active', true)->with(['teamB'])->first();
+        })->where('is_active', true)->firstOrFail();
+        $activeMatch = MatchMaking::query()->where('tournament_id', $tournament->id)->where('is_active', true)->with(['teamB'])->firstOrFail();
         $tournamentPrimaryColor = $tournament->primary_color ?: 'rgba(51, 51, 51, 1)';
         $textColor = calculateBrightnessFromRgba($tournamentPrimaryColor) > 125 ? 'text-black' : 'text-white';
         return view('screen.assets.broster', compact('tournament', 'activeMatch', 'tournamentPrimaryColor', 'textColor'));
