@@ -138,7 +138,7 @@ class MatchMakingResource extends Resource
                             Group::make([
                                 Select::make('team_player_id')
                                     ->options(function (Get $get): array {
-                                        return TeamPlayer::where('tournament_team_id', $get('../../team_a'))->pluck('name', 'id')->toArray();
+                                        return TeamPlayer::where('tournament_team_id', $get('../../team_a'))->pluck('nickname', 'id')->toArray();
                                     })
                                     ->required()
                                     ->label('Player')
@@ -203,7 +203,7 @@ class MatchMakingResource extends Resource
                             ])->columns(4)
                         ])
                         ->columnSpanFull()
-                        ->itemLabel(fn(array $state): ?string => $state['team_player_id'] ? TeamPlayer::where('id', $state['team_player_id'])->first()->name : null)
+                        ->itemLabel(fn(array $state): ?string => $state['team_player_id'] ? TeamPlayer::where('id', $state['team_player_id'])->first()->nickname : null)
                         ->collapsible()
                         ->collapseAllAction(
                             fn(Action $action) => $action->label('Collapse all'),
@@ -269,7 +269,7 @@ class MatchMakingResource extends Resource
                             Group::make([
                                 Select::make('team_player_id')
                                     ->options(function (Get $get): array {
-                                        return TeamPlayer::where('tournament_team_id', $get('../../team_b'))->pluck('name', 'id')->toArray();
+                                        return TeamPlayer::where('tournament_team_id', $get('../../team_b'))->pluck('nickname', 'id')->toArray();
                                     })
                                     ->disableOptionsWhenSelectedInSiblingRepeaterItems()
                                     ->required()
@@ -283,7 +283,10 @@ class MatchMakingResource extends Resource
                                     ->label('Hero')
                                     ->default(null)
                                     ->disableOptionsWhenSelectedInSiblingRepeaterItems()
-                                    ->relationship('hero', 'name')
+                                    ->options(function (Get $get): array {
+                                        $tournament = Filament::getTenant();
+                                        return GameHero::where('game_id', $tournament->game->id)->pluck('name','id')->toArray();
+                                    })
                                     ->columnSpan(3)
                                     ->searchable()
                                     ->preload()
@@ -333,7 +336,7 @@ class MatchMakingResource extends Resource
                                     ->helperText('Type without %'),
                             ])->columns(4)
                         ])
-                        ->itemLabel(fn(array $state): ?string => $state['team_player_id'] ? TeamPlayer::where('id', $state['team_player_id'])->first()->name : null)
+                        ->itemLabel(fn(array $state): ?string => $state['team_player_id'] ? TeamPlayer::where('id', $state['team_player_id'])->first()->nickname : null)
                         ->collapsible()
                         ->collapseAllAction(
                             fn(Action $action) => $action->label('Collapse all'),

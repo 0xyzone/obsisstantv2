@@ -3,7 +3,7 @@
         <img src="{{ $tournament->logo ? asset('/storage/' . $tournament->logo) : '' }}" alt="" class="max-w-48">
     </div>
     <div class="relative w-full h-full">
-        <div class="w-max pt-8 pb-5 pl-20 pr-10 bg-gray-800 text-gray-200 -skew-x-[30deg] absolute top-24 text-4xl font-bold -left-10 shadow-xl">
+        <div class="w-max pt-10 pb-5 pl-20 pr-10 bg-gray-800 text-gray-200 -skew-x-[30deg] absolute top-24 text-4xl font-bold -left-10 shadow-xl">
             <p class="skew-x-[30deg]">
                 {{ $activeMatch->title ?? 'No match has been activated' }}
             </p>

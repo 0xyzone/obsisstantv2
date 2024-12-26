@@ -18,6 +18,15 @@ class ScreenController extends Controller
         return view('screen.assets.versus', compact('tournament', 'activeMatch'));
     }
 
+    public function matchstats(User $id) {
+        $userId = $id->id;
+        $tournament = Tournament::query()->whereHas('users', function ($query) use ($userId) {
+            $query->where('users.id', $userId);
+        })->where('is_active', true)->firstOrFail();
+        $activeMatch = MatchMaking::query()->where('tournament_id', $tournament->id)->where('is_active', true)->with(['teamA', 'teamB'])->firstOrFail();
+        return view('screen.assets.match-stats', compact('tournament', 'activeMatch'));
+    }
+
     public function teama(User $id) {
         function calculateBrightnessFromRgba($rgbaColor) {
             // Match and extract R, G, B values using a regular expression
