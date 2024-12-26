@@ -138,6 +138,7 @@ class MatchMakingResource extends Resource
                                 ->button()
                         ])
                         ->schema([
+                            Forms\Components\Hidden::make('id'),
                             Forms\Components\Hidden::make('tournament_team_id')
                                 ->default(function (Get $get) {
                                     return $get('../../team_a');
