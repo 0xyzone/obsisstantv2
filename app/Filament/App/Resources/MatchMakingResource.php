@@ -125,8 +125,8 @@ class MatchMakingResource extends Resource
                             fn(Action $action) => $action->requiresConfirmation(),
                         )
                         ->extraItemActions([
-                            Action::make('save')
-                                ->label('Save')
+                            Action::make('update')
+                                ->label('Update')
                                 ->action(function (array $arguments, Repeater $component) {
                                     $itemData = $component->getItemState($arguments['item']);
                                     MatchStat::where('id', $itemData['id'])->update($itemData);
