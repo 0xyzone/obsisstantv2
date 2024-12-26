@@ -152,7 +152,10 @@ class MatchMakingResource extends Resource
                                     ->label('Hero')
                                     ->default(null)
                                     ->disableOptionsWhenSelectedInSiblingRepeaterItems()
-                                    ->relationship('hero', 'name')
+                                    ->options(function (Get $get): array {
+                                        $tournament = Filament::getTenant();
+                                        return GameHero::where('game_id', $tournament->game->id)->pluck('name','id')->toArray();
+                                    })
                                     ->columnSpan(3)
                                     ->searchable()
                                     ->preload()
