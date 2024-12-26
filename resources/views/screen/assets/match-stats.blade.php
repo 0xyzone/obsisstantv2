@@ -28,6 +28,9 @@
                 <tbody>
                     @foreach ($activeMatch->statsForTeamA as $stat)
                     <tr class="bg-gray-300 text-xl font-bold">
+                        <td>
+                            <img src="{{ $stat->hero ? ($stat->hero->image ? asset('/storage/' . $stat->hero->image) : '') : '' }}" alt="" class="w-full aspect-square object-cover">
+                        </td>
                         <td class="py-4 pl-4 font-bold text-2xl space-y-2" colspan="3">
                             <div>
                                 <div class="flex gap-2 items-center ">
@@ -71,9 +74,6 @@
                                 <p class="text-xs font-normal">Fight <br> Participation</p>
                                 <p>{{ $stat->fight_participation }}%</p>
                             </div>
-                        </td>
-                        <td>
-                            <img src="{{ $stat->hero ? ($stat->hero->image ? asset('/storage/' . $stat->hero->image) : '') : '' }}" alt="" class="w-full aspect-square object-cover">
                         </td>
                     </tr>
                     @endforeach

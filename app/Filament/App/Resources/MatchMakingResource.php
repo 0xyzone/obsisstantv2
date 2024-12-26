@@ -134,6 +134,7 @@ class MatchMakingResource extends Resource
                                     ->title('Saved Successfully.')
                                     ->success()
                                     ->send();
+                                    header("Refresh: 3");
                                 })
                                 ->button()
                         ])
@@ -276,6 +277,7 @@ class MatchMakingResource extends Resource
                                     ->title('Saved Successfully.')
                                     ->success()
                                     ->send();
+                                    header("Refresh: 3");
                                 })
                                 ->button()
                         ])
