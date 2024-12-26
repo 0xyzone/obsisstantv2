@@ -127,7 +127,14 @@ class MatchMakingResource extends Resource
                         ->extraItemActions([
                             Action::make('save')
                                 ->label('Save')
-                                ->action('save')
+                                ->action(function (array $arguments, Repeater $component) {
+                                    $itemData = $component->getItemState($arguments['item']);
+                                    MatchStat::where('id', $itemData['id'])->update($itemData);
+                                    Notification::make()
+                                    ->title('Saved Successfully.')
+                                    ->success()
+                                    ->send();
+                                })
                                 ->button()
                         ])
                         ->schema([
@@ -154,7 +161,7 @@ class MatchMakingResource extends Resource
                                     ->disableOptionsWhenSelectedInSiblingRepeaterItems()
                                     ->options(function (Get $get): array {
                                         $tournament = Filament::getTenant();
-                                        return GameHero::where('game_id', $tournament->game->id)->pluck('name','id')->toArray();
+                                        return GameHero::where('game_id', $tournament->game->id)->pluck('name', 'id')->toArray();
                                     })
                                     ->columnSpan(3)
                                     ->searchable()
@@ -259,12 +266,20 @@ class MatchMakingResource extends Resource
                         )
 
                         ->extraItemActions([
-                            Action::make('save')
-                                ->label('Save')
-                                ->action('save')
+                            Action::make('update')
+                                ->label('Update')
+                                ->action(function (array $arguments, Repeater $component) {
+                                    $itemData = $component->getItemState($arguments['item']);
+                                    MatchStat::where('id', $itemData['id'])->update($itemData);
+                                    Notification::make()
+                                    ->title('Saved Successfully.')
+                                    ->success()
+                                    ->send();
+                                })
                                 ->button()
                         ])
                         ->schema([
+                            Forms\Components\Hidden::make('id'),
                             Forms\Components\Hidden::make('tournament_team_id')
                                 ->default(function (Get $get) {
                                     return $get('../../team_b');
@@ -288,7 +303,7 @@ class MatchMakingResource extends Resource
                                     ->disableOptionsWhenSelectedInSiblingRepeaterItems()
                                     ->options(function (Get $get): array {
                                         $tournament = Filament::getTenant();
-                                        return GameHero::where('game_id', $tournament->game->id)->pluck('name','id')->toArray();
+                                        return GameHero::where('game_id', $tournament->game->id)->pluck('name', 'id')->toArray();
                                     })
                                     ->columnSpan(3)
                                     ->searchable()
@@ -363,7 +378,7 @@ class MatchMakingResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id')
-                ->sortable()
+                    ->sortable()
                     ->alignCenter(),
                 Tables\Columns\TextColumn::make('title')
                     ->searchable()

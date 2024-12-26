@@ -2,9 +2,9 @@
 
 namespace App\Filament\App\Resources\MatchMakingResource\Pages;
 
-use App\Filament\App\Resources\MatchMakingResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
+use App\Filament\App\Resources\MatchMakingResource;
 
 class EditMatchMaking extends EditRecord
 {
@@ -21,5 +21,9 @@ class EditMatchMaking extends EditRecord
                 ->requiresConfirmation() // Optional: Adds confirmation dialog
                 ->button(),
         ];
+    }
+    protected function getSaveFormAction(): Actions\Action
+    {
+        return parent::getSaveFormAction()->extraAttributes(['type' => 'button', 'wire:click' => 'save']);
     }
 }
