@@ -3,7 +3,7 @@
         {{-- team info --}}
         <div class="flex items-end w-full text-3xl font-bold">
             <div>
-                <img src="{{ $activeMatch->teamA->logo ? asset('/storage/' . $activeMatch->teamA->logo) : '' }}" alt="team a logo" class="max-w-32 border-lime-500 border-[6px]">
+                <img src="{{ $activeMatch->teamA->logo ? asset('/storage/' . $activeMatch->teamA->logo) : '' }}" alt="team a logo" class="max-w-32 border-lime-500 border-[6px] aspect-square">
             </div>
             <div class="bg-lime-500 h-max py-6 px-6 w-full">
                 <p>{{ $activeMatch->teamA->name }}</p>
@@ -17,7 +17,7 @@
                 <p>{{ $activeMatch->teamB->name }}</p>
             </div>
             <div>
-                <img src="{{ $activeMatch->teamB->logo ? asset('/storage/' . $activeMatch->teamB->logo) : '' }}" alt="team a logo" class="max-w-32 border-red-500 border-[6px]">
+                <img src="{{ $activeMatch->teamB->logo ? asset('/storage/' . $activeMatch->teamB->logo) : '' }}" alt="team a logo" class="max-w-32 border-red-500 border-[6px] aspect-square">
             </div>
         </div>
         {{-- team info end --}}
