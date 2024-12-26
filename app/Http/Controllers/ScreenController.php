@@ -18,6 +18,33 @@ class ScreenController extends Controller
         return view('screen.assets.versus', compact('tournament', 'activeMatch'));
     }
 
+    public function winner(User $id) {
+        $userId = $id->id;
+        $tournament = Tournament::query()->whereHas('users', function ($query) use ($userId) {
+            $query->where('users.id', $userId);
+        })->where('is_active', true)->firstOrFail();
+        $activeMatch = MatchMaking::query()->where('tournament_id', $tournament->id)->where('is_active', true)->with(['teamA', 'teamB'])->firstOrFail();
+        return view('screen.assets.winner', compact('tournament', 'activeMatch'));
+    }
+
+    public function mvp(User $id) {
+        $userId = $id->id;
+        $tournament = Tournament::query()->whereHas('users', function ($query) use ($userId) {
+            $query->where('users.id', $userId);
+        })->where('is_active', true)->firstOrFail();
+        $activeMatch = MatchMaking::query()->where('tournament_id', $tournament->id)->where('is_active', true)->with(['teamA', 'teamB'])->firstOrFail();
+        return view('screen.assets.mvp', compact('tournament', 'activeMatch'));
+    }
+
+    public function mvph2h(User $id) {
+        $userId = $id->id;
+        $tournament = Tournament::query()->whereHas('users', function ($query) use ($userId) {
+            $query->where('users.id', $userId);
+        })->where('is_active', true)->firstOrFail();
+        $activeMatch = MatchMaking::query()->where('tournament_id', $tournament->id)->where('is_active', true)->with(['teamA', 'teamB'])->firstOrFail();
+        return view('screen.assets.mvph2h', compact('tournament', 'activeMatch'));
+    }
+
     public function matchstats(User $id) {
         $userId = $id->id;
         $tournament = Tournament::query()->whereHas('users', function ($query) use ($userId) {
