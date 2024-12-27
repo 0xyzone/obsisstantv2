@@ -120,6 +120,7 @@ class MatchMakingResource extends Resource
                         )
                         ->addActionLabel('Add player')
                         ->visibleOn('edit')
+                        ->disabledOn('create')
                         ->defaultItems(1)
                         ->deleteAction(
                             fn(Action $action) => $action->requiresConfirmation(),
@@ -262,6 +263,7 @@ class MatchMakingResource extends Resource
                         )
                         ->addActionLabel('Add player')
                         ->visibleOn('edit')
+                        ->disabledOn('create')
                         ->defaultItems(1)
                         ->deleteAction(
                             fn(Action $action) => $action->requiresConfirmation(),
