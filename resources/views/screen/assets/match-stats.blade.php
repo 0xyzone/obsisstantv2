@@ -3,9 +3,9 @@
         {{-- team info --}}
         <div class="flex items-end w-full text-3xl font-bold">
             <div>
-                <img src="{{ $activeMatch->teamA->logo ? asset('/storage/' . $activeMatch->teamA->logo) : '' }}" alt="team a logo" class="max-w-32 border-lime-500 border-[6px] aspect-square object-cover">
+                <img src="{{ $activeMatch->teamA->logo ? asset('/storage/' . $activeMatch->teamA->logo) : '' }}" alt="team a logo" class="max-w-32 {{ ($activeMatch->winner->id == $activeMatch->team_a) ? 'border-lime-500' : 'border-red-500' }} border-[6px] aspect-square object-cover">
             </div>
-            <div class="bg-lime-500 h-max py-6 px-6 w-full">
+            <div class="{{ ($activeMatch->winner->id == $activeMatch->team_a) ? 'bg-lime-500' : 'bg-red-500' }} h-max py-6 px-6 w-full">
                 <p>{{ $activeMatch->teamA->name }}</p>
             </div>
             <div class="h-32 aspect-video bg-gray-300 flex justify-center items-center gap-2 text-6xl font-bold">
@@ -13,11 +13,11 @@
                 <p>:</p>
                 <p>{{ $activeMatch->team_b_mp }}</p>
             </div>
-            <div class="bg-red-500 w-full h-max py-6 px-6 text-right">
+            <div class="{{ ($activeMatch->winner->id == $activeMatch->team_b) ? 'bg-lime-500' : 'bg-red-500' }} w-full h-max py-6 px-6 text-right">
                 <p>{{ $activeMatch->teamB->name }}</p>
             </div>
             <div>
-                <img src="{{ $activeMatch->teamB->logo ? asset('/storage/' . $activeMatch->teamB->logo) : '' }}" alt="team a logo" class="max-w-32 border-red-500 border-[6px] aspect-square object-cover">
+                <img src="{{ $activeMatch->teamB->logo ? asset('/storage/' . $activeMatch->teamB->logo) : '' }}" alt="team a logo" class="max-w-32 {{ ($activeMatch->winner->id == $activeMatch->team_b) ? 'border-lime-500' : 'border-red-500' }} border-[6px] aspect-square object-cover">
             </div>
         </div>
         {{-- team info end --}}

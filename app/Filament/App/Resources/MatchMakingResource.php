@@ -116,7 +116,7 @@ class MatchMakingResource extends Resource
                         ->relationship(
                             name: 'statsForTeamA',
                             modifyQueryUsing:
-                            fn(Builder $query, Get $get) => $query->where('tournament_team_id', $get('team_a'))
+                            fn(Builder $query, Get $get, $record) => $query->where('tournament_team_id', $get('team_a'))->where('match_making_id', $record->id)
                         )
                         ->addActionLabel('Add player')
                         ->visibleOn('edit')
@@ -258,7 +258,7 @@ class MatchMakingResource extends Resource
                         ->relationship(
                             name: 'statsForTeamB',
                             modifyQueryUsing:
-                            fn(Builder $query, Get $get) => $query->where('tournament_team_id', $get('team_b'))
+                            fn(Builder $query, Get $get, $record) => $query->where('tournament_team_id', $get('team_b'))->where('match_making_id', $record->id)
                         )
                         ->addActionLabel('Add player')
                         ->visibleOn('edit')
