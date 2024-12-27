@@ -101,7 +101,6 @@ class MatchMakingResource extends Resource
                             fn(Builder $query, Get $get) => $query->whereBelongsTo(Filament::getTenant())->where('id', '!=', $get('team_b'))
                         )
                         ->live()
-                        ->disabledOn('edit')
                         ->required(),
                     Forms\Components\TextInput::make('team_a_mp')
                         ->label(function (Get $get) {
@@ -116,11 +115,10 @@ class MatchMakingResource extends Resource
                         ->relationship(
                             name: 'statsForTeamA',
                             modifyQueryUsing:
-                            fn(Builder $query, Get $get, $record) => $query->where('tournament_team_id', $get('team_a'))->where('match_making_id', ($record ? $record->id : null))
+                            fn(Builder $query, Get $get, $record) => $query->where('tournament_team_id', $get('team_a'))
                         )
                         ->addActionLabel('Add player')
                         ->visibleOn('edit')
-                        ->disabledOn('create')
                         ->defaultItems(1)
                         ->deleteAction(
                             fn(Action $action) => $action->requiresConfirmation(),
@@ -259,11 +257,10 @@ class MatchMakingResource extends Resource
                         ->relationship(
                             name: 'statsForTeamB',
                             modifyQueryUsing:
-                            fn(Builder $query, Get $get, $record) => $query->where('tournament_team_id', $get('team_b'))->where('match_making_id', ($record ? $record->id : null))
+                            fn(Builder $query, Get $get, $record) => $query->where('tournament_team_id', $get('team_b'))
                         )
                         ->addActionLabel('Add player')
                         ->visibleOn('edit')
-                        ->disabledOn('create')
                         ->defaultItems(1)
                         ->deleteAction(
                             fn(Action $action) => $action->requiresConfirmation(),
