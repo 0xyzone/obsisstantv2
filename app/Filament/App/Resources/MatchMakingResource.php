@@ -101,6 +101,7 @@ class MatchMakingResource extends Resource
                             fn(Builder $query, Get $get) => $query->whereBelongsTo(Filament::getTenant())->where('id', '!=', $get('team_b'))
                         )
                         ->live()
+                        ->disabledOn('edit')
                         ->required(),
                     Forms\Components\TextInput::make('team_a_mp')
                         ->label(function (Get $get) {
