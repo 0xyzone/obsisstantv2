@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\MatchMaking;
+use App\Models\MatchStat;
 use App\Models\Tournament;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -33,7 +34,9 @@ class ScreenController extends Controller
             $query->where('users.id', $userId);
         })->where('is_active', true)->firstOrFail();
         $activeMatch = MatchMaking::query()->where('tournament_id', $tournament->id)->where('is_active', true)->with(['teamA', 'teamB'])->firstOrFail();
-        return view('screen.assets.mvp', compact('tournament', 'activeMatch'));
+        $matchWinner = $activeMatch->winner;
+        $matchMvp = MatchStat::where('match_making_id', $activeMatch->id)->where('tournament_team_id', $matchWinner->id)->where('is_mvp', true)->with(['team', 'hero'])->firstOrFail();
+        return view('screen.assets.mvp', compact('tournament', 'activeMatch', 'matchMvp'));
     }
 
     public function mvph2h(User $id) {

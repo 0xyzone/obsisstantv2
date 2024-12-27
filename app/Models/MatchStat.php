@@ -42,4 +42,14 @@ class MatchStat extends Model
     {
         return $this->belongsTo(GameHero::class, 'game_hero_id');
     }
+
+    /**
+     * Get the team that owns the MatchStat
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function team(): BelongsTo
+    {
+        return $this->belongsTo(TournamentTeam::class, 'tournament_team_id');
+    }
 }
