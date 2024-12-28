@@ -50,7 +50,7 @@
                             <p>Fight Participation:</p>
                             <p class="text-4xl font-black">{{ $matchMvp->fight_participation }}%</p>
                         </div>
-                        <div class="col-span-2">
+                        <div class="col-span-2 pt-16">
                             <img src="{{ asset('img/MVP.webp') }}" alt="" class="w-5/12 mx-auto">
                         </div>
                     </div>
