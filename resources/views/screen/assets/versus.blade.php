@@ -15,7 +15,7 @@
         </div>
         @if ($activeMatch !== null) 
             <div class="w-full h-full flex absolute top-0 items-center text-2xl font-bold">
-                <div class="flex w-full items-center gap-8 mx-auto justify-around">
+                <div class="flex w-full items-center gap-8 mx-auto justify-around px-16">
                     <div class="flex flex-col justify-center items-center w-4/12">
                         <div><img src="{{ $activeMatch->teamA->logo ? asset('/storage/' . $activeMatch->teamA->logo) : "" }}" alt="" class="min-w-[20rem] max-w-[20rem] aspect-square bg-white object-cover"></div>
                         <div class="w-full text-center py-2 px-8 bg-gray-200 -skew-x-[30deg] text-6xl font-bold shadow-xl -translate-y-5">
@@ -23,7 +23,7 @@
                         </div>
                     </div>
                     <div>
-                        <p class="text-9xl">vs</p>
+                        <p class="text-9xl text-white">vs</p>
                     </div>
                     <div class="flex flex-col justify-center items-center w-4/12">
                         <div><img src="{{ $activeMatch->teamB->logo ? asset('/storage/' . $activeMatch->teamB->logo) : "" }}" alt="" class="min-w-[20rem] max-w-[20rem] aspect-square bg-white object-cover"></div>
