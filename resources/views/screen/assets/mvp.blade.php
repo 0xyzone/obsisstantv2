@@ -1,12 +1,12 @@
 <x-screen>
     <style>
-        div {
+        /* div {
             border: 1px solid cyan;
         }
 
         p {
             border: 1px solid red;
-        }
+        } */
 
     </style>
     <div class="mt-10 w-max border-l-[18px] shadow-lg" style="border-color: {{ $tournament->primary_color ?? '#ccc' }};">
