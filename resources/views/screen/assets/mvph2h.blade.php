@@ -48,7 +48,7 @@
                             <p class="text-4xl font-black">{{ $matchMvp->fight_participation }}%</p>
                         </div>
                         <div class="col-span-2">
-                            <img src="{{ asset('img/MVP.webp') }}" alt="" class="w-5/12 mx-auto">
+                            <img src="{{ asset('storage/'. $looserMvp->team->logo) }}" alt="" class="w-5/12 mx-auto">
                         </div>
                     </div>
                 </div>
@@ -84,7 +84,7 @@
                             <p class="text-4xl font-black">{{ $looserMvp->fight_participation }}%</p>
                         </div>
                         <div class="col-span-2">
-                            <img src="{{ asset('img/MVP.webp') }}" alt="" class="w-5/12 mx-auto">
+                            <img src="{{ asset('storage/'. $looserMvp->team->logo) }}" alt="" class="w-5/12 mx-auto">
                         </div>
                     </div>
                 </div>
