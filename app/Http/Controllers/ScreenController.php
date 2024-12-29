@@ -50,7 +50,11 @@ class ScreenController extends Controller
         })->where('is_active', true)->firstOrFail();
         $activeMatch = MatchMaking::query()->where('tournament_id', $tournament->id)->where('is_active', true)->with(['teamA', 'teamB'])->firstOrFail();
         $matchWinner = $activeMatch->winner;
-        $matchMvp = MatchStat::where('match_making_id', $activeMatch->id)->where('tournament_team_id', $matchWinner->id)->where('is_mvp', true)->with(['team', 'hero'])->firstOrFail();
+        if($matchWinner) {
+            $matchMvp = MatchStat::where('match_making_id', $activeMatch->id)->where('tournament_team_id', $matchWinner->id)->where('is_mvp', true)->with(['team', 'hero'])->firstOrFail();
+        }else{
+            $matchMvp = [];
+        }
 
         $tournamentPrimaryColor = $tournament->primary_color ?: 'rgba(51, 51, 51, 1)';
         $textColor = calculateBrightnessFromRgba($tournamentPrimaryColor) > 125 ? 'text-black' : 'text-white';
@@ -78,9 +82,13 @@ class ScreenController extends Controller
         })->where('is_active', true)->firstOrFail();
         $activeMatch = MatchMaking::query()->where('tournament_id', $tournament->id)->where('is_active', true)->with(['teamA', 'teamB'])->firstOrFail();
         $matchWinner = $activeMatch->winner;
-        $matchMvp = MatchStat::where('match_making_id', $activeMatch->id)->where('tournament_team_id', $matchWinner->id)->where('is_mvp', true)->with(['team', 'hero'])->firstOrFail();
+        if($matchWinner) {
+            $matchMvp = MatchStat::where('match_making_id', $activeMatch->id)->where('tournament_team_id', $matchWinner->id)->where('is_mvp', true)->with(['team', 'hero'])->firstOrFail();
+        }else{
+            $matchMvp = [];
+        }
         $looserMvp = '';
-        if($matchWinner->id == $activeMatch->team_a) {
+        if(isset($matchWinner) && $matchWinner->id == $activeMatch->team_a) {
             $looserMvp = MatchStat::where('match_making_id', $activeMatch->id)->where('tournament_team_id', $activeMatch->team_b)->where('is_mvp', true)->with('team', 'hero')->firstOrFail();
         }else{
             $looserMvp = MatchStat::where('match_making_id', $activeMatch->id)->where('tournament_team_id', $activeMatch->team_a)->where('is_mvp', true)->with('team', 'hero')->firstOrFail();
