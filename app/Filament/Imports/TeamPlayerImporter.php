@@ -25,13 +25,10 @@ class TeamPlayerImporter extends Importer
     {
         return [
             ImportColumn::make('team')
-            ->relationship(resolveUsing: function (ImportColumn $column, $value) {
-                // Ensure tenant context is available
-                $tenant = filament()->getTenant();
-        
-                // Resolve the team by name, scoped to the current tenant
+            ->relationship('team', resolveUsing: function ($value) {
+                $tenant = filament()->getTenant(); // Retrieve the current tenant
                 return $tenant->teams()->where('name', $value)->first();
-                }),
+            }),
             ImportColumn::make('name')
                 ->rules(['max:255']),
             ImportColumn::make('nickname')
