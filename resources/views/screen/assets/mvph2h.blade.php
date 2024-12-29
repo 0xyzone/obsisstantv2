@@ -52,7 +52,7 @@
                                     <p class="text-4xl font-black">{{ $matchMvp->fight_participation }}%</p>
                                 </div>
                                 <div class="col-span-2 pt-10">
-                                    <img src="{{ asset('storage/'. $matchMvp->team->logo) }}" alt="" class="w-5/12 mx-auto">
+                                    <img src="{{ asset('storage/'. $matchMvp->team->logo) }}" alt="" class="w-5/12 aspect-square mx-auto">
                                 </div>
                             </div>
                             <p class="py-2 text-4xl text-center w-full text-white font-bold" style="background-color: rgb(21, 144, 21);">{{ $matchMvp->team->name }}</p>
@@ -89,7 +89,7 @@
                                     <p class="text-4xl font-black">{{ $looserMvp->fight_participation }}%</p>
                                 </div>
                                 <div class="col-span-2 pt-10">
-                                    <img src="{{ asset('storage/'. $looserMvp->team->logo) }}" alt="" class="w-5/12 mx-auto">
+                                    <img src="{{ asset('storage/'. $looserMvp->team->logo) }}" alt="" class="w-5/12 aspect-square mx-auto">
                                 </div>
                             </div>
                             <p class="py-2 text-4xl text-center w-full text-white font-bold" style="background-color: rgb(198, 13, 13);">{{ $looserMvp->team->name }}</p>
