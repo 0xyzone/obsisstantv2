@@ -224,10 +224,4 @@ class EditTournament extends EditTenantProfile
                 ->label('Create New Tournament'),
         ];
     }
-    protected function getFormActions(): array
-    {
-
-        return []; // No save button included
-
-    }
 }
