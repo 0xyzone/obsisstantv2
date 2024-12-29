@@ -66,5 +66,9 @@
                 <p class="text-5xl font-bold px-6 py-3 {{ $textColor }}" style="background-image: linear-gradient(to right, {{ $tournamentPrimaryColor }},  {{ $tournamentPrimaryColor }}, transparent)">{{ $matchMvp->team->name }}</p>
             </div>
         </div>
+        @else
+        <div class="w-full h-full flex justify-center items-center text-6xl font-bold">
+            <p class="px-6 py-3 rounded-lg bg-gray-400 animate-pulse">No MVP Has Been Selected!</p>
+        </div>
     @endif
 </x-screen>
