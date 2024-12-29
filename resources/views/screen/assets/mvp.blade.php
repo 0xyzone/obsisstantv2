@@ -24,7 +24,7 @@
                     <p class="px-2 py-2 absolute bottom-0 font-bold text-2xl w-full h-52 flex items-end {{ $textColor }} justify-center" style="background-image: linear-gradient(to top, {{ $tournamentPrimaryColor }}, transparent)">{{ $matchMvp->hero->name }}</p>
                 </div>
                 <div class="w-4/12 overflow-hidden">
-                    <p class="text-5xl text-center py-2 font-bold {{ $textColor }}" style="background-color: {{ $tournamentPrimaryColor }};">{{ $matchMvp->player->name }}</p>
+                    <p class="text-5xl text-center py-2 font-bold {{ $textColor }}" style="background-color: {{ $tournamentPrimaryColor }};">{{ $matchMvp->player->nickname }}</p>
                     <div class="h-full" style="background-image: linear-gradient(to bottom, {{ $tournamentPrimaryColor }}, transparent)">
                         <div class="grid grid-cols-2 gap-2 px-6 pt-16 {{ $textColor }}">
                             <div class="flex flex-col justify-center">
