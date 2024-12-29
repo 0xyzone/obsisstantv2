@@ -63,4 +63,9 @@ class TeamPlayerImporter extends Importer
     {
         return 'players-import';
     }
+
+    protected function afterCreate(): void
+    {
+        $this->getRecord()->syncToCurrentTenant($this->tenant);
+    }
 }
