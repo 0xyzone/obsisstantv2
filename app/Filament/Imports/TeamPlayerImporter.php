@@ -42,7 +42,6 @@ class TeamPlayerImporter extends Importer
         return TeamPlayer::firstOrNew([
             // Update existing records, matching them by `$this->data['column_name']`
             'ingame_id' => $this->data['ingame_id'],
-        ], [
             'tournament_id' => $this->tenant->id
         ]);
 
