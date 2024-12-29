@@ -24,7 +24,7 @@
                         <p class="px-2 py-2 absolute bottom-0 font-bold text-2xl w-full h-52 flex items-end text-white justify-center" style="background-image: linear-gradient(to top, rgb(21, 144, 21), transparent)">{{ $matchMvp->hero->name }}</p>
                     </div>
                     <div class="w-full overflow-hidden">
-                        <p class="text-5xl text-center py-2 font-bold text-white" style="background-color: rgb(21, 144, 21);">{{ $matchMvp->player->name }}</p>
+                        <p class="text-5xl text-center py-2 font-bold text-white" style="background-color: rgb(21, 144, 21);">{{ $matchMvp->player->nickname }}</p>
                         <div class="h-full relative" style="background-image: linear-gradient(to bottom, rgb(21, 144, 21), transparent)">
                             <div class="grid grid-cols-2 gap-2 px-6 pt-16 text-white">
                                 <div class="flex flex-col justify-center">
@@ -61,7 +61,7 @@
                 </div>
                 <div class="flex w-full justify-center">
                     <div class="w-full overflow-hidden">
-                        <p class="text-5xl text-center py-2 font-bold text-white" style="background-color: rgb(198, 13, 13);">{{ $looserMvp->player->name }}</p>
+                        <p class="text-5xl text-center py-2 font-bold text-white" style="background-color: rgb(198, 13, 13);">{{ $looserMvp->player->nickname }}</p>
                         <div class="h-full" style="background-image: linear-gradient(to bottom, rgb(198, 13, 13), transparent)">
                             <div class="grid grid-cols-2 gap-2 px-6 pt-16 text-white">
                                 <div class="flex flex-col justify-center">
