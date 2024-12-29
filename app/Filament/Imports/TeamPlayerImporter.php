@@ -37,7 +37,7 @@ class TeamPlayerImporter extends Importer
 
     public function resolveRecord(): ?TeamPlayer
     {
-        return TeamPlayer::firstOrNew([
+        return TeamPlayer::where('tournament_id', $this->tenant->id)->firstOrNew([
             // Update existing records, matching them by `$this->data['column_name']`
             'ingame_id' => $this->data['ingame_id'],
             'tournament_id' => $this->tenant->id
