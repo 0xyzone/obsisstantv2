@@ -25,7 +25,9 @@ class TeamPlayerImporter extends Importer
     {
         return [
             ImportColumn::make('team')
-                ->relationship(resolveUsing: 'name'),
+                ->relationship(resolveUsing: function ($value) {
+                    return $this->tenant->teams()->where('name', $value)->first();
+                }),
             ImportColumn::make('name')
                 ->rules(['max:255']),
             ImportColumn::make('nickname')
@@ -40,7 +42,7 @@ class TeamPlayerImporter extends Importer
         return TeamPlayer::firstOrNew([
             // Update existing records, matching them by `$this->data['column_name']`
             'ingame_id' => $this->data['ingame_id'],
-        ],[
+        ], [
             'tournament_id' => $this->tenant->id
         ]);
 
