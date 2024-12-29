@@ -53,7 +53,7 @@ class ScreenController extends Controller
         if($matchWinner) {
             $matchMvp = MatchStat::where('match_making_id', $activeMatch->id)->where('tournament_team_id', $matchWinner->id)->where('is_mvp', true)->with(['team', 'hero'])->firstOrFail();
         }else{
-            $matchMvp = [];
+            $matchMvp = null;
         }
 
         $tournamentPrimaryColor = $tournament->primary_color ?: 'rgba(51, 51, 51, 1)';
@@ -85,13 +85,15 @@ class ScreenController extends Controller
         if($matchWinner) {
             $matchMvp = MatchStat::where('match_making_id', $activeMatch->id)->where('tournament_team_id', $matchWinner->id)->where('is_mvp', true)->with(['team', 'hero'])->firstOrFail();
         }else{
-            $matchMvp = [];
+            $matchMvp = null;
         }
         $looserMvp = '';
         if(isset($matchWinner) && $matchWinner->id == $activeMatch->team_a) {
             $looserMvp = MatchStat::where('match_making_id', $activeMatch->id)->where('tournament_team_id', $activeMatch->team_b)->where('is_mvp', true)->with('team', 'hero')->firstOrFail();
-        }else{
+        }elseif(isset($matchWinner) && $matchWinner->id == $activeMatch->team_b){
             $looserMvp = MatchStat::where('match_making_id', $activeMatch->id)->where('tournament_team_id', $activeMatch->team_a)->where('is_mvp', true)->with('team', 'hero')->firstOrFail();
+        } else {
+            $looserMvp = null;
         }
 
         $tournamentPrimaryColor = $tournament->primary_color ?: 'rgba(51, 51, 51, 1)';
