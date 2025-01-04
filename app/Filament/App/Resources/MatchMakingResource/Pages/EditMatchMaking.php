@@ -14,16 +14,22 @@ class EditMatchMaking extends EditRecord
     {
         return [
             Actions\DeleteAction::make(),
-            Actions\Action::make('submit')
-                ->label('Save')
-                ->action('save')
-                ->color('primary')
-                ->requiresConfirmation() // Optional: Adds confirmation dialog
-                ->button(),
+            // Actions\Action::make('submit')
+            //     ->label('Save')
+            //     ->action('save')
+            //     ->color('primary')
+            //     ->requiresConfirmation() // Optional: Adds confirmation dialog
+            //     ->button(),
         ];
     }
-    protected function getSaveFormAction(): Actions\Action
+    protected function getSaveFormAction(): \Filament\Actions\Action
     {
-        return parent::getSaveFormAction()->extraAttributes(['type' => 'button', 'wire:click' => 'save']);
+        return parent::getSaveFormAction()
+            ->disabled();
+    }
+
+    protected function getFormActions(): array
+    {
+        return [];
     }
 }
