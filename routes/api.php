@@ -9,6 +9,6 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 
-Route::prefix('match')->group(function () {
-    Route::get('/{user}/match', [MatchController::class, 'index']);
+Route::prefix('{user}')->group(function () {
+    Route::get('/match', [MatchController::class, 'index']);
 });
