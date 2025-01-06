@@ -83,9 +83,9 @@ class MatchMakingResource extends Resource
                         )
                         ->hidden(fn(Get $get): bool => ($get('team_a') != null && $get('team_b') != null) ? false : true),
                 ])
-                ->key(function ($record){
-                    return $record->id ?? '';
-                })
+                // ->key(function ($record){
+                //     return $record->id ?? '';
+                // })
                     ->headerActions([
                         Action::make('update')
                             ->label('Update')
