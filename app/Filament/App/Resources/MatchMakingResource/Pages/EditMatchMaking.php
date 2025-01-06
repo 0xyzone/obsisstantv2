@@ -3,7 +3,10 @@
 namespace App\Filament\App\Resources\MatchMakingResource\Pages;
 
 use Filament\Actions;
+use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
+use Filament\Forms\Get;
 use App\Filament\App\Resources\MatchMakingResource;
 
 class EditMatchMaking extends EditRecord
@@ -14,12 +17,19 @@ class EditMatchMaking extends EditRecord
     {
         return [
             Actions\DeleteAction::make(),
-            // Actions\Action::make('submit')
-            //     ->label('Save')
-            //     ->action('save')
-            //     ->color('primary')
-            //     ->requiresConfirmation() // Optional: Adds confirmation dialog
-            //     ->button(),
+            Actions\Action::make('update')
+            ->label('Update')
+            ->action(function () {
+                $data = $this->form->getState();
+                $formFields['title'] = $data['title'];
+                $formFields['match_winner'] = $data['match_winner'];
+                $formFields['tournament_admin_id'] = $data['tournament_admin_id'];
+                $this->record->update($formFields);
+                Notification::make()
+                        ->title('Saved Successfully.')
+                        ->success()
+                        ->send();
+            })
         ];
     }
     protected function getSaveFormAction(): \Filament\Actions\Action

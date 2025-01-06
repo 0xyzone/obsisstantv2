@@ -83,21 +83,6 @@ class MatchMakingResource extends Resource
                         )
                         ->hidden(fn(Get $get): bool => ($get('team_a') != null && $get('team_b') != null) ? false : true),
                 ])
-                // ->key(function ($record){
-                //     return $record->id ?? '';
-                // })
-                    ->headerActions([
-                        Action::make('update')
-                            ->label('Update')
-                            ->action(function ($record, GET $get) {
-                                $record->title = $get('title');
-                                $record->save();
-                                Notification::make()
-                                        ->title('Saved Successfully.')
-                                        ->success()
-                                        ->send();
-                            })
-                    ])
                     ->columns(3),
                 Section::make([
                     Forms\Components\Select::make('team_a')
@@ -126,9 +111,9 @@ class MatchMakingResource extends Resource
                             $record->team_a_mp = $state;
                             $record->save();
                             Notification::make()
-                                        ->title('Saved Successfully.')
-                                        ->success()
-                                        ->send();
+                                ->title('Saved Successfully.')
+                                ->success()
+                                ->send();
                         })
                         ->visibleOn('edit'),
                     Repeater::make('statsForTeamA')
@@ -276,9 +261,9 @@ class MatchMakingResource extends Resource
                             $record->team_b_mp = $state;
                             $record->save();
                             Notification::make()
-                                        ->title('Saved Successfully.')
-                                        ->success()
-                                        ->send();
+                                ->title('Saved Successfully.')
+                                ->success()
+                                ->send();
                         })
                         ->visibleOn('edit'),
                     Repeater::make('statsForTeamB')
