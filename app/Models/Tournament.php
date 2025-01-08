@@ -117,4 +117,15 @@ class Tournament extends Model implements HasAvatar
     {
         return $this->hasMany(TournamentGroupTeam::class);
     }
+
+    /**
+     * Get all of the assets for the Tournament
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function assets(): HasMany
+    {
+        return $this->hasMany(TournamentAsset::class);
+    }
+
 }
