@@ -18,6 +18,10 @@ class AssetController extends Controller
 
         $asset = TournamentAsset::where('tournament_id', $tournament->id)->first();
 
-        return $asset ?? [];
+        return $asset ?? [
+            "tournament_overview_url" => asset('img/placeholder/1920x1080.png'),
+            "bracket_url" => asset('img/placeholder/1920x1080.png'),
+            "schedule_url" => asset('img/placeholder/1920x1080.png')
+        ];
     }
 }
