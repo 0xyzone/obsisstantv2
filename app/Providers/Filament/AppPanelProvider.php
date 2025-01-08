@@ -55,6 +55,7 @@ class AppPanelProvider extends PanelProvider
             ->sidebarFullyCollapsibleOnDesktop()
             ->databaseNotifications()
             ->tenant(Tournament::class, ownershipRelationship: 'tournament')
+            ->tenantMenu(fn (): bool => false)
             ->tenantRoutePrefix('tournament')
             ->tenantRegistration(RegisterTournament::class)
             ->tenantProfile(EditTournament::class)
