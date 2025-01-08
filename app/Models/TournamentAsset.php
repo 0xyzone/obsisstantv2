@@ -38,7 +38,7 @@ class TournamentAsset extends Model
     {
         return $this->tournament_overview 
             ? asset('storage/' . $this->tournament_overview) 
-            : null;
+            : asset('img/placeholder/1920x1080.png');
     }
 
     /**
@@ -50,7 +50,7 @@ class TournamentAsset extends Model
     {
         return $this->bracket 
             ? asset('storage/' . $this->bracket) 
-            : null;
+            : asset('img/placeholder/1920x1080.png');
     }
 
     /**
@@ -62,6 +62,6 @@ class TournamentAsset extends Model
     {
         return $this->schedule 
             ? asset('storage/' . $this->schedule) 
-            : null;
+            : asset('img/placeholder/1920x1080.png');
     }
 }
