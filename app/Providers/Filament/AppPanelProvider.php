@@ -38,6 +38,7 @@ use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use SolutionForest\FilamentSimpleLightBox\SimpleLightBoxPlugin;
 use Filament\Pages\Auth\EmailVerification\EmailVerificationPrompt;
 
 class AppPanelProvider extends PanelProvider
@@ -115,6 +116,7 @@ class AppPanelProvider extends PanelProvider
             ])
             ->viteTheme('resources/css/filament/studio/theme.css')
             ->plugins([
+                SimpleLightBoxPlugin::make(),
                 BreezyCore::make()
                     ->myProfile(
                         shouldRegisterUserMenu: true, // Sets the 'account' link in the panel User Menu (default = true)

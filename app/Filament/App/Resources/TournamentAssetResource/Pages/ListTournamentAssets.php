@@ -2,9 +2,11 @@
 
 namespace App\Filament\App\Resources\TournamentAssetResource\Pages;
 
-use App\Filament\App\Resources\TournamentAssetResource;
 use Filament\Actions;
+use Filament\Facades\Filament;
+use App\Models\TournamentAsset;
 use Filament\Resources\Pages\ListRecords;
+use App\Filament\App\Resources\TournamentAssetResource;
 
 class ListTournamentAssets extends ListRecords
 {
@@ -13,7 +15,16 @@ class ListTournamentAssets extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+            ->hidden(function (): bool {
+                $tournament = Filament::getTenant()->id;
+                $asset = TournamentAsset::where('tournament_id', $tournament)->get();
+                if($asset->count() < 1) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }),
         ];
     }
 }

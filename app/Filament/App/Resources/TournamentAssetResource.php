@@ -42,10 +42,15 @@ class TournamentAssetResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('tournament.name'),
-                Tables\Columns\ImageColumn::make('tournament_overview'),
-                Tables\Columns\ImageColumn::make('bracket'),
-                Tables\Columns\ImageColumn::make('schedule'),
+                Tables\Columns\ImageColumn::make('tournament_overview')
+                ->defaultImageUrl(asset('img/placeholder/1920x1080.png'))
+                ->simpleLightbox(fn ($record) =>  $record?->image ?? asset('img/placeholder/1920x1080.png'), defaultDisplayUrl: true),
+                Tables\Columns\ImageColumn::make('bracket')
+                ->defaultImageUrl(asset('img/placeholder/1920x1080.png'))
+                ->simpleLightbox(fn ($record) =>  $record?->image ?? asset('img/placeholder/1920x1080.png'), defaultDisplayUrl: true),
+                Tables\Columns\ImageColumn::make('schedule')
+                ->defaultImageUrl(asset('img/placeholder/1920x1080.png'))
+                ->simpleLightbox(fn ($record) =>  $record?->image ?? asset('img/placeholder/1920x1080.png'), defaultDisplayUrl: true),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -58,6 +63,7 @@ class TournamentAssetResource extends Resource
             ->filters([
                 //
             ])
+            ->description('You can preview the images by clicking on it.')
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
