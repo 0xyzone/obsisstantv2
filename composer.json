@@ -26,7 +26,6 @@
         "owenvoke/blade-fontawesome": "^2.6",
         "ratchet/pawl": "^0.4.1",
         "rupadana/filament-announce": "^3.2",
-        "ryangjchandler/blade-tabler-icons": "^2.3",
         "solution-forest/filament-simplelightbox": "^0.0.10",
         "spatie/shiki-php": "2.0",
         "symfony/polyfill-php72": "^1.31"
