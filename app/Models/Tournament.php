@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Tournament extends Model implements HasAvatar
 {
     use HasFactory;
+    protected $appends = ['logo_url'];
     
     public function users(): BelongsToMany
     {

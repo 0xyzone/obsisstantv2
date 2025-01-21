@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class TeamPlayer extends Model
 {
     use HasFactory;
+    protected $appends = ['photo_url'];
 
     /**
      * Get the tournament that owns the TeamPlayer
