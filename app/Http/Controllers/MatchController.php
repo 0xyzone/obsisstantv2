@@ -19,6 +19,13 @@ class MatchController extends Controller
         return $activeMatch;
     }
 
+    public function tournament(User $user) {
+        $userId = $user->id;
+        $tournament = Tournament::query()->whereHas('users', function ($query) use ($userId) {
+            $query->where('users.id', $userId);
+        })->where('is_active', true)->firstOrFail();
+        return $tournament;
+    }
     public function mvp(User $user) {
         function calculateBrightnessFromRgba($rgbaColor) {
                     // Match and extract R, G, B values using a regular expression
