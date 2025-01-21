@@ -101,7 +101,7 @@ class Tournament extends Model implements HasAvatar
         if($this->logo) {
             return asset('storage/' . $this->logo); // Assuming $this->image contains the asset path
         }
-        return null;
+        return "";
     }
 
     public function getFilamentAvatarUrl(): ?string

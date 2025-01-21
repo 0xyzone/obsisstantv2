@@ -50,6 +50,6 @@ class TeamPlayer extends Model
         if($this->photo) {
             return asset('storage/' . $this->photo); // Assuming $this->image contains the asset path
         }
-        return null;
+        return "";
     }
 }
