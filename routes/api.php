@@ -12,6 +12,7 @@ Route::get('/user', function (Request $request) {
 
 Route::prefix('{user}')->group(function () {
     Route::get('/match', [MatchController::class, 'index']);
+    Route::get('/tournament', [MatchController::class, 'tournament']);
     Route::get('/match/mvp', [MatchController::class, 'mvp']);
     Route::get('/assets', [AssetController::class, 'index']);
 });
