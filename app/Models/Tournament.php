@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Enums\TournamentType;
 use App\Models\TournamentTeam;
 use App\Models\TournamentGroup;
+use App\Models\TournamentCaster;
 use App\Models\TournamentGroupTeam;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -127,6 +128,16 @@ class Tournament extends Model implements HasAvatar
     public function assets(): HasMany
     {
         return $this->hasMany(TournamentAsset::class);
+    }
+
+    /**
+     * Get all of the assets for the Tournament
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function casters(): HasMany
+    {
+        return $this->hasMany(TournamentCaster::class);
     }
 
 }
