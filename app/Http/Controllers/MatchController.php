@@ -23,7 +23,7 @@ class MatchController extends Controller
         $userId = $user->id;
         $tournament = Tournament::query()->whereHas('users', function ($query) use ($userId) {
             $query->where('users.id', $userId);
-        })->where('is_active', true)->firstOrFail();
+        })->where('is_active', true)->with('casters.caster')->firstOrFail();
         return $tournament;
     }
     public function mvp(User $user) {
