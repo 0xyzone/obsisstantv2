@@ -46,6 +46,7 @@ Route::group(['prefix'=> '/{id}'], function () {
     Route::get('/winner', [ScreenController::class,'winner'])->name('screen.winner');
     Route::get('/mvp', [ScreenController::class,'mvp'])->name('screen.mvp');
     Route::get('/mvph2h', [ScreenController::class,'mvph2h'])->name('screen.mvph2h');
+    Route::get('/solocaster', [ScreenController::class,'soloCaster'])->name('screen.caster1');
 });
 
 

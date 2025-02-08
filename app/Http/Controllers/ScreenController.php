@@ -160,4 +160,12 @@ class ScreenController extends Controller
         $textColor = calculateBrightnessFromRgba($tournamentPrimaryColor) > 125 ? 'text-black' : 'text-white';
         return view('screen.assets.broster', compact('tournament', 'activeMatch', 'tournamentPrimaryColor', 'textColor'));
     }
+
+    public function soloCaster(User $id) {
+        $userId = $id->id;
+        $tournament = Tournament::query()->whereHas('users', function ($query) use ($userId) {
+            $query->where('users.id', $userId);
+        })->where('is_active', true)->firstOrFail();
+        return view('screen.assets.caster', compact('tournament'));
+    }
 }
