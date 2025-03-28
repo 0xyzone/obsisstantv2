@@ -24,7 +24,7 @@ class MatchController extends Controller
         $tournament = Tournament::query()->whereHas('users', function ($query) use ($userId) {
             $query->where('users.id', $userId);
         })->where('is_active', true)->with(['casters.caster' => function($query) {
-            $query->orderBy('position', 'aesc');
+            $query->orderBy('position', 'asc');
         }])->firstOrFail();
         return $tournament;
     }
