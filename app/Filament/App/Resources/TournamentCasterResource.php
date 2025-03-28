@@ -50,8 +50,12 @@ class TournamentCasterResource extends Resource
                     ->sortable(),
                 Tables\Columns\ImageColumn::make('caster.photo_path'),
                 Tables\Columns\TextColumn::make('caster.vdo_ninja_url'),
-                Tables\Columns\TextColumn::make('position')
-                    ->searchable(),
+                Tables\Columns\SelectColumn::make('position')
+                ->options([
+                    "1" => "One",
+                    "2" => "Two",
+                    "3" => "Three",
+                ]),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
