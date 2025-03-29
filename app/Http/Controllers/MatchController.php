@@ -15,7 +15,12 @@ class MatchController extends Controller
         $tournament = Tournament::query()->whereHas('users', function ($query) use ($userId) {
             $query->where('users.id', $userId);
         })->where('is_active', true)->firstOrFail();
-        $activeMatch = MatchMaking::where('is_active', true)->where('user_id', $user->id)->where('tournament_id', $tournament->id)->with('teamA', 'teamB', 'statsForTeamA', 'statsForTeamB')->firstOrFail();
+        $activeMatch = MatchMaking::where('is_active', true)->where('user_id', $user->id)->where('tournament_id', $tournament->id)->with(['teamA', 'teamB','statsForTeamA' => function($query) {
+            $query->with('player'); // Ensure player is loaded
+        },
+        'statsForTeamB' => function($query) {
+            $query->with('player'); // Ensure player is loaded
+        }])->firstOrFail();
         return $activeMatch;
     }
 
