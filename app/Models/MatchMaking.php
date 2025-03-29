@@ -52,7 +52,7 @@ class MatchMaking extends Model
      */
     public function statsForTeamA(): HasMany
     {
-        return $this->hasMany(MatchStat::class, 'tournament_team_id', 'team_a')->where('match_making_id', $this->id);
+        return $this->hasMany(MatchStat::class, 'tournament_team_id', 'team_a')->where('match_making_id', $this->id)->with('player');
     }
 
     /**
@@ -62,7 +62,7 @@ class MatchMaking extends Model
      */
     public function statsForTeamB(): HasMany
     {
-        return $this->hasMany(MatchStat::class, 'tournament_team_id', 'team_b')->where('match_making_id', $this->id);
+        return $this->hasMany(MatchStat::class, 'tournament_team_id', 'team_b')->where('match_making_id', $this->id)->with('player');
     }
 
     /**
