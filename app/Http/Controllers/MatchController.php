@@ -20,7 +20,7 @@ class MatchController extends Controller
             'teamA',
             'teamB',
         ])->firstOrFail();
-        $statA = MatchStat::where('match_making_id', $activeMatch->id)->where('tournament_team_id', $activeMatch->teamA)->with('player')->get();
+        $statA = MatchStat::where('match_making_id', $activeMatch->id)->where('tournament_team_id', $activeMatch->teamA->id)->with('player')->get();
         $activeMatch['statA'] = $statA;
         return $activeMatch;
     }
