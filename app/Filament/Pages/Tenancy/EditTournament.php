@@ -151,19 +151,19 @@ class EditTournament extends EditTenantProfile
                     ]),
                 Section::make([
                     Section::make('Logo')
-                        ->headerActions([
-                            FormAction::make('update')
-                                ->label('Update')
-                                ->action(function (Get $get, Tournament $record) {
-                                    $data['logo'] = $get('logo');
-                                    $record->update($data);
-                                    Notify::make()
-                                        ->title('Saved Successfully.')
-                                        ->success()
-                                        ->send();
-                                })
-                                ->button()
-                        ])
+                        // ->headerActions([
+                        //     FormAction::make('update')
+                        //         ->label('Update')
+                        //         ->action(function (Get $get, Tournament $record) {
+                        //             $data['logo'] = $get('logo');
+                        //             $record->update($data);
+                        //             Notify::make()
+                        //                 ->title('Saved Successfully.')
+                        //                 ->success()
+                        //                 ->send();
+                        //         })
+                        //         ->button()
+                        // ])
                         ->schema([
                             FileUpload::make("logo")
                                 ->label('')
@@ -188,7 +188,7 @@ class EditTournament extends EditTenantProfile
                                 ->action(function (Get $get, Tournament $record) {
                                     $data['primary_color'] = $get('primary_color');
                                     $data['secondary_color'] = $get('secondary_color');
-                                    $data['accent_color'] = $get('secondary_color');
+                                    $data['accent_color'] = $get('accent_color');
                                     $record->update($data);
                                     Notify::make()
                                         ->title('Saved Successfully.')
