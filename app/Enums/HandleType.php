@@ -8,4 +8,5 @@ enum HandleType: string
     case Insta = 'instagram';
     case X = 'x';
     case Discord = 'discord';
+    case YouTube = 'youtube';
 }

@@ -5,15 +5,15 @@
             <div>
                 <img src="{{ $activeMatch->teamA->logo ? asset('/storage/' . $activeMatch->teamA->logo) : '' }}" alt="team a logo" class="max-w-32 {{ (isset($activeMatch->winner) && $activeMatch->winner->id == $activeMatch->team_a) ? 'border-lime-500' : 'border-red-500' }} border-[6px] aspect-square object-cover">
             </div>
-            <div class="{{ (isset($activeMatch->winner) && $activeMatch->winner->id == $activeMatch->team_a) ? 'bg-lime-500' : 'bg-red-500' }} h-max py-6 px-6 w-full">
+            <div class="{{ (isset($activeMatch->winner) && $activeMatch->winner->id == $activeMatch->team_a) ? 'bg-gradient-to-r from-lime-500 to-lime-800' : 'bg-gradient-to-r from-red-500 to-red-800' }} h-max py-6 px-6 w-full">
                 <p>{{ $activeMatch->teamA->name }}</p>
             </div>
-            <div class="h-32 aspect-video bg-gray-300 flex justify-center items-center gap-2 text-6xl font-bold">
+            <div class="h-32 aspect-video bg-gradient-to-r from-stone-900 via-stone-800 to-stone-900 flex justify-center items-center gap-2 text-6xl font-bold text-white">
                 <p>{{ $activeMatch->team_a_mp }}</p>
                 <p>:</p>
                 <p>{{ $activeMatch->team_b_mp }}</p>
             </div>
-            <div class="{{ (isset($activeMatch->winner) && $activeMatch->winner->id == $activeMatch->team_b) ? 'bg-lime-500' : 'bg-red-500' }} w-full h-max py-6 px-6 text-right">
+            <div class="{{ (isset($activeMatch->winner) && $activeMatch->winner->id == $activeMatch->team_b) ? 'bg-gradient-to-l from-lime-500 to-lime-800' : 'bg-gradient-to-l from-red-500 to-red-800' }} w-full h-max py-6 px-6 text-right">
                 <p>{{ $activeMatch->teamB->name }}</p>
             </div>
             <div>
@@ -29,7 +29,7 @@
                     @foreach ($activeMatch->statsForTeamA as $stat)
                     <tr class="bg-gray-300 text-xl font-bold">
                         <td>
-                            <img src="{{ $stat->hero ? ($stat->hero->image ? asset('/storage/' . $stat->hero->image) : '') : '' }}" alt="" class="w-full aspect-square object-cover">
+                            <img src="{{ $stat->hero ? ($stat->hero->image ? asset('/storage/' . $stat->hero->image) : '') : '' }}" alt="" class="h-32 aspect-[12/16] object-cover">
                         </td>
                         <td class="py-4 pl-4 font-bold text-2xl space-y-2" colspan="3">
                             <div>
@@ -41,7 +41,7 @@
                                     <p class="w-8/12 truncate">{{ $stat->player->nickname }}</p>
                                 </div>
                             </div>
-                            <p class="text-sm text-gray-500">{{ $stat->hero ? $stat->hero->name : 'No hero selected' }}</p>
+                            <p class="text-lg text-gray-500">{{ $stat->hero ? $stat->hero->name : 'No hero selected' }}</p>
                         </td>
                         <td class="px-4 space-y-4">
                             <div class="flex gap-2 items-center">
@@ -84,7 +84,7 @@
                     @foreach ($activeMatch->statsForTeamB as $stat)
                     <tr class="bg-gray-300 text-xl font-bold">
                         <td>
-                            <img src="{{ $stat->hero ? ($stat->hero->image ? asset('/storage/' . $stat->hero->image) : '') : '' }}" alt="" class="w-full aspect-square object-cover">
+                            <img src="{{ $stat->hero ? ($stat->hero->image ? asset('/storage/' . $stat->hero->image) : '') : '' }}" alt="" class="h-32 aspect-[12/16] object-cover">
                         </td>
                         <td class="py-4 pl-4 font-bold text-2xl space-y-2" colspan="3">
                             <div>
@@ -96,7 +96,7 @@
                                     {{ $stat->player->nickname }}
                                 </p>
                             </div>
-                            <p class="text-sm text-gray-500">{{ $stat->hero ? $stat->hero->name : 'No hero selected' }}</p>
+                            <p class="text-lg text-gray-500">{{ $stat->hero ? $stat->hero->name : 'No hero selected' }}</p>
                         </td>
                         <td class="px-4 space-y-4">
                             <div class="flex gap-2 items-center">
