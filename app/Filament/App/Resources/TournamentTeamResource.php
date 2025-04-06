@@ -143,7 +143,7 @@ class TournamentTeamResource extends Resource
                     Split::make([
                         ImageColumn::make('logo')
                             ->grow(false)
-                            ->size(100)
+                            ->size(150)
                             ->hidden(function ($state) {
                                 return $state ? false : true;
                             })
@@ -190,6 +190,9 @@ class TournamentTeamResource extends Resource
                     Panel::make([
                         TextColumn::make('players.name')
                             ->badge()
+                    ])
+                    ->extraAttributes([
+                        'class' => 'w-auto flex flex-wrap'
                     ]),
                 ])
                     ->space(3),
@@ -197,7 +200,7 @@ class TournamentTeamResource extends Resource
             ->contentGrid([
                 'lg' => 2,
                 'xl' => 2,
-                '2xl' => 3,
+                '2xl' => 2,
             ])
             ->filters([
                 //
