@@ -82,7 +82,7 @@
             <table class="table table-fixed w-6/12 space-y-2 border-separate border-spacing-x-0 border-spacing-y-2">
                 <tbody>
                     @foreach ($activeMatch->statsForTeamB as $stat)
-                    <tr class="{{ (isset($activeMatch->winner) && $activeMatch->winner->id == $activeMatch->team_b) ? 'bg-gradient-to-r to-lime-500/50 from-lime-800' : 'bg-gradient-to-r to-rose-500/50 from-red-800' }} text-xl font-bold">
+                    <tr class="{{ (isset($activeMatch->winner) && $activeMatch->winner->id == $activeMatch->team_b) ? 'bg-gradient-to-r to-lime-300 from-lime-700' : 'bg-gradient-to-r to-rose-300 from-red-600' }} text-xl font-bold">
                         <td>
                             <img src="{{ $stat->hero ? ($stat->hero->image ? asset('/storage/' . $stat->hero->image) : '') : '' }}" alt="" class="h-32 aspect-[12/16] object-cover">
                         </td>
