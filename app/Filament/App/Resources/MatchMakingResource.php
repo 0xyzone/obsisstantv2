@@ -187,7 +187,26 @@ class MatchMakingResource extends Resource
                                     ->inline(false)
                                     ->live()
                                     ->distinct()
-                                    ->fixIndistinctState(),
+                                    ->fixIndistinctState()
+                                    ->afterStateUpdated(function ($record) {
+                                        $match = MatchMaking::where('id', $record->match_making_id)->firstOrFail();
+                                        $statsA = MatchStat::where('match_making_id', $match->id)->where('tournament_team_id', $match->team_a)->get();
+
+                                        foreach ($statsA as $a) {
+                                            if ($a->id !== $record->id) {
+                                                $a->is_mvp = false;
+                                                $a->save();
+                                            } else {
+                                                $a->is_mvp = true;
+                                                $a->save();
+                                            }
+                                        }
+                                        Notification::make('Saved')
+                                            ->title('Changed MVP of ' . $record->team->name)
+                                            ->body('Saved changes successfully!')
+                                            ->success()
+                                            ->send();
+                                    }),
                             ])
                                 ->columns(8),
                             Group::make([
@@ -338,7 +357,25 @@ class MatchMakingResource extends Resource
                                     ->inline(false)
                                     ->live()
                                     ->distinct()
-                                    ->fixIndistinctState(),
+                                    ->fixIndistinctState()
+                                    ->afterStateUpdated(function ($record) {
+                                        $match = MatchMaking::where('id', $record->match_making_id)->firstOrFail();
+                                        $statsB = MatchStat::where('match_making_id', $match->id)->where('tournament_team_id', $match->team_b)->get();
+                                        foreach ($statsB as $b) {
+                                            if ($b->id !== $record->id) {
+                                                $b->is_mvp = false;
+                                                $b->save();
+                                            } else {
+                                                $b->is_mvp = true;
+                                                $b->save();
+                                            }
+                                        }
+                                        Notification::make('Saved')
+                                            ->title('Changed MVP of ' . $record->team->name)
+                                            ->body('Saved changes successfully!')
+                                            ->success()
+                                            ->send();
+                                    }),
                             ])
                                 ->columns(8),
                             Group::make([
