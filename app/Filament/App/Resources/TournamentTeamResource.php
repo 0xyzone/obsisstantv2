@@ -93,7 +93,7 @@ class TournamentTeamResource extends Resource
                         'default' => '3',
                         'md' => 'full'
                     ])
-                    ->columns(16)
+                    ->columns(19)
                     ->schema([
                         Forms\Components\Hidden::make('tournament_id')
                             ->default(Filament::getTenant()->id),
