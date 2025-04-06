@@ -121,7 +121,10 @@ class MatchMakingResource extends Resource
                         })
                         ->live(onBlur: true)
                         ->afterStateUpdated(function ($record, $state) {
-                            $record->team_a_mp = $state;
+                            $formattedState = is_numeric($state) && $state >= 0 && $state <= 9
+                                ? sprintf("%02d", (int) $state)
+                                : $state;
+                            $record->team_a_mp = $formattedState;
                             $record->save();
                             Notification::make()
                                 ->title($record->teamA->name . '\'s match point has been updated')
@@ -230,7 +233,7 @@ class MatchMakingResource extends Resource
                                     ->prefixIcon('fas-k')
                                     ->placeholder('Kills')
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(function($record, $state) {
+                                    ->afterStateUpdated(function ($record, $state) {
                                         if ($record) {
                                             $record->kills = $state != null ? $state : 0;
                                             $record->save();
@@ -241,7 +244,7 @@ class MatchMakingResource extends Resource
                                     ->prefixIcon('fas-d')
                                     ->placeholder('Deaths')
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(function($record, $state) {
+                                    ->afterStateUpdated(function ($record, $state) {
                                         if ($record) {
                                             $record->deaths = $state != null ? $state : 0;
                                             $record->save();
@@ -252,7 +255,7 @@ class MatchMakingResource extends Resource
                                     ->prefixIcon('fas-a')
                                     ->placeholder('Assists')
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(function($record, $state) {
+                                    ->afterStateUpdated(function ($record, $state) {
                                         if ($record) {
                                             $record->assists = $state != null ? $state : 0;
                                             $record->save();
@@ -263,7 +266,7 @@ class MatchMakingResource extends Resource
                                     ->prefixIcon('fas-g')
                                     ->placeholder('Net worth')
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(function($record, $state) {
+                                    ->afterStateUpdated(function ($record, $state) {
                                         if ($record) {
                                             $record->net_worth = $state != null ? $state : 0;
                                             $record->save();
@@ -272,7 +275,7 @@ class MatchMakingResource extends Resource
                                 TextInput::make('hero_damage')
                                     ->placeholder('Hero Damage')
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(function($record, $state) {
+                                    ->afterStateUpdated(function ($record, $state) {
                                         if ($record) {
                                             $record->hero_damage = $state != null ? $state : 0;
                                             $record->save();
@@ -281,7 +284,7 @@ class MatchMakingResource extends Resource
                                 TextInput::make('turret_damage')
                                     ->placeholder('Turret Damage')
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(function($record, $state) {
+                                    ->afterStateUpdated(function ($record, $state) {
                                         if ($record) {
                                             $record->turret_damage = $state != null ? $state : 0;
                                             $record->save();
@@ -290,7 +293,7 @@ class MatchMakingResource extends Resource
                                 TextInput::make('damage_taken')
                                     ->placeholder('Damage Taken')
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(function($record, $state) {
+                                    ->afterStateUpdated(function ($record, $state) {
                                         if ($record) {
                                             $record->damage_taken = $state != null ? $state : 0;
                                             $record->save();
@@ -301,7 +304,7 @@ class MatchMakingResource extends Resource
                                     ->placeholder('Fight Participation')
                                     ->helperText('Type without %')
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(function($record, $state) {
+                                    ->afterStateUpdated(function ($record, $state) {
                                         if ($record) {
                                             $record->fight_participation = $state != null ? $state : 0;
                                             $record->save();
@@ -456,7 +459,7 @@ class MatchMakingResource extends Resource
                                     ->prefixIcon('fas-k')
                                     ->placeholder('Kills')
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(function($record, $state) {
+                                    ->afterStateUpdated(function ($record, $state) {
                                         if ($record) {
                                             $record->kills = $state != null ? $state : 0;
                                             $record->save();
@@ -467,7 +470,7 @@ class MatchMakingResource extends Resource
                                     ->prefixIcon('fas-d')
                                     ->placeholder('Deaths')
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(function($record, $state) {
+                                    ->afterStateUpdated(function ($record, $state) {
                                         if ($record) {
                                             $record->deaths = $state != null ? $state : 0;
                                             $record->save();
@@ -478,7 +481,7 @@ class MatchMakingResource extends Resource
                                     ->prefixIcon('fas-a')
                                     ->placeholder('Assists')
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(function($record, $state) {
+                                    ->afterStateUpdated(function ($record, $state) {
                                         if ($record) {
                                             $record->assists = $state != null ? $state : 0;
                                             $record->save();
@@ -489,7 +492,7 @@ class MatchMakingResource extends Resource
                                     ->prefixIcon('fas-g')
                                     ->placeholder('Net worth')
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(function($record, $state) {
+                                    ->afterStateUpdated(function ($record, $state) {
                                         if ($record) {
                                             $record->net_worth = $state != null ? $state : 0;
                                             $record->save();
@@ -498,7 +501,7 @@ class MatchMakingResource extends Resource
                                 TextInput::make('hero_damage')
                                     ->placeholder('Hero Damage')
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(function($record, $state) {
+                                    ->afterStateUpdated(function ($record, $state) {
                                         if ($record) {
                                             $record->hero_damage = $state != null ? $state : 0;
                                             $record->save();
@@ -507,7 +510,7 @@ class MatchMakingResource extends Resource
                                 TextInput::make('turret_damage')
                                     ->placeholder('Turret Damage')
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(function($record, $state) {
+                                    ->afterStateUpdated(function ($record, $state) {
                                         if ($record) {
                                             $record->turret_damage = $state != null ? $state : 0;
                                             $record->save();
@@ -516,7 +519,7 @@ class MatchMakingResource extends Resource
                                 TextInput::make('damage_taken')
                                     ->placeholder('Damage Taken')
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(function($record, $state) {
+                                    ->afterStateUpdated(function ($record, $state) {
                                         if ($record) {
                                             $record->damage_taken = $state != null ? $state : 0;
                                             $record->save();
@@ -527,7 +530,7 @@ class MatchMakingResource extends Resource
                                     ->placeholder('Fight Participation')
                                     ->helperText('Type without %')
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(function($record, $state) {
+                                    ->afterStateUpdated(function ($record, $state) {
                                         if ($record) {
                                             $record->fight_participation = $state != null ? $state : 0;
                                             $record->save();
