@@ -17,19 +17,19 @@ class EditMatchMaking extends EditRecord
     {
         return [
             Actions\DeleteAction::make(),
-            // Actions\Action::make('update')
-            // ->label('Update')
-            // ->action(function () {
-            //     $data = $this->form->getState();
-            //     $formFields['title'] = $data['title'];
-            //     $formFields['match_winner'] = $data['match_winner'];
-            //     $formFields['tournament_admin_id'] = $data['tournament_admin_id'];
-            //     $this->record->update($formFields);
-            //     Notification::make()
-            //             ->title('Saved Successfully.')
-            //             ->success()
-            //             ->send();
-            // })
+            Actions\Action::make('update')
+            ->label('Update')
+            ->action(function () {
+                $data = $this->form->getState();
+                $formFields['title'] = $data['title'];
+                $formFields['match_winner'] = $data['match_winner'];
+                $formFields['tournament_admin_id'] = $data['tournament_admin_id'];
+                $this->record->update($formFields);
+                Notification::make()
+                        ->title('Saved Successfully.')
+                        ->success()
+                        ->send();
+            })
         ];
     }
     protected function getSaveFormAction(): \Filament\Actions\Action

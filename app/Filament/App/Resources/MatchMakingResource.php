@@ -369,7 +369,6 @@ class MatchMakingResource extends Resource
                         ->deleteAction(
                             fn(Action $action) => $action->requiresConfirmation(),
                         )
-
                         ->extraItemActions([
                             Action::make('update')
                                 ->label('Update')
