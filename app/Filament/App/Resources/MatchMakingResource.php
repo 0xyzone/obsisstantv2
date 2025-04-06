@@ -48,6 +48,9 @@ class MatchMakingResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
+            ->extraAttributes([
+                'x-on:click' => '$store.sidebar.close()'
+            ])
             ->schema([
                 Forms\Components\Hidden::make('user_id')
                     ->default(auth()->id()),
@@ -72,18 +75,28 @@ class MatchMakingResource extends Resource
                         ->options(function (Get $get): array {
                             return TournamentTeam::where('id', $get('team_a'))->orWhere('id', $get('team_b'))->pluck('name', 'id')->toArray();
                         })
-                        ->hidden(fn(Get $get): bool => ($get('team_a') != null && $get('team_b') != null) ? false : true),
-                    Forms\Components\Select::make('tournament_admin_id')
-                        ->visibleOn('edit')
-                        ->relationship(
-                            name: 'admin',
-                            titleAttribute: 'ig_name',
-                            modifyQueryUsing:
-                            fn(Builder $query, Get $get) => $query->whereBelongsTo(Filament::getTenant())
-                        )
-                        ->hidden(fn(Get $get): bool => ($get('team_a') != null && $get('team_b') != null) ? false : true),
+                        ->hidden(fn(Get $get): bool => ($get('team_a') != null && $get('team_b') != null) ? false : true)
+                        ->live()
+                        ->afterStateUpdated(function ($record, $state) {
+                            $record->match_winner = $state;
+                            $record->save();
+                            Notification::make()
+                                ->title('Winner selected!')
+                                ->body($state == $record->teamA->id ? $record->teamA->name : $record->teamB->name . ' has been selected as winner for the match.')
+                                ->success()
+                                ->send();
+                        }),
+                    // Forms\Components\Select::make('tournament_admin_id')
+                    //     ->visibleOn('edit')
+                    //     ->relationship(
+                    //         name: 'admin',
+                    //         titleAttribute: 'ig_name',
+                    //         modifyQueryUsing:
+                    //         fn(Builder $query, Get $get) => $query->whereBelongsTo(Filament::getTenant())
+                    //     )
+                    //     ->hidden(fn(Get $get): bool => ($get('team_a') != null && $get('team_b') != null) ? false : true),
                 ])
-                    ->columns(3),
+                    ->columns(2),
                 Section::make([
                     Forms\Components\Select::make('team_a')
                         ->label(function ($state) {
@@ -111,7 +124,7 @@ class MatchMakingResource extends Resource
                             $record->team_a_mp = $state;
                             $record->save();
                             Notification::make()
-                                ->title('Saved Successfully.')
+                                ->title($record->teamA->name . '\'s match point has been updated')
                                 ->success()
                                 ->send();
                         })
@@ -204,7 +217,7 @@ class MatchMakingResource extends Resource
                                             }
                                             Notification::make('Saved')
                                                 ->title('Changed MVP of ' . $record->team->name)
-                                                ->body('Saved changes successfully!')
+                                                ->body($record->player->nickname . ' has been selected as MVP from team ' . $record->team->name)
                                                 ->success()
                                                 ->send();
                                         }
@@ -215,29 +228,85 @@ class MatchMakingResource extends Resource
                                 TextInput::make('kills')
                                     ->label('')
                                     ->prefixIcon('fas-k')
-                                    ->placeholder('Kills'),
+                                    ->placeholder('Kills')
+                                    ->live(onBlur: true)
+                                    ->afterStateUpdated(function($record, $state) {
+                                        if ($record) {
+                                            $record->kills = $state != null ? $state : 0;
+                                            $record->save();
+                                        }
+                                    }),
                                 TextInput::make('deaths')
                                     ->label('')
                                     ->prefixIcon('fas-d')
-                                    ->placeholder('Deaths'),
+                                    ->placeholder('Deaths')
+                                    ->live(onBlur: true)
+                                    ->afterStateUpdated(function($record, $state) {
+                                        if ($record) {
+                                            $record->deaths = $state != null ? $state : 0;
+                                            $record->save();
+                                        }
+                                    }),
                                 TextInput::make('assists')
                                     ->label('')
                                     ->prefixIcon('fas-a')
-                                    ->placeholder('Assists'),
+                                    ->placeholder('Assists')
+                                    ->live(onBlur: true)
+                                    ->afterStateUpdated(function($record, $state) {
+                                        if ($record) {
+                                            $record->assists = $state != null ? $state : 0;
+                                            $record->save();
+                                        }
+                                    }),
                                 TextInput::make('net_worth')
                                     ->label('')
                                     ->prefixIcon('fas-g')
-                                    ->placeholder('Net worth'),
+                                    ->placeholder('Net worth')
+                                    ->live(onBlur: true)
+                                    ->afterStateUpdated(function($record, $state) {
+                                        if ($record) {
+                                            $record->net_worth = $state != null ? $state : 0;
+                                            $record->save();
+                                        }
+                                    }),
                                 TextInput::make('hero_damage')
-                                    ->placeholder('Hero Damage'),
+                                    ->placeholder('Hero Damage')
+                                    ->live(onBlur: true)
+                                    ->afterStateUpdated(function($record, $state) {
+                                        if ($record) {
+                                            $record->hero_damage = $state != null ? $state : 0;
+                                            $record->save();
+                                        }
+                                    }),
                                 TextInput::make('turret_damage')
-                                    ->placeholder('Turret Damage'),
+                                    ->placeholder('Turret Damage')
+                                    ->live(onBlur: true)
+                                    ->afterStateUpdated(function($record, $state) {
+                                        if ($record) {
+                                            $record->turret_damage = $state != null ? $state : 0;
+                                            $record->save();
+                                        }
+                                    }),
                                 TextInput::make('damage_taken')
-                                    ->placeholder('Damage Taken'),
+                                    ->placeholder('Damage Taken')
+                                    ->live(onBlur: true)
+                                    ->afterStateUpdated(function($record, $state) {
+                                        if ($record) {
+                                            $record->damage_taken = $state != null ? $state : 0;
+                                            $record->save();
+                                        }
+                                    }),
                                 TextInput::make('fight_participation')
                                     ->label('F. Participation')
                                     ->placeholder('Fight Participation')
-                                    ->helperText('Type without %'),
+                                    ->helperText('Type without %')
+                                    ->live(onBlur: true)
+                                    ->afterStateUpdated(function($record, $state) {
+                                        if ($record) {
+                                            $record->fight_participation = $state != null ? $state : 0;
+                                            $record->save();
+                                        }
+                                    }),
                             ])->columns(4)
                         ])
                         ->columnSpanFull()
@@ -282,7 +351,7 @@ class MatchMakingResource extends Resource
                             $record->team_b_mp = $state;
                             $record->save();
                             Notification::make()
-                                ->title('Saved Successfully.')
+                                ->title($record->teamB->name . '\'s match point has been updated')
                                 ->success()
                                 ->send();
                         })
@@ -375,7 +444,7 @@ class MatchMakingResource extends Resource
                                             }
                                             Notification::make('Saved')
                                                 ->title('Changed MVP of ' . $record->team->name)
-                                                ->body('Saved changes successfully!')
+                                                ->body($record->player->nickname . ' has been selected as MVP from team ' . $record->team->name)
                                                 ->success()
                                                 ->send();
                                         }
@@ -386,29 +455,85 @@ class MatchMakingResource extends Resource
                                 TextInput::make('kills')
                                     ->label('')
                                     ->prefixIcon('fas-k')
-                                    ->placeholder('Kills'),
+                                    ->placeholder('Kills')
+                                    ->live(onBlur: true)
+                                    ->afterStateUpdated(function($record, $state) {
+                                        if ($record) {
+                                            $record->kills = $state != null ? $state : 0;
+                                            $record->save();
+                                        }
+                                    }),
                                 TextInput::make('deaths')
                                     ->label('')
                                     ->prefixIcon('fas-d')
-                                    ->placeholder('Deaths'),
+                                    ->placeholder('Deaths')
+                                    ->live(onBlur: true)
+                                    ->afterStateUpdated(function($record, $state) {
+                                        if ($record) {
+                                            $record->deaths = $state != null ? $state : 0;
+                                            $record->save();
+                                        }
+                                    }),
                                 TextInput::make('assists')
                                     ->label('')
                                     ->prefixIcon('fas-a')
-                                    ->placeholder('Assists'),
+                                    ->placeholder('Assists')
+                                    ->live(onBlur: true)
+                                    ->afterStateUpdated(function($record, $state) {
+                                        if ($record) {
+                                            $record->assists = $state != null ? $state : 0;
+                                            $record->save();
+                                        }
+                                    }),
                                 TextInput::make('net_worth')
                                     ->label('')
                                     ->prefixIcon('fas-g')
-                                    ->placeholder('Net worth'),
+                                    ->placeholder('Net worth')
+                                    ->live(onBlur: true)
+                                    ->afterStateUpdated(function($record, $state) {
+                                        if ($record) {
+                                            $record->net_worth = $state != null ? $state : 0;
+                                            $record->save();
+                                        }
+                                    }),
                                 TextInput::make('hero_damage')
-                                    ->placeholder('Hero Damage'),
+                                    ->placeholder('Hero Damage')
+                                    ->live(onBlur: true)
+                                    ->afterStateUpdated(function($record, $state) {
+                                        if ($record) {
+                                            $record->hero_damage = $state != null ? $state : 0;
+                                            $record->save();
+                                        }
+                                    }),
                                 TextInput::make('turret_damage')
-                                    ->placeholder('Turret Damage'),
+                                    ->placeholder('Turret Damage')
+                                    ->live(onBlur: true)
+                                    ->afterStateUpdated(function($record, $state) {
+                                        if ($record) {
+                                            $record->turret_damage = $state != null ? $state : 0;
+                                            $record->save();
+                                        }
+                                    }),
                                 TextInput::make('damage_taken')
-                                    ->placeholder('Damage Taken'),
+                                    ->placeholder('Damage Taken')
+                                    ->live(onBlur: true)
+                                    ->afterStateUpdated(function($record, $state) {
+                                        if ($record) {
+                                            $record->damage_taken = $state != null ? $state : 0;
+                                            $record->save();
+                                        }
+                                    }),
                                 TextInput::make('fight_participation')
                                     ->label('F. Participation')
                                     ->placeholder('Fight Participation')
-                                    ->helperText('Type without %'),
+                                    ->helperText('Type without %')
+                                    ->live(onBlur: true)
+                                    ->afterStateUpdated(function($record, $state) {
+                                        if ($record) {
+                                            $record->fight_participation = $state != null ? $state : 0;
+                                            $record->save();
+                                        }
+                                    }),
                             ])->columns(4)
                         ])
                         ->itemLabel(fn(array $state): ?string => $state['team_player_id'] ? TeamPlayer::where('id', $state['team_player_id'])->first()->nickname : null)

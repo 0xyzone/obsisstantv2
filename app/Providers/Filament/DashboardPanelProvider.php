@@ -39,6 +39,7 @@ class DashboardPanelProvider extends PanelProvider
                 'primary' => Color::Emerald,
             ])
             ->emailVerification(EmailVerificationPrompt::class)
+            ->unsavedChangesAlerts()
             ->sidebarFullyCollapsibleOnDesktop()
             ->databaseNotifications()
             ->brandLogo(asset('mainLogo.png'))
