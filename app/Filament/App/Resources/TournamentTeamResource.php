@@ -124,6 +124,18 @@ class TournamentTeamResource extends Resource
                             ->downloadable()
                             ->moveFiles()
                             ->directory('images/teams/players'),
+                        Forms\Components\FileUpload::make('portrait')
+                            ->image()
+                            ->imageEditor()
+                            ->imageEditorAspectRatios([
+                                '1:1',
+                            ])
+                            ->columnSpan(3)
+                            ->panelLayout('integrated')
+                            ->openable()
+                            ->downloadable()
+                            ->moveFiles()
+                            ->directory('images/teams/players/portrait'),
                     ])
                     ->mutateRelationshipDataBeforeFillUsing(function (array $data): array {
                         $data['tournament_id'] = Filament::getTenant()->id;
@@ -191,9 +203,9 @@ class TournamentTeamResource extends Resource
                         TextColumn::make('players.name')
                             ->badge()
                     ])
-                    ->extraAttributes([
-                        'class' => 'w-auto flex flex-wrap'
-                    ]),
+                        ->extraAttributes([
+                            'class' => 'w-auto flex flex-wrap'
+                        ]),
                 ])
                     ->space(3),
             ])
