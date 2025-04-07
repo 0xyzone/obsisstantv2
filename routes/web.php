@@ -41,7 +41,9 @@ Route::group(['prefix'=> 'screen'], function () {
 Route::group(['prefix'=> '/{id}'], function () {
     Route::get('/vs', [ScreenController::class,'versus'])->name('screen.versus');
     Route::get('/teama', [ScreenController::class,'teama'])->name('screen.teama');
+    Route::get('/teamav2', [ScreenController::class,'teamav2'])->name('screen.teamav2');
     Route::get('/teamb', [ScreenController::class,'teamb'])->name('screen.teamb');
+    Route::get('/teambv2', [ScreenController::class,'teambv2'])->name('screen.teambv2');
     Route::get('/matchstats', [ScreenController::class,'matchstats'])->name('screen.matchstats');
     Route::get('/winner', [ScreenController::class,'winner'])->name('screen.winner');
     Route::get('/mvp', [ScreenController::class,'mvp'])->name('screen.mvp');
