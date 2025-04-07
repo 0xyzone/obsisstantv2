@@ -15,7 +15,7 @@
     </div>
     <div class="flex mt-10">
         <div>
-            <img src="{{ $activeMatch->teamB->logo ? asset('/storage/' . $activeMatch->teamA->logo) : "" }}" alt="" class="min-w-[10rem] max-w-[10rem] aspect-square bg-white object-cover">
+            <img src="{{ $activeMatch->teamB->logo ? asset('/storage/' . $activeMatch->teamB->logo) : "" }}" alt="" class="min-w-[10rem] max-w-[10rem] aspect-square bg-white object-cover">
         </div>
         <div class="w-max py-2 pr-32 px-8 bg-gray-200 text-6xl font-bold shadow-lg flex items-center" style="clip-path: polygon(0 0%, 10% 0, 90% 0, 100% 0%, 90% 15%, 100% 5%, 90% 45%, 100% 60%, 88% 75%, 93% 79%, 100% 100%, 0% 100%, 0 0%);">
             <p class="">{{ $activeMatch->teamB->name }}</p>
