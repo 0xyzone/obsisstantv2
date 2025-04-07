@@ -23,7 +23,7 @@ class EditMatchMaking extends EditRecord
                 $data = $this->form->getState();
                 $formFields['title'] = $data['title'];
                 $formFields['match_winner'] = $data['match_winner'];
-                $formFields['tournament_admin_id'] = $data['tournament_admin_id'];
+                // $formFields['tournament_admin_id'] = $data['tournament_admin_id'];
                 $this->record->update($formFields);
                 Notification::make()
                         ->title('Saved Successfully.')
