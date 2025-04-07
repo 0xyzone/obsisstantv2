@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Game;
 use App\Models\User;
+use App\Models\Matchup;
 use App\Enums\TournamentType;
 use App\Models\TournamentTeam;
 use App\Models\TournamentGroup;
@@ -65,6 +66,16 @@ class Tournament extends Model implements HasAvatar
     public function matches(): HasMany
     {
         return $this->hasMany(MatchMaking::class);
+    }
+
+    /**
+     * Get all of the matches for the Tournament
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function matcheups(): HasMany
+    {
+        return $this->hasMany(Matchup::class);
     }
 
     public function players(): HasMany

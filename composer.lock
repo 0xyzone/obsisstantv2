@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "83196701c2df3b7817915d63753fbdf4",
+    "content-hash": "60a30588229dc4ffa6823fba4b2b9c17",
     "packages": [
         {
             "name": "abanoubnassem/filament-grecaptcha-field",
@@ -11733,6 +11733,72 @@
                 "source": "https://github.com/webmozarts/assert/tree/1.11.0"
             },
             "time": "2022-06-03T18:03:27+00:00"
+        },
+        {
+            "name": "zenepay/filament-buddhist-date-picker",
+            "version": "1.0.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zenepay/filament-buddhist-date-picker.git",
+                "reference": "f7e5839cfc129ae8d3fa38b3c45511fe0b53d00e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zenepay/filament-buddhist-date-picker/zipball/f7e5839cfc129ae8d3fa38b3c45511fe0b53d00e",
+                "reference": "f7e5839cfc129ae8d3fa38b3c45511fe0b53d00e",
+                "shasum": ""
+            },
+            "require": {
+                "blade-ui-kit/blade-heroicons": "^2.3",
+                "php": "^8.1|^8.2|^8.3",
+                "spatie/laravel-package-tools": "^1.15.0"
+            },
+            "require-dev": {
+                "filament/tables": "^3.2",
+                "orchestra/testbench": "^9.1",
+                "pestphp/pest-plugin-livewire": "^2.1",
+                "pestphp/pest-plugin-watch": "^2.1",
+                "phpunit/phpunit": "^10.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Zenepay\\FilamentBuddhistDatePicker\\BuddhistDatePickerServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Zenepay\\FilamentBuddhistDatePicker\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nitiruj Atipongpisal (Zen)",
+                    "email": "zennitiruj@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Laravel Filament DatePicker with Bhuddist Era plugin",
+            "keywords": [
+                "buddhist",
+                "calendar",
+                "datepicker",
+                "filament",
+                "languages",
+                "laravel",
+                "thai"
+            ],
+            "support": {
+                "issues": "https://github.com/zenepay/filament-buddhist-date-picker/issues",
+                "source": "https://github.com/zenepay/filament-buddhist-date-picker/tree/1.0.7"
+            },
+            "time": "2024-10-25T14:58:38+00:00"
         }
     ],
     "packages-dev": [
