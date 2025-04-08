@@ -189,7 +189,18 @@ class MatchMakingResource extends Resource
                                     ->columnSpan(3)
                                     ->searchable()
                                     ->preload()
-                                    ->live(),
+                                    ->live()
+                                    ->afterStateUpdated( function($record, $state) {
+                                        if($record) {
+                                            $record->update(['game_hero_id' => $state]);
+                                            $hero = GameHero::where('id', $state)->first();
+                                            Notification::make('Saved')
+                                                ->title('Hero Selected!')
+                                                ->body('Selected ' . $hero->name . ' for ' . $record->player->name)
+                                                ->success()
+                                                ->send();
+                                        }
+                                    }),
                                 Forms\Components\Placeholder::make('Image')
                                     ->label('')
                                     ->content(function (Get $get) {
@@ -416,7 +427,17 @@ class MatchMakingResource extends Resource
                                     ->columnSpan(3)
                                     ->searchable()
                                     ->preload()
-                                    ->live(),
+                                    ->live()->afterStateUpdated( function($record, $state) {
+                                        if($record) {
+                                            $record->update(['game_hero_id' => $state]);
+                                            $hero = GameHero::where('id', $state)->first();
+                                            Notification::make('Saved')
+                                                ->title('Hero Selected!')
+                                                ->body('Selected ' . $hero->name . ' for ' . $record->player->name)
+                                                ->success()
+                                                ->send();
+                                        }
+                                    }),
                                 Forms\Components\Placeholder::make('Image')
                                     ->label('')
                                     ->content(function (Get $get) {
