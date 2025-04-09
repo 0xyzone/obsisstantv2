@@ -362,7 +362,10 @@ class MatchMakingResource extends Resource
                         })
                         ->live(onBlur: true)
                         ->afterStateUpdated(function ($record, $state) {
-                            $record->team_b_mp = $state;
+                            $formattedState = is_numeric($state) && $state >= 0 && $state <= 9
+                                ? sprintf("%02d", (int) $state)
+                                : $state;
+                            $record->team_b_mp = $formattedState;
                             $record->save();
                             Notification::make()
                                 ->title($record->teamB->name . '\'s match point has been updated')
