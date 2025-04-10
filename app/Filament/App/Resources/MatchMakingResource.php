@@ -47,11 +47,12 @@ class MatchMakingResource extends Resource
 
     public static function shouldRegisterNavigation(): bool
     {
-        if(Filament::getTenant()->game_id === 1) {
+        if (Filament::getTenant()->game_id === 1) {
             return true;
         } else {
             return false;
-        };
+        }
+        ;
     }
 
     public static function form(Form $form): Form
@@ -120,7 +121,7 @@ class MatchMakingResource extends Resource
                             fn(Builder $query, Get $get) => $query->whereBelongsTo(Filament::getTenant())->where('id', '!=', $get('team_b'))
                         )
                         ->live()
-                        ->disabledOn('edit')
+                        // ->disabledOn('edit')
                         ->required(),
                     Forms\Components\TextInput::make('team_a_mp')
                         ->label(function (Get $get) {
@@ -152,7 +153,10 @@ class MatchMakingResource extends Resource
                         ->visibleOn('edit')
                         ->defaultItems(1)
                         ->deleteAction(
-                            fn(Action $action) => $action->requiresConfirmation(),
+                            fn(Action $action) => $action->requiresConfirmation()
+                                ->extraAttributes([
+                                    'tabindex' => '-1',
+                                ]),
                         )
                         ->extraItemActions([
                             Action::make('update')
@@ -167,10 +171,16 @@ class MatchMakingResource extends Resource
                                     header("Refresh: 3");
                                 })
                                 ->button()
+                                ->extraAttributes([
+                                    'tabindex' => '-1',
+                                ])
                         ])
                         ->schema([
                             Forms\Components\Hidden::make('id'),
                             Forms\Components\Hidden::make('tournament_team_id')
+                            ->extraAttributes([
+                                'tabindex' => '-1',
+                            ])
                                 ->default(function (Get $get) {
                                     return $get('../../team_a');
                                 }),
@@ -185,10 +195,17 @@ class MatchMakingResource extends Resource
                                     ->live()
                                     ->preload()
                                     ->distinct()
-                                    ->searchable()
-                                    ->columnSpan(3),
+                                    ->columnSpan(3)
+                                    ->extraInputAttributes([
+                                        'tabindex' => '-1'
+                                    ]),
                                 Forms\Components\Select::make('game_hero_id')
                                     ->label('Hero')
+                                    ->extraInputAttributes([
+                                        'tabindex' => '-1',
+                                        'x-on:keydown' => 'if (["Tab","ArrowUp","ArrowDown"].includes($event.key)) $event.preventDefault()',
+                                    ])
+                                    // ->searchable()
                                     ->default(null)
                                     ->disableOptionsWhenSelectedInSiblingRepeaterItems()
                                     ->options(function (Get $get): array {
@@ -196,8 +213,6 @@ class MatchMakingResource extends Resource
                                         return GameHero::where('game_id', $tournament->game->id)->pluck('name', 'id')->toArray();
                                     })
                                     ->columnSpan(3)
-                                    ->searchable()
-                                    ->preload()
                                     ->live()
                                     ->afterStateUpdated(function ($record, $state) {
                                         if ($record) {
@@ -205,13 +220,16 @@ class MatchMakingResource extends Resource
                                             $hero = GameHero::where('id', $state)->first();
                                             Notification::make('Saved')
                                                 ->title('Hero Selected!')
-                                                ->body('Selected ' . $hero->name . ' for ' . $record->player->name)
+                                                ->body('Selected ' . ($hero->name ?? '') . ' for ' . $record->player->name)
                                                 ->success()
                                                 ->send();
                                         }
                                     }),
                                 Forms\Components\Placeholder::make('Image')
                                     ->label('')
+                                    ->extraAttributes([
+                                        'tabindex' => '-1',
+                                    ])
                                     ->content(function (Get $get) {
                                         $hero = GameHero::where('id', $get('game_hero_id'))->first();
                                         if ($hero && $hero->image_url) { // Check if hero and image_url exist
@@ -221,6 +239,9 @@ class MatchMakingResource extends Resource
                                     }),
                                 Toggle::make('is_mvp')
                                     ->inline(false)
+                                    ->extraAttributes([
+                                        'tabindex' => '-1',
+                                    ])
                                     ->live()
                                     ->distinct()
                                     ->fixIndistinctState()
@@ -334,10 +355,10 @@ class MatchMakingResource extends Resource
                         ])
                         ->columnSpanFull()
                         ->itemLabel(fn(array $state): ?string => $state['team_player_id'] ? TeamPlayer::where('id', $state['team_player_id'])->first()->nickname : null)
-                        ->collapsible()
-                        ->collapseAllAction(
-                            fn(Action $action) => $action->label('Collapse all'),
-                        )
+                        // ->collapsible()
+                        // ->collapseAllAction(
+                        //     fn(Action $action) => $action->label('Collapse all'),
+                        // )
                         ->mutateRelationshipDataBeforeCreateUsing(function (array $data, Get $get): array {
                             $data['tournament_team_id'] = $get('team_a');
                             $data['match_making_id'] = $get('../../record.id');
@@ -361,8 +382,11 @@ class MatchMakingResource extends Resource
                             fn(Builder $query, Get $get) => $query->whereBelongsTo(Filament::getTenant())->where('id', '!=', $get('team_a'))
                         )
                         ->live()
-                        ->disabledOn('edit')
-                        ->required(),
+                        // ->disabledOn('edit')
+                        ->required()
+                        ->extraInputAttributes([
+                            'tabindex' => '-1',
+                        ]),
                     Forms\Components\TextInput::make('team_b_mp')
                         ->label(function (Get $get) {
                             if ($get('team_b') != null) {
@@ -381,7 +405,10 @@ class MatchMakingResource extends Resource
                                 ->success()
                                 ->send();
                         })
-                        ->visibleOn('edit'),
+                        ->visibleOn('edit')
+                        ->extraInputAttributes([
+                            'tabindex' => '-1',
+                        ]),
                     Repeater::make('statsForTeamB')
                         ->label('Players')
                         ->relationship(
@@ -393,7 +420,10 @@ class MatchMakingResource extends Resource
                         ->visibleOn('edit')
                         ->defaultItems(1)
                         ->deleteAction(
-                            fn(Action $action) => $action->requiresConfirmation(),
+                            fn(Action $action) => $action->requiresConfirmation()
+                                ->extraAttributes([
+                                    'tabindex' => '-1',
+                                ]),
                         )
                         ->extraItemActions([
                             Action::make('update')
@@ -408,6 +438,9 @@ class MatchMakingResource extends Resource
                                     header("Refresh: 3");
                                 })
                                 ->button()
+                                ->extraAttributes([
+                                    'tabindex' => '-1',
+                                ])
                         ])
                         ->schema([
                             Forms\Components\Hidden::make('id'),
@@ -425,10 +458,16 @@ class MatchMakingResource extends Resource
                                     ->label('Player')
                                     ->live()
                                     ->distinct()
-                                    ->searchable()
                                     ->preload()
-                                    ->columnSpan(3),
+                                    ->columnSpan(3)
+                                    ->extraInputAttributes([
+                                        'tabindex' => -1,
+                                    ]),
                                 Forms\Components\Select::make('game_hero_id')
+                                    ->extraInputAttributes([
+                                        'tabindex' => -1,
+                                    ])
+                                    // ->searchable()
                                     ->label('Hero')
                                     ->default(null)
                                     ->disableOptionsWhenSelectedInSiblingRepeaterItems()
@@ -437,20 +476,23 @@ class MatchMakingResource extends Resource
                                         return GameHero::where('game_id', $tournament->game->id)->pluck('name', 'id')->toArray();
                                     })
                                     ->columnSpan(3)
-                                    ->searchable()
                                     ->preload()
-                                    ->live()->afterStateUpdated(function ($record, $state) {
+                                    ->live()
+                                    ->afterStateUpdated(function ($record, $state) {
                                         if ($record) {
                                             $record->update(['game_hero_id' => $state]);
                                             $hero = GameHero::where('id', $state)->first();
                                             Notification::make('Saved')
                                                 ->title('Hero Selected!')
-                                                ->body('Selected ' . $hero->name . ' for ' . $record->player->name)
+                                                ->body('Selected ' . ($hero->name ?? '') . ' for ' . $record->player->name)
                                                 ->success()
                                                 ->send();
                                         }
                                     }),
                                 Forms\Components\Placeholder::make('Image')
+                                    ->extraAttributes([
+                                        'tabindex' => '-1',
+                                    ])
                                     ->label('')
                                     ->content(function (Get $get) {
                                         $hero = GameHero::where('id', $get('game_hero_id'))->first();
@@ -460,6 +502,9 @@ class MatchMakingResource extends Resource
                                         return '';
                                     }),
                                 Toggle::make('is_mvp')
+                                    ->extraAttributes([
+                                        'tabindex' => '-1',
+                                    ])
                                     ->inline(false)
                                     ->live()
                                     ->distinct()
@@ -572,10 +617,10 @@ class MatchMakingResource extends Resource
                             ])->columns(4)
                         ])
                         ->itemLabel(fn(array $state): ?string => $state['team_player_id'] ? TeamPlayer::where('id', $state['team_player_id'])->first()->nickname : null)
-                        ->collapsible()
-                        ->collapseAllAction(
-                            fn(Action $action) => $action->label('Collapse all'),
-                        )
+                        // ->collapsible()
+                        // ->collapseAllAction(
+                        //     fn(Action $action) => $action->label('Collapse all'),
+                        // )
                         ->maxItems(5)
                         ->columnSpanFull()
                         ->mutateRelationshipDataBeforeCreateUsing(function (array $data, Get $get): array {

@@ -88,6 +88,17 @@ return [
 
     'panel' => [
         'tenantRegistrationRedirect' => false,
-    ]
+    ],
 
+    'forms' => [
+        'components' => [
+            'select' => [
+                'searchable' => [
+                    'search_input_attributes' => [
+                        'tabindex' => -1,
+                    ],
+                ],
+            ],
+        ],
+    ],
 ];
