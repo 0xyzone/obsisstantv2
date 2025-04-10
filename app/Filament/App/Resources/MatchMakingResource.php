@@ -715,81 +715,80 @@ class MatchMakingResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make()
-                ->iconButton(),
-                // Tables\Actions\DeleteAction::make(),
-                Tables\Actions\Action::make('Dublicate')
-                ->iconButton()
-                ->icon('heroicon-m-document-duplicate')
-                    ->form([
-                        TextInput::make('title')
-                            ->default(function ($record) {
-                                return $record->title;
-                            }),
-                        Forms\Components\Hidden::make('user_id')
-                            ->default(auth()->id()),
-                        Forms\Components\Hidden::make('tournament_id')
-                            ->default(Filament::getTenant()->id),
-                        Forms\Components\Hidden::make('team_a')
-                            ->default(fn($record) => $record->team_a)
-                            ->columnSpan(1),
-                        Forms\Components\Hidden::make('team_b')
-                            ->default(fn($record) => $record->team_b)
-                            ->columnSpan(1),
-                    ])
-                    ->action(function (array $data) {
-                        // dd($data);
-                        $match = MatchMaking::create([
-                            'title' => $data['title'],
-                            'tournament_id' => $data['tournament_id'],
-                            'user_id' => $data['user_id'],
-                            'team_a' => $data['team_a'],
-                            'team_b' => $data['team_b'],
-                        ]);
-                        Notification::make('Created')
-                            ->title('Dublicated Match!')
-                            ->success()
-                            ->send();
-                    }),
-                Tables\Actions\Action::make('Publish Admin info')
-                    ->iconButton()
-                    ->icon('heroicon-s-megaphone')
-                    ->hidden(fn($record): bool => $record->admin ? false : true)
-                    ->form([
-                        Select::make('tournament.webhook')
-                            ->label('Select Channel')
-                            ->required()
-                            ->relationship(
-                                name: 'tournament.webhooks',
-                                titleAttribute: 'channel_name',
-                                modifyQueryUsing:
-                                fn(Builder $query, Get $get) => $query->whereBelongsTo(Filament::getTenant())
-                            )
-                    ])
-                    ->action(function (Model $record, array $data) {
-                        // dd('test');
-                        $webhook = TournamentWebhook::find($data['tournament']['webhook']);
-                        $webhookUrl = $webhook->link;
-                        // dd($webhook->link);
-                        $teamA = $record->teamA->name;
-                        $teamB = $record->teamB->name;
-                        $admin = $record->admin->ig_name . " - " . $record->admin->ig_id . " (" . $record->admin->server_id . ")";
-                        // dd([$admin, $teamA, $teamB]);
-            
-                        $payload = [
-                            'embeds' => [
-                                [
-                                    'title' => 'Lobby Details for: ' . $teamA . ' vs ' . $teamB,
-                                    'description' => 'Admin: ' . $admin,
-                                    'color' => 0xFF5733,
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\EditAction::make(),
+                    // Tables\Actions\DeleteAction::make(),
+                    Tables\Actions\Action::make('Dublicate')
+                        ->icon('heroicon-m-document-duplicate')
+                        ->form([
+                            TextInput::make('title')
+                                ->default(function ($record) {
+                                    return $record->title;
+                                }),
+                            Forms\Components\Hidden::make('user_id')
+                                ->default(auth()->id()),
+                            Forms\Components\Hidden::make('tournament_id')
+                                ->default(Filament::getTenant()->id),
+                            Forms\Components\Hidden::make('team_a')
+                                ->default(fn($record) => $record->team_a)
+                                ->columnSpan(1),
+                            Forms\Components\Hidden::make('team_b')
+                                ->default(fn($record) => $record->team_b)
+                                ->columnSpan(1),
+                        ])
+                        ->action(function (array $data) {
+                            // dd($data);
+                            $match = MatchMaking::create([
+                                'title' => $data['title'],
+                                'tournament_id' => $data['tournament_id'],
+                                'user_id' => $data['user_id'],
+                                'team_a' => $data['team_a'],
+                                'team_b' => $data['team_b'],
+                            ]);
+                            Notification::make('Created')
+                                ->title('Dublicated Match!')
+                                ->success()
+                                ->send();
+                        }),
+                    Tables\Actions\Action::make('Publish Admin info')
+                        ->icon('heroicon-s-megaphone')
+                        ->hidden(fn($record): bool => $record->admin ? false : true)
+                        ->form([
+                            Select::make('tournament.webhook')
+                                ->label('Select Channel')
+                                ->required()
+                                ->relationship(
+                                    name: 'tournament.webhooks',
+                                    titleAttribute: 'channel_name',
+                                    modifyQueryUsing:
+                                    fn(Builder $query, Get $get) => $query->whereBelongsTo(Filament::getTenant())
+                                )
+                        ])
+                        ->action(function (Model $record, array $data) {
+                            // dd('test');
+                            $webhook = TournamentWebhook::find($data['tournament']['webhook']);
+                            $webhookUrl = $webhook->link;
+                            // dd($webhook->link);
+                            $teamA = $record->teamA->name;
+                            $teamB = $record->teamB->name;
+                            $admin = $record->admin->ig_name . " - " . $record->admin->ig_id . " (" . $record->admin->server_id . ")";
+                            // dd([$admin, $teamA, $teamB]);
+                
+                            $payload = [
+                                'embeds' => [
+                                    [
+                                        'title' => 'Lobby Details for: ' . $teamA . ' vs ' . $teamB,
+                                        'description' => 'Admin: ' . $admin,
+                                        'color' => 0xFF5733,
+                                    ]
                                 ]
-                            ]
-                        ];
+                            ];
 
-                        Http::post($webhookUrl, $payload);
+                            Http::post($webhookUrl, $payload);
 
-                    })
-            ], position: ActionsPosition::BeforeColumns)
+                        })
+                ])
+            ])
             ->defaultSort('id', 'desc')
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
