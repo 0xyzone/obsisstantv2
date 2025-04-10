@@ -4,6 +4,7 @@ namespace App\Filament\App\Resources;
 
 use Closure;
 use Filament\Forms;
+use Filament\Forms\Components\Split;
 use Filament\Tables;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
@@ -30,6 +31,7 @@ use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Enums\ActionsPosition;
 use Filament\Forms\Components\Actions\Action;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\App\Resources\MatchMakingResource\Pages;
@@ -178,9 +180,9 @@ class MatchMakingResource extends Resource
                         ->schema([
                             Forms\Components\Hidden::make('id'),
                             Forms\Components\Hidden::make('tournament_team_id')
-                            ->extraAttributes([
-                                'tabindex' => '-1',
-                            ])
+                                ->extraAttributes([
+                                    'tabindex' => '-1',
+                                ])
                                 ->default(function (Get $get) {
                                     return $get('../../team_a');
                                 }),
@@ -638,6 +640,10 @@ class MatchMakingResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->recordClasses(fn(Model $record) => match ($record->is_active) {
+                1 => 'bg-lime-500/20 hover:!bg-lime-500/40',
+                default => null
+            })
             ->columns([
                 Tables\Columns\TextColumn::make('id')
                     ->sortable()
@@ -709,9 +715,45 @@ class MatchMakingResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                ->iconButton(),
+                // Tables\Actions\DeleteAction::make(),
+                Tables\Actions\Action::make('Dublicate')
+                ->iconButton()
+                ->icon('heroicon-m-document-duplicate')
+                    ->form([
+                        TextInput::make('title')
+                            ->default(function ($record) {
+                                return $record->title;
+                            }),
+                        Forms\Components\Hidden::make('user_id')
+                            ->default(auth()->id()),
+                        Forms\Components\Hidden::make('tournament_id')
+                            ->default(Filament::getTenant()->id),
+                        Forms\Components\Hidden::make('team_a')
+                            ->default(fn($record) => $record->team_a)
+                            ->columnSpan(1),
+                        Forms\Components\Hidden::make('team_b')
+                            ->default(fn($record) => $record->team_b)
+                            ->columnSpan(1),
+                    ])
+                    ->action(function (array $data) {
+                        // dd($data);
+                        $match = MatchMaking::create([
+                            'title' => $data['title'],
+                            'tournament_id' => $data['tournament_id'],
+                            'user_id' => $data['user_id'],
+                            'team_a' => $data['team_a'],
+                            'team_b' => $data['team_b'],
+                        ]);
+                        Notification::make('Created')
+                            ->title('Dublicated Match!')
+                            ->success()
+                            ->send();
+                    }),
                 Tables\Actions\Action::make('Publish Admin info')
-                    ->button()
+                    ->iconButton()
+                    ->icon('heroicon-s-megaphone')
                     ->hidden(fn($record): bool => $record->admin ? false : true)
                     ->form([
                         Select::make('tournament.webhook')
@@ -747,7 +789,7 @@ class MatchMakingResource extends Resource
                         Http::post($webhookUrl, $payload);
 
                     })
-            ])
+            ], position: ActionsPosition::BeforeColumns)
             ->defaultSort('id', 'desc')
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -767,7 +809,7 @@ class MatchMakingResource extends Resource
     {
         return [
             'index' => Pages\ListMatchMakings::route('/'),
-            'create' => Pages\CreateMatchMaking::route('/create'),
+            // 'create' => Pages\CreateMatchMaking::route('/create'),
             'edit' => Pages\EditMatchMaking::route('/{record}/edit'),
         ];
     }
