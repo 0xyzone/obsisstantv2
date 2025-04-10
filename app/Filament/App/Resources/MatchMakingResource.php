@@ -717,39 +717,7 @@ class MatchMakingResource extends Resource
             ->actions([
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\EditAction::make(),
-                    // Tables\Actions\DeleteAction::make(),
-                    Tables\Actions\Action::make('Dublicate')
-                        ->icon('heroicon-m-document-duplicate')
-                        ->form([
-                            TextInput::make('title')
-                                ->default(function ($record) {
-                                    return $record->title;
-                                }),
-                            Forms\Components\Hidden::make('user_id')
-                                ->default(auth()->id()),
-                            Forms\Components\Hidden::make('tournament_id')
-                                ->default(Filament::getTenant()->id),
-                            Forms\Components\Hidden::make('team_a')
-                                ->default(fn($record) => $record->team_a)
-                                ->columnSpan(1),
-                            Forms\Components\Hidden::make('team_b')
-                                ->default(fn($record) => $record->team_b)
-                                ->columnSpan(1),
-                        ])
-                        ->action(function (array $data) {
-                            // dd($data);
-                            $match = MatchMaking::create([
-                                'title' => $data['title'],
-                                'tournament_id' => $data['tournament_id'],
-                                'user_id' => $data['user_id'],
-                                'team_a' => $data['team_a'],
-                                'team_b' => $data['team_b'],
-                            ]);
-                            Notification::make('Created')
-                                ->title('Dublicated Match!')
-                                ->success()
-                                ->send();
-                        }),
+                    Tables\Actions\DeleteAction::make(),
                     Tables\Actions\Action::make('Publish Admin info')
                         ->icon('heroicon-s-megaphone')
                         ->hidden(fn($record): bool => $record->admin ? false : true)
@@ -787,7 +755,40 @@ class MatchMakingResource extends Resource
                             Http::post($webhookUrl, $payload);
 
                         })
-                ])
+                ]),
+                Tables\Actions\Action::make('Dublicate')
+                    ->iconButton()
+                    ->icon('heroicon-m-document-duplicate')
+                    ->form([
+                        TextInput::make('title')
+                            ->default(function ($record) {
+                                return $record->title;
+                            }),
+                        Forms\Components\Hidden::make('user_id')
+                            ->default(auth()->id()),
+                        Forms\Components\Hidden::make('tournament_id')
+                            ->default(Filament::getTenant()->id),
+                        Forms\Components\Hidden::make('team_a')
+                            ->default(fn($record) => $record->team_a)
+                            ->columnSpan(1),
+                        Forms\Components\Hidden::make('team_b')
+                            ->default(fn($record) => $record->team_b)
+                            ->columnSpan(1),
+                    ])
+                    ->action(function (array $data) {
+                        // dd($data);
+                        $match = MatchMaking::create([
+                            'title' => $data['title'],
+                            'tournament_id' => $data['tournament_id'],
+                            'user_id' => $data['user_id'],
+                            'team_a' => $data['team_a'],
+                            'team_b' => $data['team_b'],
+                        ]);
+                        Notification::make('Created')
+                            ->title('Dublicated Match!')
+                            ->success()
+                            ->send();
+                    }),
             ])
             ->defaultSort('id', 'desc')
             ->bulkActions([
