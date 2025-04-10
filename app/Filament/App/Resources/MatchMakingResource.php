@@ -45,6 +45,15 @@ class MatchMakingResource extends Resource
     protected static ?string $tenantOwnershipRelationshipName = 'tournament';
     protected static ?string $tenantRelationshipName = 'matches';
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        if(Filament::getTenant()->game_id === 1) {
+            return true;
+        } else {
+            return false;
+        };
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -190,8 +199,8 @@ class MatchMakingResource extends Resource
                                     ->searchable()
                                     ->preload()
                                     ->live()
-                                    ->afterStateUpdated( function($record, $state) {
-                                        if($record) {
+                                    ->afterStateUpdated(function ($record, $state) {
+                                        if ($record) {
                                             $record->update(['game_hero_id' => $state]);
                                             $hero = GameHero::where('id', $state)->first();
                                             Notification::make('Saved')
@@ -430,8 +439,8 @@ class MatchMakingResource extends Resource
                                     ->columnSpan(3)
                                     ->searchable()
                                     ->preload()
-                                    ->live()->afterStateUpdated( function($record, $state) {
-                                        if($record) {
+                                    ->live()->afterStateUpdated(function ($record, $state) {
+                                        if ($record) {
                                             $record->update(['game_hero_id' => $state]);
                                             $hero = GameHero::where('id', $state)->first();
                                             Notification::make('Saved')

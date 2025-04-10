@@ -2,16 +2,17 @@
 
 namespace App\Filament\App\Resources;
 
-use App\Filament\App\Resources\TournamentAdminResource\Pages;
-use App\Filament\App\Resources\TournamentAdminResource\RelationManagers;
-use App\Models\TournamentAdmin;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Facades\Filament;
+use App\Models\TournamentAdmin;
+use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\App\Resources\TournamentAdminResource\Pages;
+use App\Filament\App\Resources\TournamentAdminResource\RelationManagers;
 
 class TournamentAdminResource extends Resource
 {
@@ -22,6 +23,14 @@ class TournamentAdminResource extends Resource
     protected static ?string $activeNavigationIcon = 'eos-admin-panel-settings';
     protected static ?string $tenantOwnershipRelationshipName = 'tournament';
     protected static ?string $tenantRelationshipName = 'admins';
+    public static function shouldRegisterNavigation(): bool
+    {
+        if(Filament::getTenant()->game_id === 1) {
+            return true;
+        } else {
+            return false;
+        };
+    }
 
     public static function form(Form $form): Form
     {
