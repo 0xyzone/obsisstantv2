@@ -775,8 +775,11 @@ class MatchMakingResource extends Resource
                             ->default(fn($record) => $record->team_b)
                             ->columnSpan(1),
                     ])
-                    ->action(function (array $data) {
-                        // dd($data);
+                    ->action(function (array $data, MatchMaking $record) {
+                        // dd($record->statsForTeamA()->get());
+                        $teamAplayers = $record->statsForTeamA()->get();
+                        $teamBplayers = $record->statsForTeamB()->get();
+                        // dd($teamBplayers);
                         $match = MatchMaking::create([
                             'title' => $data['title'],
                             'tournament_id' => $data['tournament_id'],
@@ -784,6 +787,25 @@ class MatchMakingResource extends Resource
                             'team_a' => $data['team_a'],
                             'team_b' => $data['team_b'],
                         ]);
+                        if($teamAplayers) {
+                            foreach($teamAplayers as $player) {
+                                // dd($player->tournament_team_id);
+                                MatchStat::create([
+                                    'tournament_team_id' => $player->tournament_team_id,
+                                    'match_making_id' => $match->id,
+                                    'team_player_id' => $player->team_player_id,
+                                ]);
+                            }
+                        };
+                        if($teamBplayers) {
+                            foreach($teamBplayers as $player) {
+                                MatchStat::create([
+                                    'tournament_team_id' => $player->tournament_team_id,
+                                    'match_making_id' => $match->id,
+                                    'team_player_id' => $player->team_player_id,
+                                ]);
+                            }
+                        };
                         Notification::make('Created')
                             ->title('Dublicated Match!')
                             ->success()
