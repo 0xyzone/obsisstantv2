@@ -674,20 +674,42 @@ class MatchMakingResource extends Resource
                         }
                     }),
                 Tables\Columns\TextInputColumn::make('team_a_mp')
+                    ->afterStateUpdated(function ($record, $state) {
+                        $formattedState = is_numeric($state) && $state >= 0 && $state <= 9
+                            ? sprintf("%02d", (int) $state)
+                            : $state;
+                        $record->team_a_mp = $formattedState;
+                        $record->save();
+                        Notification::make()
+                            ->title($record->teamA->name . '\'s match point has been updated')
+                            ->success()
+                            ->send();
+                    })
                     ->alignCenter(),
                 Tables\Columns\TextColumn::make('teamB.name')
                     ->extraAttributes(function ($record) {
                         if ($record->match_winner != null) {
                             if ($record->match_winner == $record->team_b) {
-                                return ['class' => 'dark:bg-lime-700 bg-lime-300'];
+                                return ['class' => 'dark:bg-lime-700 bg-lime-300', 'tabindex' => '-1'];
                             } else {
-                                return ['class' => 'dark:bg-red-700 bg-red-300'];
+                                return ['class' => 'dark:bg-red-700 bg-red-300', 'tabindex' => '-1'];
                             }
                         } else {
-                            return [];
+                            return ['tabindex' => '-1'];
                         }
                     }),
                 Tables\Columns\TextInputColumn::make('team_b_mp')
+                    ->afterStateUpdated(function ($record, $state) {
+                        $formattedState = is_numeric($state) && $state >= 0 && $state <= 9
+                            ? sprintf("%02d", (int) $state)
+                            : $state;
+                        $record->team_b_mp = $formattedState;
+                        $record->save();
+                        Notification::make()
+                            ->title($record->teamB->name . '\'s match point has been updated')
+                            ->success()
+                            ->send();
+                    })
                     ->alignCenter(),
                 Tables\Columns\ToggleColumn::make('is_active')
                     ->beforeStateUpdated(function (MatchMaking $record) {
@@ -787,9 +809,8 @@ class MatchMakingResource extends Resource
                             'team_a' => $data['team_a'],
                             'team_b' => $data['team_b'],
                         ]);
-                        if($teamAplayers) {
-                            foreach($teamAplayers as $player) {
-                                // dd($player->tournament_team_id);
+                        if ($teamAplayers) {
+                            foreach ($teamAplayers as $player) {
                                 MatchStat::create([
                                     'tournament_team_id' => $player->tournament_team_id,
                                     'match_making_id' => $match->id,
@@ -797,8 +818,8 @@ class MatchMakingResource extends Resource
                                 ]);
                             }
                         };
-                        if($teamBplayers) {
-                            foreach($teamBplayers as $player) {
+                        if ($teamBplayers) {
+                            foreach ($teamBplayers as $player) {
                                 MatchStat::create([
                                     'tournament_team_id' => $player->tournament_team_id,
                                     'match_making_id' => $match->id,
