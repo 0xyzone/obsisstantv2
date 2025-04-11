@@ -790,6 +790,7 @@ class MatchMakingResource extends Resource
                             ->send();
                     }),
             ])
+            ->poll(10)
             ->defaultSort('id', 'desc')
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
