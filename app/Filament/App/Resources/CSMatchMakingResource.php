@@ -34,22 +34,23 @@ use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Enums\ActionsPosition;
 use Filament\Forms\Components\Actions\Action;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\App\Resources\MatchMakingResource\Pages;
-use App\Filament\App\Resources\MatchMakingResource\RelationManagers;
+use App\Filament\App\Resources\CSMatchMakingResource\Pages;
+use App\Filament\App\Resources\CSMatchMakingResource\RelationManagers;
 
-class MatchMakingResource extends Resource
+class CSMatchMakingResource extends Resource
 {
     protected static ?string $model = MatchMaking::class;
     protected static ?int $navigationSort = 4;
+    protected static ?string $slug = "csmatches";
     protected static ?string $navigationGroup = 'Manage';
-    protected static ?string $navigationLabel = 'Matches';
+    protected static ?string $navigationLabel = 'CS Matches';
     protected static ?string $navigationIcon = 'tabler-tournament';
     protected static ?string $tenantOwnershipRelationshipName = 'tournament';
     protected static ?string $tenantRelationshipName = 'matches';
 
     public static function shouldRegisterNavigation(): bool
     {
-        if (Filament::getTenant()->game->name === "Mobile Legends") {
+        if (Filament::getTenant()->game->name === "Counter Strike 2") {
             return true;
         } else {
             return false;
