@@ -49,7 +49,7 @@ class MatchMakingResource extends Resource
 
     public static function shouldRegisterNavigation(): bool
     {
-        if (Filament::getTenant()->game->name === "Mobile Legends") {
+        if (Filament::getTenant()->game->name === "Mobile Legends" || Filament::getTenant()->game->name === "Dota 2") {
             return true;
         } else {
             return false;
