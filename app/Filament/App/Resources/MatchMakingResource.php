@@ -160,23 +160,23 @@ class MatchMakingResource extends Resource
                                     'tabindex' => '-1',
                                 ]),
                         )
-                        ->extraItemActions([
-                            Action::make('update')
-                                ->label('Update')
-                                ->action(function (array $arguments, Repeater $component) {
-                                    $itemData = $component->getItemState($arguments['item']);
-                                    MatchStat::where('id', $itemData['id'])->update($itemData);
-                                    Notification::make()
-                                        ->title('Saved Successfully.')
-                                        ->success()
-                                        ->send();
-                                    header("Refresh: 3");
-                                })
-                                ->button()
-                                ->extraAttributes([
-                                    'tabindex' => '-1',
-                                ])
-                        ])
+                        // ->extraItemActions([
+                        //     Action::make('update')
+                        //         ->label('Update')
+                        //         ->action(function (array $arguments, Repeater $component) {
+                        //             $itemData = $component->getItemState($arguments['item']);
+                        //             MatchStat::where('id', $itemData['id'])->update($itemData);
+                        //             Notification::make()
+                        //                 ->title('Saved Successfully.')
+                        //                 ->success()
+                        //                 ->send();
+                        //             header("Refresh: 3");
+                        //         })
+                        //         ->button()
+                        //         ->extraAttributes([
+                        //             'tabindex' => '-1',
+                        //         ])
+                        // ])
                         ->schema([
                             Forms\Components\Hidden::make('id'),
                             Forms\Components\Hidden::make('tournament_team_id')
@@ -427,23 +427,23 @@ class MatchMakingResource extends Resource
                                     'tabindex' => '-1',
                                 ]),
                         )
-                        ->extraItemActions([
-                            Action::make('update')
-                                ->label('Update')
-                                ->action(function (array $arguments, Repeater $component) {
-                                    $itemData = $component->getItemState($arguments['item']);
-                                    MatchStat::where('id', $itemData['id'])->update($itemData);
-                                    Notification::make()
-                                        ->title('Saved Successfully.')
-                                        ->success()
-                                        ->send();
-                                    header("Refresh: 3");
-                                })
-                                ->button()
-                                ->extraAttributes([
-                                    'tabindex' => '-1',
-                                ])
-                        ])
+                        // ->extraItemActions([
+                        //     Action::make('update')
+                        //         ->label('Update')
+                        //         ->action(function (array $arguments, Repeater $component) {
+                        //             $itemData = $component->getItemState($arguments['item']);
+                        //             MatchStat::where('id', $itemData['id'])->update($itemData);
+                        //             Notification::make()
+                        //                 ->title('Saved Successfully.')
+                        //                 ->success()
+                        //                 ->send();
+                        //             header("Refresh: 3");
+                        //         })
+                        //         ->button()
+                        //         ->extraAttributes([
+                        //             'tabindex' => '-1',
+                        //         ])
+                        // ])
                         ->schema([
                             Forms\Components\Hidden::make('id'),
                             Forms\Components\Hidden::make('tournament_team_id')
