@@ -23,6 +23,11 @@ Route::get('/connectOBS', function () {
     return response()->json(['status' => 'success']);
 })->name('connectOBS');
 
+Route::prefix('obs')->group(function () {
+    Route::post('/start', [ObsController::class, 'startStream']);
+    Route::post('/scene/{scene}', [ObsController::class, 'switchScene']);
+});
+
 Route::get('demo', function() {
     if(auth()->user()){
         $tenant = filament()->getTenant();
@@ -53,4 +58,4 @@ Route::group(['prefix'=> '/{id}'], function () {
 });
 
 
-Route::get('/{user}/start', StartingSoon::class)->name('starting');
+// Route::get('/{user}/start', StartingSoon::class)->name('starting');

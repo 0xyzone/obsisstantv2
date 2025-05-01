@@ -31,6 +31,7 @@
         "solution-forest/filament-simplelightbox": "^0.0.10",
         "spatie/shiki-php": "2.0",
         "symfony/polyfill-php72": "^1.31",
+        "textalk/websocket": "^1.5",
         "zenepay/filament-buddhist-date-picker": "^1.0"
     },
     "require-dev": {

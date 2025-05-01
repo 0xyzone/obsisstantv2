@@ -778,6 +778,23 @@ class MatchMakingResource extends Resource
 
                         })
                 ]),
+                Tables\Actions\Action::make('Swap Teams')
+                    ->icon('heroicon-s-arrow-path-rounded-square')
+                    ->action(function (MatchMaking $record) {
+                        $teamAplayers = $record->statsForTeamA()->get();
+                        $teamBplayers = $record->statsForTeamB()->get();
+                        $record->update([
+                            'team_a' => $record->team_b,
+                            'team_b' => $record->team_a,
+                        ]);
+                        Notification::make('Saved')
+                            ->title('Teams Swapped!')
+                            ->success()
+                            ->send();
+                    })
+                    ->extraAttributes([
+                        'tabindex' => '-1',
+                    ]),
                 Tables\Actions\Action::make('Dublicate')
                     ->iconButton()
                     ->icon('heroicon-m-document-duplicate')
