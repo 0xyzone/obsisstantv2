@@ -781,8 +781,6 @@ class MatchMakingResource extends Resource
                 Tables\Actions\Action::make('Swap Teams')
                     ->icon('heroicon-s-arrow-path-rounded-square')
                     ->action(function (MatchMaking $record) {
-                        $teamAplayers = $record->statsForTeamA()->get();
-                        $teamBplayers = $record->statsForTeamB()->get();
                         $record->update([
                             'team_a' => $record->team_b,
                             'team_b' => $record->team_a,
