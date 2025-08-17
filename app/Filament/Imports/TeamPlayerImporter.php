@@ -38,6 +38,7 @@ class TeamPlayerImporter extends Importer
 
     protected function resolveTeamForTenant(string $teamName, int $tenantId): ?TournamentTeam
     {
+        dd($tenantId);
         $team = TournamentTeam::where('tournament_id', $tenantId)
             ->where('name', $teamName)
             ->first();
