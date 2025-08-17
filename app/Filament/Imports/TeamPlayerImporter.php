@@ -38,7 +38,6 @@ class TeamPlayerImporter extends Importer
 
     protected function resolveTeamForTenant(string $teamName, int $tenantId): ?TournamentTeam
     {
-        dd($tenantId);
         $team = TournamentTeam::where('tournament_id', $tenantId)
             ->where('name', $teamName)
             ->first();
@@ -56,6 +55,9 @@ class TeamPlayerImporter extends Importer
 
     public function resolveRecord(): ?TeamPlayer
     {
+        if (!$this->tenant) {
+            throw new \RuntimeException('No tenant (tournament) resolved for import.');
+        }
         // Step 1: Resolve or create the team within the current tenant (tournament)
         $team = $this->resolveTeamForTenant($this->data['team'], $this->tenant->id);
         // Step 2: Resolve or create the player within the current tenant (tournament)
