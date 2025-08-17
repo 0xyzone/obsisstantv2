@@ -6,7 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "abanoubnassem/filament-grecaptcha-field": "^0.0.7",
+        "abanoubnassem/filament-grecaptcha-field": "^0.0.10",
         "althinect/filament-spatie-roles-permissions": "^2.2",
         "andreiio/blade-remix-icon": "^3.6",
         "bezhansalleh/filament-panel-switch": "^1.0",

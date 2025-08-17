@@ -26,7 +26,7 @@ class TeamPlayerImporter extends Importer
     {
         return [
             ImportColumn::make('team')
-                ->relationship(resolveUsing: 'name'),
+                ->requiredMapping(),
             ImportColumn::make('name')
                 ->rules(['max:255']),
             ImportColumn::make('nickname')
