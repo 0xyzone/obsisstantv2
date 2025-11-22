@@ -58,11 +58,19 @@ class TeamPlayerImporter extends Importer
         if (!$this->tenant) {
             throw new \RuntimeException('No tenant (tournament) resolved for import.');
         }
+
+        $teamName = $this->data['team'] ?? null;
+        $playerName = $this->data['name'] ?? null;
+
+        if (!$teamName || !$playerName) {
+            return null; // Ensure both team and player names are provided
+        }
+
         // Step 1: Resolve or create the team within the current tenant (tournament)
-        $team = $this->resolveTeamForTenant($this->data['team'], $this->tenant->id);
+        $team = $this->resolveTeamForTenant($teamName, $this->tenant->id);
         // Step 2: Resolve or create the player within the current tenant (tournament)
         $player = TeamPlayer::where('tournament_id', $this->tenant->id)
-            ->where('name', $this->data['name'])
+            ->where('name', $playerName) // Use name to identify players uniquely within the tournament
             ->where('tournament_team_id', $team->id) // Use ingame_id to identify players uniquely within the tournament
             ->first();
 
