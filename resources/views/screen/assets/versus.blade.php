@@ -19,7 +19,7 @@
                     <div class="flex flex-col justify-center items-center w-4/12">
                         <div><img src="{{ $activeMatch->teamA->logo ? asset('/storage/' . $activeMatch->teamA->logo) : "" }}" alt="" class="w-64 aspect-square object-scale-down shadow-xl bg-white rounded-lg p-6"></div>
                         <div class="w-full text-center py-2 px-8 bg-gray-200 -skew-x-[30deg] text-6xl font-bold shadow-xl -translate-y-5" id="teama">
-                            <p class="skew-x-[30deg]">{{ $activeMatch->teamA->name }}a</p>
+                            <p class="skew-x-[30deg]">{{ $activeMatch->teamA->name }}</p>
                         </div>
                     </div>
                     <div>
